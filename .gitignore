@@ -1,1 +1,19 @@
 /bin/
+# Compiled class files
+*.class
+
+# Build directories
+/target/
+/build/
+
+# IDE specific files
+/.idea/
+/.classpath
+/.project
+
+# Logs
+*.log
+
+# User-defined configuration files
+application.properties
+application.yml
