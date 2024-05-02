@@ -17,7 +17,6 @@ public class JdbcConnection {
 		System.out.println(conn5);
 		/* Oracle Call Interface (OCI) driver */
 
-		
 	}
 
 }
