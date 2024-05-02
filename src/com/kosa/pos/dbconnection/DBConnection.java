@@ -1,4 +1,4 @@
-package com.kosa.dbconnection;
+package com.kosa.pos.dbconnection;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -11,7 +11,7 @@ import java.util.Properties;
 
 public class DBConnection {
 
-	private static Connection conn;
+	private static Connection conn; // 데이터베이스 연결 설정
 
 	private DBConnection() {
 	}

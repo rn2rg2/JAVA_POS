@@ -1,4 +1,4 @@
-package com.kosa.dbconnection;
+package com.kosa.pos.dbconnection;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
