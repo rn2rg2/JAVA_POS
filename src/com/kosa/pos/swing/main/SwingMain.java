@@ -1,4 +1,4 @@
-package com.kosa.pos.swing;
+package com.kosa.pos.swing.main;
 
 import java.awt.EventQueue;
 import java.util.List;
