@@ -32,8 +32,8 @@ public class KeyboardActionListener implements ActionListener {
 				}
 			}
 		} else if ("입력".equals(str_btnName)) {
-			// TODO : str_userInput -> int 전환 후, user_info 테이블 업데이트
-
+			// TODO : str_userInput -> int 전환 후, DB에 저장된 전화번호인지 확인
+			// DB에 저장되어 있으면 적립, 아니면 가입 유도 창 띄우기
 		} else { // 숫자 버튼 입력
 			String newInput = str_userInput + str_btnName;
 			superClass.userInput.setText(formatPhoneNumber(newInput));
