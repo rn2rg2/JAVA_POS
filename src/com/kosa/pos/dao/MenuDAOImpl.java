@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import com.kosa.pos.dbconnection.DBConnection;
 import com.kosa.pos.dto.Menu;
@@ -36,6 +37,7 @@ public class MenuDAOImpl implements MenuDAO {
 	            menu.setPrice(rs.getInt("PRICE"));
 	            menu.setCategory(rs.getString("CATEGORY"));
 	            menu.setMenu_desc(rs.getString("MENU_DESC"));
+	            menu.setMenu_path(rs.getString("MENU_PATH"));
 	            menuList.add(menu);
 	        }
 	    } catch (SQLException e) {
@@ -52,5 +54,42 @@ public class MenuDAOImpl implements MenuDAO {
 	        }
 	    }
 	    return menuList;
+	}
+	
+	@Override
+	public Optional<Menu> findById(int menuId) {
+		String sql = "SELECT * FROM menu WHERE menu_id = ?";
+		try {
+	        // PreparedStatement 객체 생성 후 쿼리 실행
+	        pstmt = connection.prepareStatement(sql);
+	        pstmt.setInt(1, menuId);
+	        rs = pstmt.executeQuery();
+	        
+	        if(rs.next()) {
+	            Menu menu = new Menu();
+	            menu.setMenu_id(rs.getInt("MENU_ID"));
+	            menu.setName(rs.getString("NAME"));
+	            menu.setPrice(rs.getInt("PRICE"));
+	            menu.setCategory(rs.getString("CATEGORY"));
+	            menu.setMenu_desc(rs.getString("MENU_DESC"));
+	            menu.setMenu_path(rs.getString("MENU_PATH"));
+	            return Optional.of(menu);
+	        }
+	        
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+	        // 리소스 해제
+	        try {
+	            if (rs != null)
+	                rs.close();
+	            if (stmt != null)
+	                stmt.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+		}
+		// TODO Auto-generated method stub
+		return Optional.empty();
 	}
 }
