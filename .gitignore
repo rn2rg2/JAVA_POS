@@ -15,6 +15,9 @@
 # Logs
 *.log
 
+# MacOS
+.DS_Store
+
 # User-defined configuration files
 application.properties
 application.yml
