@@ -1,23 +1,24 @@
 package com.kosa.pos.swing;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.JLabel;
-import java.awt.Color;
-import java.awt.Button;
-import javax.swing.JList;
-import javax.swing.border.LineBorder;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.JTextPane;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 
 public class Detail {
 
@@ -63,8 +64,22 @@ public class Detail {
 		JPanel menuImage = new JPanel();
 		menuImage.setBorder(new LineBorder(new Color(0, 0, 0)));
 		menuImage.setBounds(59, 46, 409, 321);
+		
+		
+		// 이미지 넣기
+//		ImageIcon icon = new ImageIcon("");
+//		JLabel iconLabel = new JLabel(icon, JLabel.CENTER);
+//		menuImage.add(iconLabel);
+		
 		panel.add(menuImage);
 		menuImage.setLayout(null);
+		
+		JLabel lblNewLabel_6 = new JLabel("New label");
+		ImageIcon icon = new ImageIcon("C:\\\\Users\\\\KOSA\\\\Desktop\\\\이종섭\\\\프로젝트 - 1차\\\\햄버거 사진.jpg");
+		
+		lblNewLabel_6.setIcon(icon);
+		lblNewLabel_6.setBounds(0, 0, 409, 321);
+		menuImage.add(lblNewLabel_6);
 		
 		JPanel menuExplain = new JPanel();
 		menuExplain.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -149,42 +164,50 @@ public class Detail {
 		btnNewButton_3.setBounds(298, 0, 143, 57);
 		menuReviewTable.add(btnNewButton_3);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 54, 441, 229);
+        // JPanel 생성
+        JPanel panel_1 = new JPanel();
+        panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.Y_AXIS));
+
+        // JScrollPane에 넣을 레이블 추가
+        for (int i = 1; i <= 10; i++) {
+        	JPanel cellPanel_1 = new JPanel();
+        	cellPanel_1.setLayout(new BorderLayout());
+        	
+        	// 번호
+            JLabel phoneNumberLabel = new JLabel("010-1234-****");
+            phoneNumberLabel.setHorizontalAlignment(JLabel.CENTER);
+            phoneNumberLabel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+            cellPanel_1.add(phoneNumberLabel, BorderLayout.WEST);
+            
+            // 날짜
+            JLabel dayLabel = new JLabel("2024-05-03 10:45:12");
+            dayLabel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+            cellPanel_1.add(dayLabel, BorderLayout.EAST);
+            
+        	JPanel cellPanel_2 = new JPanel();
+        	cellPanel_2.setLayout(new BorderLayout());
+        	cellPanel_2.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+        	
+        	// 리뷰
+            JLabel review = new JLabel("정말 맛있어요~~!!!");
+            review.setHorizontalAlignment(JLabel.CENTER);
+            review.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+            cellPanel_2.add(review, BorderLayout.WEST);
+            
+            // 평점
+            JLabel reviewScore = new JLabel("4.5"+"점");
+            reviewScore.setBorder(BorderFactory.createEmptyBorder(10,10,10,40));
+            cellPanel_2.add(reviewScore, BorderLayout.EAST);
+            
+            panel_1.add(cellPanel_1);
+            panel_1.add(cellPanel_2);
+            
+        }
+		
+		
+		JScrollPane scrollPane = new JScrollPane(panel_1);
+		scrollPane.setBounds(0, 55, 441, 228);
 		menuReviewTable.add(scrollPane);
-		
-		JPanel ReviewList = new JPanel();
-		scrollPane.setViewportView(ReviewList);
-		ReviewList.setLayout(null);
-		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel_2.setBounds(0, 0, 439, 103);
-		ReviewList.add(panel_2);
-		panel_2.setLayout(null);
-		
-		JLabel lblNewLabel_6 = new JLabel("010-1213-****");
-		lblNewLabel_6.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_6.setFont(new Font("굴림", Font.PLAIN, 16));
-		lblNewLabel_6.setBounds(12, 10, 144, 33);
-		panel_2.add(lblNewLabel_6);
-		
-		JLabel lblNewLabel_7 = new JLabel("2024-05-02 17:21:53");
-		lblNewLabel_7.setBounds(304, 19, 123, 15);
-		panel_2.add(lblNewLabel_7);
-		
-		JLabel lblNewLabel_8 = new JLabel("정말 맛있습니다~~!!!");
-		lblNewLabel_8.setFont(new Font("굴림", Font.PLAIN, 18));
-		lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_8.setBounds(22, 53, 314, 33);
-		panel_2.add(lblNewLabel_8);
-		
-		JLabel lblNewLabel_9 = new JLabel("4.5");
-		lblNewLabel_9.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_9.setFont(lblNewLabel_9.getFont().deriveFont(lblNewLabel_9.getFont().getStyle() | Font.BOLD, 20f));
-		lblNewLabel_9.setForeground(Color.RED);
-		lblNewLabel_9.setBounds(314, 53, 96, 30);
-		panel_2.add(lblNewLabel_9);
 		
 		JButton btnNewButton = new JButton("뒤로 가기");
 		btnNewButton.setFont(new Font("굴림", Font.PLAIN, 18));
