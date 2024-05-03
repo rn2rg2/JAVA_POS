@@ -6,6 +6,9 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -19,6 +22,11 @@ import javax.swing.JTextPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
+
+import com.kosa.pos.dao.MenuDAOImpl;
+import com.kosa.pos.dao.ReviewDAOImpl;
+import com.kosa.pos.dto.Menu;
+import com.kosa.pos.dto.Review;
 
 public class Detail {
 
@@ -51,6 +59,21 @@ public class Detail {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
+		// 파라미터 값이 넘어왔을 때 => menu_id = 8
+		int menuId = 1;
+		MenuDAOImpl menuDaoImpl = new MenuDAOImpl();
+		Optional<Menu> _menu = menuDaoImpl.findById(menuId);
+		if(_menu.isEmpty()) return;
+		Menu menu = _menu.get();
+		
+		// 리뷰 데이터 가져오기
+		ReviewDAOImpl reviewDaoImpl = new ReviewDAOImpl();
+		List<Review> reviewList = reviewDaoImpl.findByMenuId(menuId);
+		
+		// 리뷰 통계 데이터 가져오기
+		Map<String, Double> map = reviewDaoImpl.reviewCountandAvgFindByMenuId(menuId);
+		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 984, 703);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -93,7 +116,7 @@ public class Detail {
 		menuExplain.add(scrollPane_1);
 		
 		JTextPane textPane = new JTextPane();
-		textPane.setText("아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아ㅍ메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명메뉴설명ㅍ");
+		textPane.setText(menu.getMenu_desc()); // 메뉴 설명
 		textPane.setEditable(false);
 		scrollPane_1.setViewportView(textPane);
 		
@@ -103,12 +126,24 @@ public class Detail {
 		panel.add(menuPrice);
 		menuPrice.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("10,000원");
+		JLabel lblNewLabel = new JLabel(menu.getPrice() + "원"); // 메뉴 가격
 		lblNewLabel.setBackground(new Color(255, 255, 255));
 		lblNewLabel.setFont(new Font("굴림", Font.PLAIN, 24));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(12, 10, 417, 53);
+		lblNewLabel.setBounds(245, 10, 184, 53);
 		menuPrice.add(lblNewLabel);
+		
+		JLabel lblNewLabel_7 = new JLabel(menu.getName()); // 메뉴명
+		lblNewLabel_7.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_7.setFont(new Font("굴림", Font.PLAIN, 24));
+		lblNewLabel_7.setBounds(130, 10, 135, 53);
+		menuPrice.add(lblNewLabel_7);
+		
+		JLabel lblNewLabel_8 = new JLabel("(" + menu.getCategory() + ")"); // 카테고리명
+		lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_8.setFont(new Font("굴림", Font.PLAIN, 20));
+		lblNewLabel_8.setBounds(12, 10, 117, 53);
+		menuPrice.add(lblNewLabel_8);
 		
 		JPanel menuStats = new JPanel();
 		menuStats.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -121,7 +156,7 @@ public class Detail {
 		lblNewLabel_1.setBounds(23, 22, 130, 35);
 		menuStats.add(lblNewLabel_1);
 		
-		JLabel lblNewLabel_2 = new JLabel("128");
+		JLabel lblNewLabel_2 = new JLabel("" + map.get("count").intValue()); // 리뷰 통계 - count
 		lblNewLabel_2.setForeground(Color.RED);
 		lblNewLabel_2.setFont(lblNewLabel_2.getFont().deriveFont(lblNewLabel_2.getFont().getStyle() | Font.BOLD, 20f));
 		lblNewLabel_2.setBounds(152, 22, 62, 35);
@@ -137,7 +172,7 @@ public class Detail {
 		lblNewLabel_4.setBounds(129, 67, 99, 42);
 		menuStats.add(lblNewLabel_4);
 		
-		JLabel lblNewLabel_5 = new JLabel("4.5");
+		JLabel lblNewLabel_5 = new JLabel("" + map.get("avgScore")); // 리뷰 통계 - avgScore
 		lblNewLabel_5.setFont(lblNewLabel_5.getFont().deriveFont(lblNewLabel_5.getFont().getStyle() | Font.BOLD, 20f));
 		lblNewLabel_5.setForeground(Color.RED);
 		lblNewLabel_5.setBounds(240, 67, 39, 38);
@@ -169,18 +204,18 @@ public class Detail {
         panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.Y_AXIS));
 
         // JScrollPane에 넣을 레이블 추가
-        for (int i = 1; i <= 10; i++) {
+        for (int i = 0; i < reviewList.size(); i++) {
         	JPanel cellPanel_1 = new JPanel();
         	cellPanel_1.setLayout(new BorderLayout());
         	
-        	// 번호
-            JLabel phoneNumberLabel = new JLabel("010-1234-****");
+        	// 리뷰 제목
+            JLabel phoneNumberLabel = new JLabel(reviewList.get(i).getTitle());
             phoneNumberLabel.setHorizontalAlignment(JLabel.CENTER);
             phoneNumberLabel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
             cellPanel_1.add(phoneNumberLabel, BorderLayout.WEST);
             
             // 날짜
-            JLabel dayLabel = new JLabel("2024-05-03 10:45:12");
+            JLabel dayLabel = new JLabel(reviewList.get(i).getReviewDate().toString());
             dayLabel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
             cellPanel_1.add(dayLabel, BorderLayout.EAST);
             
@@ -189,13 +224,13 @@ public class Detail {
         	cellPanel_2.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
         	
         	// 리뷰
-            JLabel review = new JLabel("정말 맛있어요~~!!!");
+            JLabel review = new JLabel(reviewList.get(i).getContent());
             review.setHorizontalAlignment(JLabel.CENTER);
             review.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
             cellPanel_2.add(review, BorderLayout.WEST);
             
             // 평점
-            JLabel reviewScore = new JLabel("4.5"+"점");
+            JLabel reviewScore = new JLabel(reviewList.get(i).getRating()+"점");
             reviewScore.setBorder(BorderFactory.createEmptyBorder(10,10,10,40));
             cellPanel_2.add(reviewScore, BorderLayout.EAST);
             

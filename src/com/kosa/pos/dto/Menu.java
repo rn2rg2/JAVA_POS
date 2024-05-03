@@ -13,4 +13,5 @@ public class Menu {
 	private int price;
 	private String category;
 	private String menu_desc;
+	private String menu_path;
 }
