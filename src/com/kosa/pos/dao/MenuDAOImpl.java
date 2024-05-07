@@ -65,7 +65,7 @@ public class MenuDAOImpl implements MenuDAO {
 	public Optional<MenuDetail> findById(int menuId) {
 		
 //		int menuID = 1;
-		String runSP = "{ call menu_package.get_menu_detail(?,?,?,?,?) }";
+		String runSP = "{ call menu_package.get_menu_detail(?,?,?,?,?,?,?) }";
 		
 		try {
 	        // PreparedStatement 객체 생성 후 쿼리 실행
@@ -74,13 +74,17 @@ public class MenuDAOImpl implements MenuDAO {
 			callableStatement.registerOutParameter(2, OracleTypes.CURSOR); // 메뉴 디테일
 			callableStatement.registerOutParameter(3, OracleTypes.NUMBER); // 주문 받은 횟수
 			callableStatement.registerOutParameter(4, OracleTypes.NUMBER); // 리뷰 평점
-			callableStatement.registerOutParameter(5, OracleTypes.CURSOR); // 리뷰 리스트
+			callableStatement.registerOutParameter(5, OracleTypes.CURSOR); // 리뷰 리스트 최신순
+			callableStatement.registerOutParameter(6, OracleTypes.CURSOR); // 리뷰 리스트 평점순
+			callableStatement.registerOutParameter(7, OracleTypes.CURSOR); // 리뷰 리스트 오래된순
 			callableStatement.execute();
 	        
 			ResultSet menuRec = (ResultSet) callableStatement.getObject(2);
 			int menuOrderCount = callableStatement.getInt(3);
 			float menuReviewAvgScore = callableStatement.getFloat(4);
-			ResultSet reviewList = (ResultSet) callableStatement.getObject(5);
+			ResultSet orderByReviewDateDesc = (ResultSet) callableStatement.getObject(5);
+			ResultSet orderByRatingDesc = (ResultSet) callableStatement.getObject(6);
+			ResultSet orderByReviewDateAsc = (ResultSet) callableStatement.getObject(7);
 			
 			MenuDetail menuDetail = new MenuDetail();
 			// 세부 메뉴 정보
@@ -99,17 +103,42 @@ public class MenuDAOImpl implements MenuDAO {
 			menuDetail.setCount(menuOrderCount);
 	        menuDetail.setAvgScore(menuReviewAvgScore);
 	        
-	        // 리뷰 리스트
-	        List<Review> list = new ArrayList<>();
-	        while(reviewList.next()) {
+	        // 리뷰 최신순 리스트
+	        List<Review> orderByReviewDateDescList = new ArrayList<>();
+	        while(orderByReviewDateDesc.next()) {
 	        	Review review = new Review();
-	        	review.setTitle(reviewList.getString("TITLE"));
-	        	review.setContent(reviewList.getString("CONTENT"));
-	        	review.setRating(reviewList.getInt("RATING"));
-	        	review.setReviewDate(reviewList.getDate("REVIEW_DATE"));
-	        	list.add(review);
+	        	review.setTitle(orderByReviewDateDesc.getString("TITLE"));
+	        	review.setContent(orderByReviewDateDesc.getString("CONTENT"));
+	        	review.setRating(orderByReviewDateDesc.getInt("RATING"));
+	        	review.setReviewDate(orderByReviewDateDesc.getDate("REVIEW_DATE"));
+	        	orderByReviewDateDescList.add(review);
 	        }
-	        menuDetail.setReviewList(list);
+	        menuDetail.setOrderByReviewDateDescList(orderByReviewDateDescList);
+	        
+	        // 리뷰 평점순 리스트
+	        List<Review> orderByRatingDescList = new ArrayList<>();
+	        while(orderByRatingDesc.next()) {
+	        	Review review = new Review();
+	        	review.setTitle(orderByRatingDesc.getString("TITLE"));
+	        	review.setContent(orderByRatingDesc.getString("CONTENT"));
+	        	review.setRating(orderByRatingDesc.getInt("RATING"));
+	        	review.setReviewDate(orderByRatingDesc.getDate("REVIEW_DATE"));
+	        	orderByRatingDescList.add(review);
+	        }
+	        menuDetail.setOrderByRatingDescList(orderByRatingDescList);
+	        
+	        // 리뷰 오래된순 리스트
+	        List<Review> orderByReviewDateAscList = new ArrayList<>();
+	        while(orderByReviewDateAsc.next()) {
+	        	Review review = new Review();
+	        	review.setTitle(orderByReviewDateAsc.getString("TITLE"));
+	        	review.setContent(orderByReviewDateAsc.getString("CONTENT"));
+	        	review.setRating(orderByReviewDateAsc.getInt("RATING"));
+	        	review.setReviewDate(orderByReviewDateAsc.getDate("REVIEW_DATE"));
+	        	orderByReviewDateAscList.add(review);
+	        }
+	        menuDetail.setOrderByReviewDateAscList(orderByReviewDateAscList);
+	        
 	        return Optional.of(menuDetail);
 	        
 		} catch (Exception e) {

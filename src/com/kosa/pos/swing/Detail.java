@@ -71,11 +71,17 @@ public class Detail {
 		// 상세 메뉴 데이터
 		Menu menu = menuDetail.getMenu();
 		
-		// 리뷰 데이터 가져오기
-		List<Review> reviewList = menuDetail.getReviewList();
+		// 리뷰 최신순 데이터 가져오기
+		List<Review> orderByReviewDateDescList = menuDetail.getOrderByReviewDateDescList();
+		
+		// 리뷰 평점순 데이터 가져오기
+		List<Review> orderByRatingDescList = menuDetail.getOrderByRatingDescList();
+		
+		// 리뷰 평점순 데이터 가져오기
+		List<Review> orderByReviewDateAscList = menuDetail.getOrderByReviewDateAscList();
 		
 		// 리뷰 통계 데이터 가져오기
-		double avgSCore = menuDetail.getAvgScore();
+		double avgScore = menuDetail.getAvgScore();
 		int count = menuDetail.getCount();
 		
 		frame = new JFrame();
@@ -176,10 +182,10 @@ public class Detail {
 		lblNewLabel_4.setBounds(129, 67, 99, 42);
 		menuStats.add(lblNewLabel_4);
 		
-		JLabel lblNewLabel_5 = new JLabel("" + avgSCore); // 리뷰 통계 - avgScore
+		JLabel lblNewLabel_5 = new JLabel(String.format("%.2f", avgScore)); // 리뷰 통계 - avgScore
 		lblNewLabel_5.setFont(lblNewLabel_5.getFont().deriveFont(lblNewLabel_5.getFont().getStyle() | Font.BOLD, 20f));
 		lblNewLabel_5.setForeground(Color.RED);
-		lblNewLabel_5.setBounds(240, 67, 39, 38);
+		lblNewLabel_5.setBounds(240, 67, 62, 38);
 		menuStats.add(lblNewLabel_5);
 		
 		JPanel menuReviewTable = new JPanel();
@@ -188,42 +194,42 @@ public class Detail {
 		panel.add(menuReviewTable);
 		menuReviewTable.setLayout(null);
 		
-		JButton btnNewButton_1 = new JButton("최신순");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnNewButton_1.setFont(new Font("굴림", Font.PLAIN, 20));
-		btnNewButton_1.setBounds(0, 0, 143, 57);
-		menuReviewTable.add(btnNewButton_1);
+//		JButton btnNewButton_1 = new JButton("최신순");
+//		btnNewButton_1.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//			}
+//		});
+//		btnNewButton_1.setFont(new Font("굴림", Font.PLAIN, 20));
+//		btnNewButton_1.setBounds(0, 0, 143, 57);
+//		menuReviewTable.add(btnNewButton_1);
+//		
+//		JButton btnNewButton_2 = new JButton("평점순");
+//		btnNewButton_2.setFont(new Font("굴림", Font.PLAIN, 20));
+//		btnNewButton_2.setBounds(142, 0, 157, 57);
+//		menuReviewTable.add(btnNewButton_2);
+//		
+//		JButton btnNewButton_3 = new JButton("오래된순");
+//		btnNewButton_3.setFont(new Font("굴림", Font.PLAIN, 20));
+//		btnNewButton_3.setBounds(298, 0, 143, 57);
+//		menuReviewTable.add(btnNewButton_3);
 		
-		JButton btnNewButton_2 = new JButton("평점순");
-		btnNewButton_2.setFont(new Font("굴림", Font.PLAIN, 20));
-		btnNewButton_2.setBounds(142, 0, 157, 57);
-		menuReviewTable.add(btnNewButton_2);
-		
-		JButton btnNewButton_3 = new JButton("오래된순");
-		btnNewButton_3.setFont(new Font("굴림", Font.PLAIN, 20));
-		btnNewButton_3.setBounds(298, 0, 143, 57);
-		menuReviewTable.add(btnNewButton_3);
-		
-        // JPanel 생성
-        JPanel panel_1 = new JPanel();
-        panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.Y_AXIS));
-
+        // JPanel 생성 orderByReviewDateDesc
+        JPanel orderByReviewDateDesc = new JPanel();
+        orderByReviewDateDesc.setLayout(new BoxLayout(orderByReviewDateDesc, BoxLayout.Y_AXIS));
+        
         // JScrollPane에 넣을 레이블 추가
-        for (int i = 0; i < reviewList.size(); i++) {
+        for (int i = 0; i < orderByReviewDateDescList.size(); i++) {
         	JPanel cellPanel_1 = new JPanel();
         	cellPanel_1.setLayout(new BorderLayout());
         	
         	// 리뷰 제목
-            JLabel phoneNumberLabel = new JLabel(reviewList.get(i).getTitle());
+            JLabel phoneNumberLabel = new JLabel(orderByReviewDateDescList.get(i).getTitle());
             phoneNumberLabel.setHorizontalAlignment(JLabel.CENTER);
             phoneNumberLabel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
             cellPanel_1.add(phoneNumberLabel, BorderLayout.WEST);
             
             // 날짜
-            JLabel dayLabel = new JLabel(reviewList.get(i).getReviewDate().toString());
+            JLabel dayLabel = new JLabel(orderByReviewDateDescList.get(i).getReviewDate().toString());
             dayLabel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
             cellPanel_1.add(dayLabel, BorderLayout.EAST);
             
@@ -232,25 +238,141 @@ public class Detail {
         	cellPanel_2.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
         	
         	// 리뷰
-            JLabel review = new JLabel(reviewList.get(i).getContent());
+            JLabel review = new JLabel(orderByReviewDateDescList.get(i).getContent());
             review.setHorizontalAlignment(JLabel.CENTER);
             review.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
             cellPanel_2.add(review, BorderLayout.WEST);
             
             // 평점
-            JLabel reviewScore = new JLabel(reviewList.get(i).getRating()+"점");
+            JLabel reviewScore = new JLabel(orderByReviewDateDescList.get(i).getRating()+"점");
             reviewScore.setBorder(BorderFactory.createEmptyBorder(10,10,10,40));
             cellPanel_2.add(reviewScore, BorderLayout.EAST);
             
-            panel_1.add(cellPanel_1);
-            panel_1.add(cellPanel_2);
+            orderByReviewDateDesc.add(cellPanel_1);
+            orderByReviewDateDesc.add(cellPanel_2);
             
         }
 		
+
+        // JPanel 생성 orderByRatingesc
+        JPanel orderByRatingDesc = new JPanel();
+        orderByRatingDesc.setLayout(new BoxLayout(orderByRatingDesc, BoxLayout.Y_AXIS));
+        
+        // JScrollPane에 넣을 레이블 추가
+        for (int i = 0; i < orderByRatingDescList.size(); i++) {
+        	JPanel cellPanel_1 = new JPanel();
+        	cellPanel_1.setLayout(new BorderLayout());
+        	
+        	// 리뷰 제목
+            JLabel phoneNumberLabel = new JLabel(orderByRatingDescList.get(i).getTitle());
+            phoneNumberLabel.setHorizontalAlignment(JLabel.CENTER);
+            phoneNumberLabel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+            cellPanel_1.add(phoneNumberLabel, BorderLayout.WEST);
+            
+            // 날짜
+            JLabel dayLabel = new JLabel(orderByRatingDescList.get(i).getReviewDate().toString());
+            dayLabel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+            cellPanel_1.add(dayLabel, BorderLayout.EAST);
+            
+        	JPanel cellPanel_2 = new JPanel();
+        	cellPanel_2.setLayout(new BorderLayout());
+        	cellPanel_2.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+        	
+        	// 리뷰
+            JLabel review = new JLabel(orderByRatingDescList.get(i).getContent());
+            review.setHorizontalAlignment(JLabel.CENTER);
+            review.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+            cellPanel_2.add(review, BorderLayout.WEST);
+            
+            // 평점
+            JLabel reviewScore = new JLabel(orderByRatingDescList.get(i).getRating()+"점");
+            reviewScore.setBorder(BorderFactory.createEmptyBorder(10,10,10,40));
+            cellPanel_2.add(reviewScore, BorderLayout.EAST);
+            
+            orderByRatingDesc.add(cellPanel_1);
+            orderByRatingDesc.add(cellPanel_2);
+            
+        }
+        
+        // JPanel 생성 orderByReviewDateAsc
+        JPanel orderByReviewDateAsc = new JPanel();
+        orderByReviewDateAsc.setLayout(new BoxLayout(orderByReviewDateAsc, BoxLayout.Y_AXIS));
+        
+        // JScrollPane에 넣을 레이블 추가
+        for (int i = 0; i < orderByReviewDateAscList.size(); i++) {
+        	JPanel cellPanel_1 = new JPanel();
+        	cellPanel_1.setLayout(new BorderLayout());
+        	
+        	// 리뷰 제목
+            JLabel phoneNumberLabel = new JLabel(orderByReviewDateAscList.get(i).getTitle());
+            phoneNumberLabel.setHorizontalAlignment(JLabel.CENTER);
+            phoneNumberLabel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+            cellPanel_1.add(phoneNumberLabel, BorderLayout.WEST);
+            
+            // 날짜
+            JLabel dayLabel = new JLabel(orderByReviewDateAscList.get(i).getReviewDate().toString());
+            dayLabel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+            cellPanel_1.add(dayLabel, BorderLayout.EAST);
+            
+        	JPanel cellPanel_2 = new JPanel();
+        	cellPanel_2.setLayout(new BorderLayout());
+        	cellPanel_2.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+        	
+        	// 리뷰
+            JLabel review = new JLabel(orderByReviewDateAscList.get(i).getContent());
+            review.setHorizontalAlignment(JLabel.CENTER);
+            review.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+            cellPanel_2.add(review, BorderLayout.WEST);
+            
+            // 평점
+            JLabel reviewScore = new JLabel(orderByReviewDateAscList.get(i).getRating()+"점");
+            reviewScore.setBorder(BorderFactory.createEmptyBorder(10,10,10,40));
+            cellPanel_2.add(reviewScore, BorderLayout.EAST);
+            
+            orderByReviewDateAsc.add(cellPanel_1);
+            orderByReviewDateAsc.add(cellPanel_2);
+            
+        }
+        
 		
-		JScrollPane scrollPane = new JScrollPane(panel_1);
+		JScrollPane scrollPane = new JScrollPane(orderByReviewDateDesc);
 		scrollPane.setBounds(0, 55, 441, 228);
 		menuReviewTable.add(scrollPane);
+		
+        //
+		JButton btnNewButton_1 = new JButton("최신순");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				scrollPane.setViewportView(orderByReviewDateDesc);
+				
+			}
+		});
+		btnNewButton_1.setFont(new Font("굴림", Font.PLAIN, 20));
+		btnNewButton_1.setBounds(0, 0, 143, 57);
+		menuReviewTable.add(btnNewButton_1);
+		
+		JButton btnNewButton_2 = new JButton("평점순");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				scrollPane.setViewportView(orderByRatingDesc);
+				
+			}
+		});
+		btnNewButton_2.setFont(new Font("굴림", Font.PLAIN, 20));
+		btnNewButton_2.setBounds(142, 0, 157, 57);
+		menuReviewTable.add(btnNewButton_2);
+		
+		JButton btnNewButton_3 = new JButton("오래된순");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				scrollPane.setViewportView(orderByReviewDateAsc);
+			}
+		});
+		btnNewButton_3.setFont(new Font("굴림", Font.PLAIN, 20));
+		btnNewButton_3.setBounds(298, 0, 143, 57);
+		menuReviewTable.add(btnNewButton_3);
+		//
+		
 		
 		JButton btnNewButton = new JButton("뒤로 가기");
 		btnNewButton.setFont(new Font("굴림", Font.PLAIN, 18));

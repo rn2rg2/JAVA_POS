@@ -15,6 +15,8 @@ public class MenuDetail {
 	private int count;
 	private double avgScore;
 	
-	private List<Review> reviewList;
+	private List<Review> orderByReviewDateDescList;
+	private List<Review> orderByRatingDescList;
+	private List<Review> orderByReviewDateAscList;
 	
 }
