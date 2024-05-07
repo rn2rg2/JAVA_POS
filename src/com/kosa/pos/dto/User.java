@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User_infoDTO {
+public class User {
 	private int user_id;
 	private int phonenum;
 	private Date join_date;
