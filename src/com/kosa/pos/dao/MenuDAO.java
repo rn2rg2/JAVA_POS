@@ -8,4 +8,5 @@ import com.kosa.pos.dto.Menu;
 public interface MenuDAO {
 public List<Menu> findall();
 public Optional<Menu> findById(int menuId);
+public List<Menu> findByCategory(String category);
 }

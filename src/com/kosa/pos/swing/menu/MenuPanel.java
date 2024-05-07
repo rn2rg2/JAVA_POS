@@ -7,19 +7,34 @@ import javax.swing.SwingConstants;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class MenuPanel extends JPanel {
-
+	private int clickCount = 0;
+	private MenuSidebarPanel msbp;
 	/**
 	 * Create the panel.
 	 */
-	 public MenuPanel(String menuname) {
+	 public MenuPanel(String menuname, int price, JPanel msbpport) {
 		setLayout(null);
-		
-		System.out.println(menuname);
+		//System.out.println("menuname : "+ menuname + " 가격 : "+ price );
 		JButton menu_minus = new JButton("New button");
+		menu_minus.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				 MenuSidebarPanel msbp = new MenuSidebarPanel();
+				 clickCount--;
+				 if(clickCount < 0){
+					 clickCount = 0;
+				 }// 클릭 횟수 감소 및 0 이하로 내려가지 않게 하기
+	             msbp.updateSidebarminus(clickCount, price); // 사이드바 업데이트
+	             System.out.println(clickCount);
+	             System.out.println(price);
+			}
+		});
+		
 		menu_minus.setBounds(0, 197, 77, 29);
 		add(menu_minus);
 		
@@ -38,8 +53,18 @@ public class MenuPanel extends JPanel {
 		menu_plus.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				MenuSidebarPanel msbp = new MenuSidebarPanel();
-		        //msbpport.add(msbp); 
+				
+				 clickCount++; // 클릭 횟수 증가
+				 if (msbp == null) {
+	                    msbp = new MenuSidebarPanel(); // 객체가 없을 경우에만 생성
+	                    msbpport.add(msbp); // MenuView의 msbpport에 추가
+	                }
+				
+	             msbp.updateSidebar(clickCount, menuname, price); // 사이드바 업데이트
+	             msbpport.add(msbp); // 변경된 MenuSidebarPanel 추가
+	             msbpport.revalidate(); // 레이아웃 갱신
+	             msbpport.repaint(); // 변경된 내용을 다시 그림
+	            
 			}
 		});
 		menu_plus.setBounds(89, 197, 77, 29);
