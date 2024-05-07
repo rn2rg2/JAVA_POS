@@ -1,7 +1,6 @@
 package com.kosa.pos.dto;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
+import java.sql.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,6 +14,6 @@ public class Review {
 	private String title;
 	private String content;
 	private int rating;
-	private Timestamp reviewDate;
+	private Date reviewDate;
 	private int menuMenuID;
 }

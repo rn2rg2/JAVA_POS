@@ -26,6 +26,7 @@ import javax.swing.border.LineBorder;
 import com.kosa.pos.dao.MenuDAOImpl;
 import com.kosa.pos.dao.ReviewDAOImpl;
 import com.kosa.pos.dto.Menu;
+import com.kosa.pos.dto.MenuDetail;
 import com.kosa.pos.dto.Review;
 
 public class Detail {
@@ -63,16 +64,19 @@ public class Detail {
 		// 파라미터 값이 넘어왔을 때 => menu_id = 8
 		int menuId = 1;
 		MenuDAOImpl menuDaoImpl = new MenuDAOImpl();
-		Optional<Menu> _menu = menuDaoImpl.findById(menuId);
-		if(_menu.isEmpty()) return;
-		Menu menu = _menu.get();
+		Optional<MenuDetail> _menuDetail = menuDaoImpl.findById(menuId);
+		if(_menuDetail.isEmpty()) return;
+		MenuDetail menuDetail = _menuDetail.get();
+		
+		// 상세 메뉴 데이터
+		Menu menu = menuDetail.getMenu();
 		
 		// 리뷰 데이터 가져오기
-		ReviewDAOImpl reviewDaoImpl = new ReviewDAOImpl();
-		List<Review> reviewList = reviewDaoImpl.findByMenuId(menuId);
+		List<Review> reviewList = menuDetail.getReviewList();
 		
 		// 리뷰 통계 데이터 가져오기
-		Map<String, Double> map = reviewDaoImpl.reviewCountandAvgFindByMenuId(menuId);
+		double avgSCore = menuDetail.getAvgScore();
+		int count = menuDetail.getCount();
 		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 984, 703);
@@ -156,7 +160,7 @@ public class Detail {
 		lblNewLabel_1.setBounds(23, 22, 130, 35);
 		menuStats.add(lblNewLabel_1);
 		
-		JLabel lblNewLabel_2 = new JLabel("" + map.get("count").intValue()); // 리뷰 통계 - count
+		JLabel lblNewLabel_2 = new JLabel("" + count); // 리뷰 통계 - count
 		lblNewLabel_2.setForeground(Color.RED);
 		lblNewLabel_2.setFont(lblNewLabel_2.getFont().deriveFont(lblNewLabel_2.getFont().getStyle() | Font.BOLD, 20f));
 		lblNewLabel_2.setBounds(152, 22, 62, 35);
@@ -172,7 +176,7 @@ public class Detail {
 		lblNewLabel_4.setBounds(129, 67, 99, 42);
 		menuStats.add(lblNewLabel_4);
 		
-		JLabel lblNewLabel_5 = new JLabel("" + map.get("avgScore")); // 리뷰 통계 - avgScore
+		JLabel lblNewLabel_5 = new JLabel("" + avgSCore); // 리뷰 통계 - avgScore
 		lblNewLabel_5.setFont(lblNewLabel_5.getFont().deriveFont(lblNewLabel_5.getFont().getStyle() | Font.BOLD, 20f));
 		lblNewLabel_5.setForeground(Color.RED);
 		lblNewLabel_5.setBounds(240, 67, 39, 38);
@@ -185,6 +189,10 @@ public class Detail {
 		menuReviewTable.setLayout(null);
 		
 		JButton btnNewButton_1 = new JButton("최신순");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnNewButton_1.setFont(new Font("굴림", Font.PLAIN, 20));
 		btnNewButton_1.setBounds(0, 0, 143, 57);
 		menuReviewTable.add(btnNewButton_1);
