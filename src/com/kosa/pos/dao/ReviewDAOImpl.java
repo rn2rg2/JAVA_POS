@@ -41,7 +41,7 @@ public class ReviewDAOImpl implements ReviewDAO{
 	            review.setTitle(rs.getString("TITLE"));
 	            review.setContent(rs.getString("CONTENT"));
 	            review.setRating(rs.getInt("RATING"));
-	            review.setReviewDate(rs.getTimestamp("REVIEW_DATE"));
+	            review.setReviewDate(rs.getDate("REVIEW_DATE"));
 	            review.setMenuMenuID(rs.getInt("MENU_MENU_ID"));
 	            reviewList.add(review);
 	        }

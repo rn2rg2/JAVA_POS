@@ -1,68 +1,51 @@
 package com.kosa.pos.swing.menu;
 
-import java.awt.GridLayout;
-import java.util.List;
-
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
-import java.awt.Font;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class MenuPanel extends JPanel {
 
 	/**
 	 * Create the panel.
 	 */
-	 public MenuPanel() {
+	 public MenuPanel(String menuname) {
+		setLayout(null);
 		
-		JButton btnNewButton = new JButton("-");
-		btnNewButton.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
+		System.out.println(menuname);
+		JButton menu_minus = new JButton("New button");
+		menu_minus.setBounds(0, 197, 77, 29);
+		add(menu_minus);
 		
-		JButton btnNewButton_1 = new JButton("+");
-		btnNewButton_1.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
+		JLabel menu_name = new JLabel(menuname);
+		menu_name.setHorizontalAlignment(SwingConstants.CENTER);
+		menu_name.setBounds(0, 168, 170, 29);
+		add(menu_name);
 		
-		JLabel lblNewLabel = new JLabel("new label");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setVerticalAlignment(SwingConstants.TOP);
+		JLabel menu_img = new JLabel("New label");
+		menu_img.setHorizontalAlignment(SwingConstants.CENTER);
+		menu_img.setBounds(0, 0, 170, 156);
+		add(menu_img);
 		
-		JLabel lblNewLabel_1 = new JLabel("image");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 78, Short.MAX_VALUE)
-							.addGap(4)
-							.addComponent(btnNewButton_1, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(6)
-							.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(lblNewLabel_1, GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)))
-					.addContainerGap())
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(lblNewLabel_1, GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(lblNewLabel)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnNewButton)
-						.addComponent(btnNewButton_1))
-					.addContainerGap())
-		);
-		setLayout(groupLayout);
-
-	        // 메뉴 데이터를 반복하여 JPanel에 추가
+		
+		JButton menu_plus = new JButton("New button");
+		menu_plus.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				MenuSidebarPanel msbp = new MenuSidebarPanel();
+		        //msbpport.add(msbp); 
+			}
+		});
+		menu_plus.setBounds(89, 197, 77, 29);
+		add(menu_plus);
+		
+		
+		setPreferredSize(new Dimension(170, 230));
 	    }
 }
