@@ -13,7 +13,7 @@ public class ContentPaneManager {
 
     public static JPanel getContentPane() {
         if (contentpane == null) {
-        	contentpane = new JPanel();
+        	contentpane = new JPanel(CardLayoutManager.getCardLayout());
         }
         return contentpane;
     }
