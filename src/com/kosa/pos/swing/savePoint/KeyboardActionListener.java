@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
+import com.kosa.pos.dao.UserDAO;
+
 public class KeyboardActionListener implements ActionListener {
 	Keyboard superClass;
 
@@ -14,29 +16,59 @@ public class KeyboardActionListener implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String str_btnName = ((JButton) e.getSource()).getText();
-		String str_userInput = superClass.userInput.getText();
+		try {
+			String str_btnName = ((JButton) e.getSource()).getText();
+			String str_userInput = superClass.userInput.getText();
 
-		if ("전체 지우기".equals(str_btnName)) {
-			superClass.userInput.setText("");
-		} else if ("하나 지우기".equals(str_btnName)) {
-			if (str_userInput.length() > 0) {
-				int length = str_userInput.length();
-				// 마지막 문자가 '-' 앞에 있는지 확인
-				if (length > 1 && str_userInput.charAt(length - 2) == '-') {
-					// 마지막 문자와 '-' 함께 삭제
-					superClass.userInput.setText(str_userInput.substring(0, length - 2));
-				} else {
-					// 마지막 문자 삭제
-					superClass.userInput.setText(str_userInput.substring(0, length - 1));
+			if ("전체 지우기".equals(str_btnName)) {
+				superClass.userInput.setText("");
+			} else if ("하나 지우기".equals(str_btnName)) {
+				if (str_userInput.length() > 0) {
+					int length = str_userInput.length();
+					// 마지막 문자가 '-' 앞에 있는지 확인
+					if (length > 1 && str_userInput.charAt(length - 2) == '-') {
+						superClass.userInput.setText(str_userInput.substring(0, length - 2));
+					} else if (length > 1 && str_userInput.charAt(length - 1) == '-') {
+						superClass.userInput.setText(str_userInput.substring(0, length - 2));
+					} else {
+						superClass.userInput.setText(str_userInput.substring(0, length - 1));
+					}
 				}
+			} else if ("입력".equals(str_btnName)) {
+				String rawNumber = str_userInput.replaceAll("-", "");
+
+				if (rawNumber.charAt(0) != '0' || rawNumber.length() != 11) {
+					System.out.println("유효하지 않은 전화번호");
+					InvalidPhoneNum ipn = new InvalidPhoneNum();
+					ipn.setVisible(true);
+
+					superClass.userInput.setText("");
+
+					return;
+				}
+
+				long long_userInput = Long.parseLong(rawNumber); // 숫자 변환을 long 처리
+
+				UserDAO userDao = new UserDAO();
+				int exists = userDao.checkPhoneNumExists(long_userInput);
+
+				if (exists == 1) {
+					System.out.println("true");
+					SaveCompleteDialog scd = new SaveCompleteDialog();
+					scd.setVisible(true);
+				} else {
+					System.out.println("false");
+					NotRegisteredDialog nrd = new NotRegisteredDialog();
+					nrd.setVisible(true);
+				}
+			} else { // 숫자 버튼 입력
+				String newInput = str_userInput + str_btnName;
+				superClass.userInput.setText(formatPhoneNumber(newInput));
 			}
-		} else if ("입력".equals(str_btnName)) {
-			// TODO : str_userInput -> int 전환 후, DB에 저장된 전화번호인지 확인
-			// DB에 저장되어 있으면 적립, 아니면 가입 유도 창 띄우기
-		} else { // 숫자 버튼 입력
-			String newInput = str_userInput + str_btnName;
-			superClass.userInput.setText(formatPhoneNumber(newInput));
+		} catch (NumberFormatException ex) {
+			System.err.println("입력된 전화번호가 유효하지 않습니다.");
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 
 	}
