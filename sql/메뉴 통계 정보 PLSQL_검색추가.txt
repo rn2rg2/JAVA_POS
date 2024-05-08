@@ -1,0 +1,146 @@
+-- 패키지 생성 부분
+create or replace package menu_stats_info
+as
+ procedure get_menu_rank(p_menu_name in varchar2 default '',p_cursor out sys_refcursor); -- 인기메뉴 가져오기 (주문 개수 순)
+ procedure get_menu_order_count(p_menu_name in varchar2, p_cursor out sys_refcursor); -- 특정 메뉴 최근 주문 개수 가져오기
+ procedure get_menu_review_avg_score(p_menu_name in varchar2, p_cursor out sys_refcursor); -- 특정 메뉴 최근 리뷰 평점 가져오기
+end;
+
+
+-- 패키지 바디 부분
+create or replace package body menu_stats_info
+as
+procedure get_menu_rank
+ (p_menu_name in varchar2 default '',p_cursor out sys_refcursor)
+ is
+ begin
+  open p_cursor for
+    select
+ rank() over(order by s.order_count desc nulls last) as rank,
+ m.category,
+ m.name,
+ nvl(s.avg_score,0) as avg_score,
+ nvl(s.order_count,0) as order_count
+from menu m
+left outer join
+(
+select
+ avge.menu_id,
+ avge.avg_score,
+ cnt.order_count
+from
+(
+    select
+     menu_menu_id as menu_id,
+     avg(rating) as avg_score
+    from review
+    where sysdate - review_date <= 7 -- in변수로 받으면 원하는 기간 설정 가능
+    group by menu_menu_id
+) avge
+inner join
+(
+select 
+    sum(od.quantity) as order_count,
+    uo.menu_menu_id as menu_id
+    from
+    order_detail od
+    inner join
+    (
+    select 
+     order_id,
+     menu_menu_id
+    from user_order
+    where sysdate - order_date <= 7
+    ) uo
+    on uo.order_id = od.user_order_order_id
+    group by uo.menu_menu_id
+) cnt
+on avge.menu_id = cnt.menu_id
+) s
+on m.menu_id = s.menu_id
+where m.name like '%' || p_menu_name || '%';
+ end;
+ 
+ procedure get_menu_order_count
+ (p_menu_name in varchar2, p_cursor out sys_refcursor)
+ is
+ v_menu_id number;
+ begin
+    select menu_id 
+    into v_menu_id
+    from menu
+    where name = p_menu_name;
+ 
+    open p_cursor for
+     select
+     to_char(a.day,'YY-MM-DD') as day,
+     nvl(b.total,0) as total
+    from
+    (
+    select 
+    level-1 as g,
+    sysdate-(level-1) as day
+    from dual
+    connect by level <= 7
+    ) a
+    left outer join
+    (
+    select 
+    sum(od.quantity) as total,
+    round(sysdate - uo.order_date) as g
+    from
+    order_detail od
+    inner join
+    (
+    select 
+     order_id,
+     order_date
+    from user_order
+    where sysdate - order_date <= 7 and menu_menu_id = v_menu_id
+    ) uo
+    on uo.order_id = od.user_order_order_id
+    group by round(sysdate - uo.order_date)
+    ) b
+   on a.g = b.g
+   order by a.g desc;
+ end;
+ 
+ procedure get_menu_review_avg_score
+ (p_menu_name in varchar2, p_cursor out sys_refcursor)
+ is
+ v_menu_id number;
+ begin
+    select menu_id 
+    into v_menu_id
+    from menu
+    where name = p_menu_name;
+ 
+  open p_cursor for
+  select
+ to_char(a.day,'YY-MM-DD') as day,
+ round(nvl(b.avg_score,0),2) as avg_score
+from
+(
+select 
+level-1 as g,
+sysdate-(level-1) as day
+from dual
+connect by level <= 7
+) a
+left outer join 
+(
+select 
+avg(rating) as avg_score,
+round(sysdate - review_date) as g
+from review
+where sysdate - review_date <= 7
+and menu_menu_id = v_menu_id
+group by round(sysdate - review_date)
+) b
+on a.g = b.g
+order by a.g desc;
+ end;
+end menu_stats_info;
+
+
+
