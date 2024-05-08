@@ -1,20 +1,21 @@
 package com.kosa.pos.swing.savePoint;
 
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.EventQueue;
 
-import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class TestFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	Keyboard keyboard = new Keyboard();
+	private CardLayout cardLayout;
+	private JPanel container; // 패널 컨테이너
+	private JPanel initialPanel; // 초기 화면 패널 TODO: 추후 결제 화면과 연결해야함.
+	private Keyboard keyboardPanel;
 
-	JPanel panel;
-
-	CardLayout card = new CardLayout();
 
 	/**
 	 * Launch the application.
@@ -23,7 +24,8 @@ public class TestFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					new TestFrame();
+					TestFrame frame = new TestFrame();
+					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -31,27 +33,32 @@ public class TestFrame extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public TestFrame() {
-		setTitle("Keyboard Test");
+		setTitle("Test");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(1000, 800);
 		setLocationRelativeTo(null);
-		getContentPane().setLayout(null);
 
-		Keyboard keyboardPanel = new Keyboard();
+		cardLayout = new CardLayout();
+		container = new JPanel(cardLayout);
+		getContentPane().add(container);
 
-		CompletePaymentDialog completePaymentDialog = new CompletePaymentDialog();
-		completePaymentDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		completePaymentDialog.setModal(true); // Optional: makes the dialog block other windows
-		completePaymentDialog.setLocationRelativeTo(this);
+		keyboardPanel = new Keyboard();
+		initialPanel = new JPanel(); // 초기 화면 설정
+		initialPanel.setLayout(new BorderLayout());
+		JLabel welcomeLabel = new JLabel("Welcome to the application!", JLabel.CENTER);
+		initialPanel.add(welcomeLabel, BorderLayout.CENTER);
 
-		// Show the dialog when needed
+		container.add(initialPanel, "Initial");
+		container.add(keyboardPanel, "Keyboard");
+
+		CompletePaymentDialog completePaymentDialog = new CompletePaymentDialog(this);
+		completePaymentDialog.setModal(true);
 		completePaymentDialog.setVisible(true);
+	}
 
-		// setVisible(true);
+	public void showKeyboardPanel() {
+		cardLayout.show(container, "Keyboard");
 	}
 
 }
