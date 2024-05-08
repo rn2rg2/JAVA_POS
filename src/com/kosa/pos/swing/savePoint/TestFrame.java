@@ -14,9 +14,9 @@ public class TestFrame extends JFrame {
 	private CardLayout cardLayout;
 	private JPanel container; // 패널 컨테이너
 	private JPanel initialPanel; // 초기 화면 패널 TODO: 추후 결제 화면과 연결해야함.
-	private Keyboard keyboardPanel;
+	private KeyboardPanel keyboardPanel;
 
-	public Keyboard getKeyboard() {
+	public KeyboardPanel getKeyboard() {
 		return keyboardPanel;
 	}
 
@@ -46,7 +46,7 @@ public class TestFrame extends JFrame {
 		container = new JPanel(cardLayout);
 		getContentPane().add(container);
 
-		keyboardPanel = new Keyboard(this);
+		keyboardPanel = new KeyboardPanel();
 		initialPanel = new JPanel(); // 초기 화면 설정
 		initialPanel.setLayout(new BorderLayout());
 		JLabel welcomeLabel = new JLabel("Welcome to the application!", JLabel.CENTER);

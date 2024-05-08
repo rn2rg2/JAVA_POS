@@ -7,11 +7,11 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-public class CompleteSignUp extends JDialog {
+public class CompleteSignUpDialog extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 
-	public CompleteSignUp() {
+	public CompleteSignUpDialog() {
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(null);
 

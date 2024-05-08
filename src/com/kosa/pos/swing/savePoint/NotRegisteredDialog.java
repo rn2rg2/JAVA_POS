@@ -53,7 +53,7 @@ public class NotRegisteredDialog extends JDialog {
 
 				if (isSuccess == 1) {
 					System.out.println("회원가입 완료");
-					CompleteSignUp csu = new CompleteSignUp();
+					CompleteSignUpDialog csu = new CompleteSignUpDialog();
 					csu.setVisible(true);
 				}
 
