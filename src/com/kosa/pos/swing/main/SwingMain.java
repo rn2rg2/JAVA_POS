@@ -1,11 +1,6 @@
 package com.kosa.pos.swing.main;
 
 import java.awt.EventQueue;
-import java.util.List;
-
-import com.kosa.pos.dao.MenuDAO;
-import com.kosa.pos.dao.MenuDAOImpl;
-import com.kosa.pos.dto.Menu;
 
 public class SwingMain {
 	public static void main(String[] args) {
@@ -20,9 +15,5 @@ public class SwingMain {
 				}
 			}
 		});
-		// 메뉴 데이터 테스트
-		MenuDAO menudao = new MenuDAOImpl();
-		List<Menu> mlist = menudao.findall();
-		System.out.println(mlist);
 	}
 }
