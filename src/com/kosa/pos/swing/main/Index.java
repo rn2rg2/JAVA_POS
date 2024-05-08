@@ -22,7 +22,10 @@ public class Index extends JFrame {
 		
 		add(contentPane);
 		MenuView menuPanel = new MenuView();
+
+
 		menutest cp = new menutest();
+
 		contentPane.add(menuPanel, "menu");
 		contentPane.add(cp, "cp");
         cardLayout.show(contentPane, "menu");         
