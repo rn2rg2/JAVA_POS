@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MenuDetail {
+	private int rank;
 	private Menu menu;
 	
 	private int count;

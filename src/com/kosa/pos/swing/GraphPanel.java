@@ -46,11 +46,18 @@ public class GraphPanel extends JPanel {
         // Y축 눈금과 레이블을 그립니다.
         int yIncrement = (int) ((height - 100) / getMaxValue());
         
-        
-        for (int i = (int) getMinValue() - 1; i <= getMaxValue(); i += 5) {
-            int y = height - 50 - i * yIncrement;
-            g2d.drawLine(45, y, 50, y); // 눈금
-            g2d.drawString(String.valueOf(i), 20, y + 5); // 레이블
+        if(getMaxValue() - getMinValue() < 10) {
+            for (int i = (int) getMinValue() - 1; i <= getMaxValue(); i += 1) {
+                int y = height - 50 - i * yIncrement;
+                g2d.drawLine(45, y, 50, y); // 눈금
+                g2d.drawString(String.valueOf(i), 20, y + 5); // 레이블
+            }
+        }else { 
+	        for (int i = (int) getMinValue() - 1; i <= getMaxValue(); i += 5) {
+	            int y = height - 50 - i * yIncrement;
+	            g2d.drawLine(45, y, 50, y); // 눈금
+	            g2d.drawString(String.valueOf(i), 20, y + 5); // 레이블
+	        }
         }
 
         // 그래프의 각 점을 연결하는 선과 꺾이는 지점의 사각형을 그립니다.

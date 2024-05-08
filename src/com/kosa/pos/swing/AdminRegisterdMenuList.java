@@ -22,12 +22,19 @@ import java.awt.Insets;
 public class AdminRegisterdMenuList extends JPanel{
 
 	private JTextField textField;
+	private AdminMain adminMain;
 	
 	/**
 	 * Create the application.
 	 */
-	public AdminRegisterdMenuList() {
+	public AdminRegisterdMenuList(AdminMain adminMain) {
+		this.adminMain = adminMain;
 		initialize();
+		setSize(743, 666);
+		setBorder(new LineBorder(new Color(0, 0, 0)));
+		setLocation(227, 0);
+		setVisible(true);
+		adminMain.getMainPanel().add(this);
 	}
 
 	/**
@@ -35,6 +42,9 @@ public class AdminRegisterdMenuList extends JPanel{
 	 */
 	private void initialize() {
 
+
+		
+		
 		setBounds(0, 0, 731, 629);
 		setLayout(null);
 		
