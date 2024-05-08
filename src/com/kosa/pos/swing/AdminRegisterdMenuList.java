@@ -3,26 +3,30 @@ package com.kosa.pos.swing;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
-import javax.swing.JScrollPane;
-import java.awt.GridLayout;
-import java.awt.Insets;
+
+import com.kosa.pos.dao.MenuDAO;
+import com.kosa.pos.dao.MenuDAOImpl;
+import com.kosa.pos.dto.Menu;
 
 public class AdminRegisterdMenuList extends JPanel{
 
 	private JTextField textField;
 	private AdminMain adminMain;
+	private String keyword;
 	
 	/**
 	 * Create the application.
@@ -36,14 +40,27 @@ public class AdminRegisterdMenuList extends JPanel{
 		setVisible(true);
 		adminMain.getMainPanel().add(this);
 	}
+	
+	public AdminRegisterdMenuList(AdminMain adminMain, String keyword) {
+		this.keyword = keyword;
+		this.adminMain = adminMain;
+		initialize();
+		setSize(743, 666);
+		setBorder(new LineBorder(new Color(0, 0, 0)));
+		setLocation(227, 0);
+		setVisible(true);
+		adminMain.getMainPanel().add(this);
+	}
+	
+	public JTextField getTextField() {
+		return this.textField;
+	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
 
-
-		
 		
 		setBounds(0, 0, 731, 629);
 		setLayout(null);
@@ -55,20 +72,28 @@ public class AdminRegisterdMenuList extends JPanel{
 		add(lblNewLabel);
 		
 		textField = new JTextField();
-		textField.setBounds(125, 103, 469, 45);
+		textField.setBounds(30, 103, 564, 45);
 		add(textField);
 		textField.setColumns(10);
+		if(keyword != null) textField.setText(keyword);
+		
+		MenuDAO menuDao = new MenuDAOImpl();
+		List<Menu> menuList = menuDao.findAll(textField.getText());
 		
 		JButton btnNewButton = new JButton("검색");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String keyword = textField.getText();
+				AdminRegisterdMenuList temp = new AdminRegisterdMenuList(AdminRegisterdMenuList.this.adminMain, keyword);
+//				temp.getTextField().setText(textField.getText());
+				AdminRegisterdMenuList.this.adminMain.setAdminRegisterdMenuList(temp);
+				AdminRegisterdMenuList.this.setVisible(false);
+				AdminRegisterdMenuList.this.adminMain.getMainPanel().remove(AdminRegisterdMenuList.this);
+			}
+		});
 		btnNewButton.setFont(new Font("굴림", Font.PLAIN, 20));
 		btnNewButton.setBounds(606, 103, 95, 45);
 		add(btnNewButton);
-		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setFont(new Font("굴림", Font.PLAIN, 20));
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"구분", "카테고리1", "카테고리2", "카테고리3"}));
-		comboBox.setBounds(30, 103, 83, 45);
-		add(comboBox);
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -83,7 +108,9 @@ public class AdminRegisterdMenuList extends JPanel{
 		JPanel listPanel = new JPanel();
 		listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.Y_AXIS));
 		
-		for (int i = 0; i < 20; i++) {
+		for (int i = 0; i < menuList.size(); i++) {
+			
+			Menu menu = menuList.get(i);
 			
 			JPanel gridLayoutPanel = new JPanel();
 	        gridLayoutPanel.setLayout(new GridLayout(0, 4, 0, 0));
@@ -92,7 +119,7 @@ public class AdminRegisterdMenuList extends JPanel{
 			JPanel menuIdPanel = new JPanel();
 			menuIdPanel.setLayout(new BorderLayout());
         	
-            JLabel menuIdLabel = new JLabel("메뉴 번호" + i);
+            JLabel menuIdLabel = new JLabel(menu.getMenu_id() + ""); // 메뉴번호
             menuIdLabel.setHorizontalAlignment(JLabel.CENTER);
             menuIdLabel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
             menuIdPanel.add(menuIdLabel, BorderLayout.CENTER);
@@ -101,16 +128,16 @@ public class AdminRegisterdMenuList extends JPanel{
 			JPanel menucategoryPanel = new JPanel();
 			menucategoryPanel.setLayout(new BorderLayout());
         	
-            JLabel menucategoryLabel = new JLabel("카테고리명" + i);
+            JLabel menucategoryLabel = new JLabel(menu.getCategory()); // 카테고리
             menucategoryLabel.setHorizontalAlignment(JLabel.CENTER);
             menucategoryLabel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
             menucategoryPanel.add(menucategoryLabel, BorderLayout.CENTER);
             
-			// 메뉴 카테고리
+			// 메뉴명
 			JPanel menuNamePanel = new JPanel();
 			menuNamePanel.setLayout(new BorderLayout());
         	
-            JLabel menuNameLabel = new JLabel("메뉴 이름" + i);
+            JLabel menuNameLabel = new JLabel(menu.getName()); // 메뉴명
             menuNameLabel.setHorizontalAlignment(JLabel.CENTER);
             menuNameLabel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
             menuNamePanel.add(menuNameLabel, BorderLayout.CENTER);

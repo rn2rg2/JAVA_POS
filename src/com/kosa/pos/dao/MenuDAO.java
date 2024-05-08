@@ -11,10 +11,10 @@ public interface MenuDAO {
 public List<Menu> findall();
 public Optional<MenuDetail> findById(int menuId);
 
-public List<MenuDetail> findBestMenuAll();
+public List<MenuDetail> findBestMenuAll(String name);
 public Optional<MenuStatsInfo> findOrderCountByName(String name);
 
 public List<Menu> findByCategory(String category);
 
-
+public List<Menu> findAll(String name);
 }

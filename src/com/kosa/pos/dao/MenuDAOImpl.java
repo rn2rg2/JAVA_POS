@@ -206,17 +206,18 @@ public class MenuDAOImpl implements MenuDAO {
 	}
 
 	@Override
-	public List<MenuDetail> findBestMenuAll() {
-		String runSP = "{ call menu_stats_info.get_menu_rank(?) }";
+	public List<MenuDetail> findBestMenuAll(String name) {
+		String runSP = "{ call menu_stats_info.get_menu_rank(?,?) }";
 		
 		try {
 	        // PreparedStatement 객체 생성 후 쿼리 실행
 			CallableStatement callableStatement = connection.prepareCall(runSP);
-			callableStatement.registerOutParameter(1, OracleTypes.CURSOR); // 인기 메뉴
+			callableStatement.setString(1, name);
+			callableStatement.registerOutParameter(2, OracleTypes.CURSOR); // 인기 메뉴
 			
 			callableStatement.execute();
 	        
-			ResultSet menuRank = (ResultSet) callableStatement.getObject(1);
+			ResultSet menuRank = (ResultSet) callableStatement.getObject(2);
 
 			List<MenuDetail> menuRankList = new ArrayList<>();
 	        while(menuRank.next()) {
@@ -288,6 +289,46 @@ public class MenuDAOImpl implements MenuDAO {
 		        }
 		    }
 		    return menuList;
+	}
+
+	@Override
+	public List<Menu> findAll(String name) {
+		String runSP = "{ call menu_package.get_menu_list(?,?) }";
+		
+		try {
+	        // PreparedStatement 객체 생성 후 쿼리 실행
+			CallableStatement callableStatement = connection.prepareCall(runSP);
+			callableStatement.setString(1, name);
+			callableStatement.registerOutParameter(2, OracleTypes.CURSOR); // 특정 메뉴의 최근 일주일간의 주문 받은 횟수
+			
+			callableStatement.execute();
+	        
+			ResultSet menuList = (ResultSet) callableStatement.getObject(2);
+
+			List<Menu> list = new ArrayList<>();
+	        while(menuList.next()) {
+	        	Menu menu = new Menu();
+	        	menu.setMenu_id(menuList.getInt("MENU_ID"));
+	        	menu.setCategory(menuList.getString("CATEGORY"));
+	        	menu.setName(menuList.getString("NAME"));
+	        	list.add(menu);
+	        }
+	        return list;
+	        
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+	        // 리소스 해제
+	        try {
+	            if (rs != null)
+	                rs.close();
+	            if (stmt != null)
+	                stmt.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+		}
+		return null;
 	}
 	
 
