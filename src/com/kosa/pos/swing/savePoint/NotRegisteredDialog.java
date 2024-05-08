@@ -1,20 +1,21 @@
 package com.kosa.pos.swing.savePoint;
 
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import com.kosa.pos.dao.UserDAO;
+
 public class NotRegisteredDialog extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * Create the dialog.
-	 */
-	public NotRegisteredDialog() {
+	public NotRegisteredDialog(long long_userInput) {
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(null);
 
@@ -41,5 +42,31 @@ public class NotRegisteredDialog extends JDialog {
 		getContentPane().add(btnNo);
 
 		setModal(true); // 다이얼로그가 모달임을 설정하여 다이얼로그 뒤의 윈도우를 클릭할 수 없도록 함
+
+		/* 리스너 설정 */
+		/* "네" 버튼 */
+		btnYes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				UserDAO userDao = new UserDAO();
+				int isSuccess = userDao.signUp(long_userInput);
+
+				if (isSuccess == 1) {
+					System.out.println("회원가입 완료");
+					CompleteSignUp csu = new CompleteSignUp();
+					csu.setVisible(true);
+				}
+
+			}
+		});
+
+		/* "아니요" 버튼 */
+		btnNo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
 	}
+	// TODO
+	// 1. 가입 "아니요" 버튼 눌렀을 때 동작 -> 메인 화면으로 이동
 }

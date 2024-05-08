@@ -27,15 +27,19 @@ public class SaveCompleteDialog extends JDialog {
 		getContentPane().add(lblMessage);
 
 		JButton btnClose = new JButton("닫기");
+		btnClose.setBounds(170, 227, 89, 23);
+		getContentPane().add(btnClose);
+
+		setModal(true); // 다이얼로그가 모달임을 설정하여 다이얼로그 뒤의 윈도우를 클릭할 수 없도록 함
+
+		/* 리스너 설정 */
 		btnClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose(); // 다이얼로그를 닫는 메서드
 			}
 		});
-		btnClose.setBounds(170, 227, 89, 23);
-		getContentPane().add(btnClose);
-
-		setModal(true); // 다이얼로그가 모달임을 설정하여 다이얼로그 뒤의 윈도우를 클릭할 수 없도록 함
 	}
-
+	// TODO
+	// 1. 적립 완료 "닫기" 버튼 눌렀을 때 메인 화면으로 전환
+	// 2. 몇 포인트 적립 됐는지 보여주는 JLabel 추가하기
 }

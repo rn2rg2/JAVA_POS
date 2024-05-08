@@ -15,7 +15,7 @@ public class UserDAO {
 	public int checkPhoneNumExists(long long_userInput) {
 		int exists = 0;
 		try {
-			stmt = conn.prepareCall("{call check_phonenum(?, ?)}");
+			stmt = conn.prepareCall("{call save_point_pkg.check_phonenum(?, ?)}");
 			stmt.setLong(1, long_userInput);
 			stmt.registerOutParameter(2, Types.INTEGER);
 
@@ -25,5 +25,20 @@ public class UserDAO {
 			se.printStackTrace();
 		}
 		return exists;
+	}
+
+	public int signUp(long long_userInput) {
+		int isSuccess = 0;
+		try {
+			stmt = conn.prepareCall("{call save_point_pkg.sign_up(?, ?)}");
+			stmt.setLong(1, long_userInput);
+			stmt.registerOutParameter(2, Types.INTEGER);
+
+			stmt.execute();
+			isSuccess = stmt.getInt(2);
+		} catch (SQLException se) {
+			se.printStackTrace();
+		}
+		return isSuccess;
 	}
 }
