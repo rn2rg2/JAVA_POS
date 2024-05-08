@@ -11,43 +11,47 @@ import javax.swing.JLabel;
 public class CompletePaymentDialog extends JDialog {
 
 	private static final long serialVersionUID = 1L;
-	private TestFrame mainFrame;
+	private TestFrame testFrame;
 
-	public CompletePaymentDialog(TestFrame mainFrame) {
-		this.mainFrame = mainFrame;
+	public CompletePaymentDialog(TestFrame testFrame) {
+		this.testFrame = testFrame;
 		initUI();
 	}
 
 	private void initUI() {
-		getContentPane().setLayout(null); // 절대 위치 지정을 위해 null 레이아웃 사용
-		setSize(627, 458); // 패널의 크기 설정
+		getContentPane().setLayout(null); // 절대 위치 지정
+		setSize(627, 458);
 
 		JLabel lblCompletePayment = new JLabel("결제 완료!");
 		lblCompletePayment.setFont(new Font("굴림", Font.PLAIN, 20));
-		lblCompletePayment.setBounds(262, 139, 103, 54); // 위치 조정
+		lblCompletePayment.setBounds(262, 139, 103, 54);
 		getContentPane().add(lblCompletePayment);
 
 		JLabel lblDoYouSave = new JLabel("적립하시겠습니까?");
 		lblDoYouSave.setFont(new Font("굴림", Font.PLAIN, 20));
-		lblDoYouSave.setBounds(225, 196, 176, 63); // 위치 조정
+		lblDoYouSave.setBounds(225, 196, 176, 63);
 		getContentPane().add(lblDoYouSave);
 
 		JButton yesButton = new JButton("네");
 		yesButton.setFont(new Font("굴림", Font.PLAIN, 17));
-		yesButton.setBounds(118, 269, 147, 54); // 위치 조정
+		yesButton.setBounds(118, 269, 147, 54);
 		getContentPane().add(yesButton);
 
 		JButton noButton = new JButton("아니요");
 		noButton.setFont(new Font("굴림", Font.PLAIN, 17));
-		noButton.setBounds(362, 269, 147, 54); // 위치 조정
+		noButton.setBounds(362, 269, 147, 54);
 		getContentPane().add(noButton);
 
 		/* 리스너 설정 */
 		yesButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				mainFrame.showKeyboardPanel();
+				testFrame.showKeyboardPanel();
 			}
 		});
+
+		// TODO
+		// 1. CompletePaymentDialog를 결제 패널에서 결제 버튼을 눌렀을 때 띄워지도록 변경하기
+		// 2. "아니요" 버튼 눌렀을 때 동작 -> 메인 화면으로 돌아가기
 	}
 }

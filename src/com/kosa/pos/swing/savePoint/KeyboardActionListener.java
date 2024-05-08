@@ -37,7 +37,8 @@ public class KeyboardActionListener implements ActionListener {
 			} else if ("입력".equals(str_btnName)) {
 				String rawNumber = str_userInput.replaceAll("-", "");
 
-				if (rawNumber.charAt(0) != '0' || rawNumber.length() != 11) {
+				/* 입력 유효성 확인 */
+				if (rawNumber.length() == 0 || rawNumber.charAt(0) != '0' || rawNumber.length() != 11) {
 					System.out.println("유효하지 않은 전화번호");
 					InvalidPhoneNum ipn = new InvalidPhoneNum();
 					ipn.setVisible(true);
@@ -50,15 +51,15 @@ public class KeyboardActionListener implements ActionListener {
 				long long_userInput = Long.parseLong(rawNumber); // 숫자 변환을 long 처리
 
 				UserDAO userDao = new UserDAO();
+
+				// 가입된 전화번호인지 확인
 				int exists = userDao.checkPhoneNumExists(long_userInput);
 
-				if (exists == 1) {
-					System.out.println("true");
+				if (exists == 1) { // 가입된 전화번호
 					SaveCompleteDialog scd = new SaveCompleteDialog();
 					scd.setVisible(true);
-				} else {
-					System.out.println("false");
-					NotRegisteredDialog nrd = new NotRegisteredDialog();
+				} else { // 가입 안 된 전화번호
+					NotRegisteredDialog nrd = new NotRegisteredDialog(long_userInput);
 					nrd.setVisible(true);
 				}
 			} else { // 숫자 버튼 입력

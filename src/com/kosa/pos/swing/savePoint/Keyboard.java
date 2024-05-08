@@ -13,9 +13,13 @@ import javax.swing.border.EmptyBorder;
 public class Keyboard extends JPanel {
 
 	private static final long serialVersionUID = 1L;
+	private TestFrame testFrame;
 	JLabel userInput;
+	JButton submitButton;
 
-	public Keyboard() {
+	public Keyboard(TestFrame testFrame) {
+		this.testFrame = testFrame;
+
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLayout(null);
 		setBounds(0, 0, 950, 700);
@@ -58,7 +62,7 @@ public class Keyboard extends JPanel {
 		add(bottomPanel);
 		bottomPanel.setLayout(new BorderLayout(0, 0));
 
-		JButton submitButton = new JButton("입력");
+		submitButton = new JButton("입력");
 		submitButton.setFont(new Font("굴림", Font.PLAIN, 18));
 		submitButton.setBounds(0, 0, 256, 50);
 		bottomPanel.add(submitButton);
@@ -74,5 +78,4 @@ public class Keyboard extends JPanel {
 
 		setVisible(true);
 	}
-
 }
