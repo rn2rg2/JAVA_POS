@@ -57,6 +57,14 @@ public class AdminMain {
 	public void setAdminStatsInfo(AdminStatsInfo adminStatsInfo) {
 		this.adminStatsInfo = adminStatsInfo;
 	}
+	
+	public void setAdminRegisterdMenuList(AdminRegisterdMenuList adminRegisterdMenuList) {
+		this.adminRegisterdMenuList = adminRegisterdMenuList;
+	}
+	
+	public void setAdminBestMenuList(AdminBestMenuList adminBestMenuList) {
+		this.adminBestMenuList = adminBestMenuList;
+	}
 
 	/**
 	 * Initialize the contents of the frame.
@@ -114,6 +122,10 @@ public class AdminMain {
 //		adminStatsInfo.setLocation(227, 0);
 //		adminStatsInfo.setVisible(false);
 //		mainPanel.add(adminStatsInfo);
+		
+		adminMenuInsert.setVisible(false);
+		adminBestMenuList.setVisible(false);
+		adminStatsInfo.setVisible(false);
 		
 		JLabel lblNewLabel = new JLabel("▼ 메뉴 정보");
 		lblNewLabel.setFont(new Font("굴림", Font.PLAIN, 20));
