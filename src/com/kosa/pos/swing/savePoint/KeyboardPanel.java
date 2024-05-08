@@ -10,16 +10,13 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-public class Keyboard extends JPanel {
+public class KeyboardPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private TestFrame testFrame;
 	JLabel userInput;
 	JButton submitButton;
 
-	public Keyboard(TestFrame testFrame) {
-		this.testFrame = testFrame;
-
+	public KeyboardPanel() {
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLayout(null);
 		setBounds(0, 0, 950, 700);

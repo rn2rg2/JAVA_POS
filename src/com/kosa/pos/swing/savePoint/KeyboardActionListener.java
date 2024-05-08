@@ -8,9 +8,9 @@ import javax.swing.JButton;
 import com.kosa.pos.dao.UserDAO;
 
 public class KeyboardActionListener implements ActionListener {
-	Keyboard superClass;
+	KeyboardPanel superClass;
 
-	public KeyboardActionListener(Keyboard superClass) {
+	public KeyboardActionListener(KeyboardPanel superClass) {
 		this.superClass = superClass;
 	}
 
@@ -40,7 +40,7 @@ public class KeyboardActionListener implements ActionListener {
 				/* 입력 유효성 확인 */
 				if (rawNumber.length() == 0 || rawNumber.charAt(0) != '0' || rawNumber.length() != 11) {
 					System.out.println("유효하지 않은 전화번호");
-					InvalidPhoneNum ipn = new InvalidPhoneNum();
+					InvalidPhoneNumDialog ipn = new InvalidPhoneNumDialog();
 					ipn.setVisible(true);
 
 					superClass.userInput.setText("");

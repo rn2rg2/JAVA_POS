@@ -9,14 +9,14 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-public class InvalidPhoneNum extends JDialog {
+public class InvalidPhoneNumDialog extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Create the dialog.
 	 */
-	public InvalidPhoneNum() {
+	public InvalidPhoneNumDialog() {
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(null);
 
