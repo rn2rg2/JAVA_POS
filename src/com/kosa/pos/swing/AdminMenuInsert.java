@@ -19,12 +19,18 @@ public class AdminMenuInsert extends JPanel{
 	private JTextField menuNameTextField;
 	private JTextField categoryNameTextField;
 	private JTextField priceTextField;
+	private AdminMain adminMain;
 	
 	/**
 	 * Create the application.
 	 */
-	public AdminMenuInsert() {
+	public AdminMenuInsert(AdminMain adminMain) {
+		this.adminMain = adminMain;
 		initialize();
+		setSize(743, 666);
+		setLocation(227, 0);
+		setVisible(false);
+		adminMain.getMainPanel().add(this);
 	}
 
 	/**
@@ -36,6 +42,7 @@ public class AdminMenuInsert extends JPanel{
 //		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //		frame.getContentPane().setLayout(null);
 		
+
 
 		setBounds(0, 0, 731, 629);
 //		frame.getContentPane().add(registeredMenuListPanel);

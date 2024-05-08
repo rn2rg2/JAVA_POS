@@ -5,8 +5,11 @@ import java.util.Optional;
 
 import com.kosa.pos.dto.Menu;
 import com.kosa.pos.dto.MenuDetail;
+import com.kosa.pos.dto.MenuStatsInfo;
 
 public interface MenuDAO {
 public List<Menu> findall();
 public Optional<MenuDetail> findById(int menuId);
+public List<MenuDetail> findBestMenuAll();
+public Optional<MenuStatsInfo> findOrderCountByName(String name);
 }

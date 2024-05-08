@@ -5,7 +5,6 @@ import java.awt.CardLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import com.kosa.pos.swing.CompletePayment;
 import com.kosa.pos.swing.menu.MenuView;
 
 public class Index extends JFrame {
@@ -21,7 +20,6 @@ public class Index extends JFrame {
 		
 		add(contentPane);
 		MenuView menuPanel = new MenuView();
-		CompletePayment cp = new CompletePayment();
 		contentPane.add(menuPanel, "menu");
         cardLayout.show(contentPane, "menu");
               

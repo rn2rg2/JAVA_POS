@@ -13,6 +13,7 @@ import java.util.Optional;
 import com.kosa.pos.dbconnection.DBConnection;
 import com.kosa.pos.dto.Menu;
 import com.kosa.pos.dto.MenuDetail;
+import com.kosa.pos.dto.MenuStatsInfo;
 import com.kosa.pos.dto.Review;
 
 import oracle.jdbc.OracleTypes;
@@ -156,5 +157,96 @@ public class MenuDAOImpl implements MenuDAO {
 		}
 		// TODO Auto-generated method stub
 		return Optional.empty();
+	}
+
+	@Override
+	public Optional<MenuStatsInfo> findOrderCountByName(String name) {
+//		int menuID = 1;
+		String runSP = "{ call menu_stats_info.get_menu_order_count(?,?) }";
+		
+		try {
+	        // PreparedStatement 객체 생성 후 쿼리 실행
+			CallableStatement callableStatement = connection.prepareCall(runSP);
+			callableStatement.setString(1, name);
+			callableStatement.registerOutParameter(2, OracleTypes.CURSOR); // 특정 메뉴의 최근 일주일간의 주문 받은 횟수
+			
+			callableStatement.execute();
+	        
+			ResultSet orderCount = (ResultSet) callableStatement.getObject(2);
+
+			
+			MenuStatsInfo menuStatsInfo = new MenuStatsInfo();
+			int index = 0;
+	        while(orderCount.next()) {
+	        	menuStatsInfo.getDay()[index] = orderCount.getString("DAY").toString();
+	        	menuStatsInfo.getValues()[index] = orderCount.getDouble("TOTAL");
+	        	index++;
+	        }
+	        return Optional.of(menuStatsInfo);
+	        
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+	        // 리소스 해제
+	        try {
+	            if (rs != null)
+	                rs.close();
+	            if (stmt != null)
+	                stmt.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+		}
+		
+		
+		
+		
+		return Optional.empty();
+	}
+
+	@Override
+	public List<MenuDetail> findBestMenuAll() {
+		String runSP = "{ call menu_stats_info.get_menu_rank(?) }";
+		
+		try {
+	        // PreparedStatement 객체 생성 후 쿼리 실행
+			CallableStatement callableStatement = connection.prepareCall(runSP);
+			callableStatement.registerOutParameter(1, OracleTypes.CURSOR); // 인기 메뉴
+			
+			callableStatement.execute();
+	        
+			ResultSet menuRank = (ResultSet) callableStatement.getObject(1);
+
+			List<MenuDetail> menuRankList = new ArrayList<>();
+	        while(menuRank.next()) {
+	        	MenuDetail menuDetail = new MenuDetail();
+	        	menuDetail.setRank(menuRank.getInt("RANK"));
+	        	menuDetail.setAvgScore(menuRank.getDouble("AVG_SCORE"));
+	        	menuDetail.setCount(menuRank.getInt("ORDER_COUNT"));
+	        	
+	        	Menu menu = new Menu();
+	        	menu.setCategory(menuRank.getString("CATEGORY"));
+	        	menu.setName(menuRank.getString("NAME"));
+	        	menuDetail.setMenu(menu);
+
+	        	menuRankList.add(menuDetail);
+	        	
+	        }
+	        return menuRankList;
+	        
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+	        // 리소스 해제
+	        try {
+	            if (rs != null)
+	                rs.close();
+	            if (stmt != null)
+	                stmt.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+		}
+		return null;
 	}
 }
