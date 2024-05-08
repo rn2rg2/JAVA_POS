@@ -1,0 +1,21 @@
+create or replace package save_point_pkg
+is
+    procedure check_phonenum(p_phonenum in number, o_exists out number);
+end;
+/
+
+create or replace package body save_point_pkg
+is
+    procedure check_phonenum
+    (p_phonenum in number, o_exists out number)
+    is
+    begin
+        select case when count(*) > 0 then 1
+            else 0
+        end
+        into o_exists
+        from user_info
+        where phonenum = p_phonenum;
+    end;
+end;
+/
