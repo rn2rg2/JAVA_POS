@@ -29,7 +29,7 @@ import com.kosa.pos.dto.Menu;
 import com.kosa.pos.dto.MenuDetail;
 import com.kosa.pos.dto.Review;
 
-public class MenuDetailPanel extends JPanel {
+public class MenuDetailPanel extends JPanel{
 
 	/**
 	 * Create the application.
@@ -67,6 +67,7 @@ public class MenuDetailPanel extends JPanel {
 		int count = menuDetail.getCount();
 		
 		
+		
 		JPanel panel = new JPanel();
 		panel.setBounds(0, 0, 970, 666);
 		panel.setLayout(null);
@@ -85,7 +86,7 @@ public class MenuDetailPanel extends JPanel {
 		menuImage.setLayout(null);
 		
 		JLabel lblNewLabel_6 = new JLabel("New label");
-		ImageIcon icon = new ImageIcon(menu.getMenu_path());
+		ImageIcon icon = new ImageIcon("C:\\\\Users\\\\KOSA\\\\Desktop\\\\이종섭\\\\프로젝트 - 1차\\\\햄버거 사진.jpg");
 		
 		lblNewLabel_6.setIcon(icon);
 		lblNewLabel_6.setBounds(0, 0, 409, 321);

@@ -253,6 +253,21 @@ public class MenuView extends JPanel {
 		JPanel panel = new JPanel();
 		panel.setBounds(956, 6, 278, 638);
 		add(panel);
+		panel.setLayout(null);
+		
+		JLabel lblNewLabel_3 = new JLabel("메뉴 순위");
+		lblNewLabel_3.setFont(new Font("Academy Engraved LET", Font.PLAIN, 30));
+		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_3.setBounds(6, 6, 266, 48);
+		panel.add(lblNewLabel_3);
+		
+		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setBounds(6, 93, 74, 33);
+		panel.add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("18개");
+		lblNewLabel_1.setBounds(92, 101, 180, 16);
+		panel.add(lblNewLabel_1);
 	}
 
 	private void loadMenuByCategory(String category) {
