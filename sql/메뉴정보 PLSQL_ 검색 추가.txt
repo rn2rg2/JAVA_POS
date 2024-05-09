@@ -1,0 +1,170 @@
+select * from temp_menu;
+
+-- 패키지 선언 부분
+create or replace package menu_package
+as
+ procedure get_menu_list(p_menu_name in varchar2 default '', p_cursor out sys_refcursor); -- 전체 다 가져오는 프로시저
+ procedure get_menu_detail(p_menu_id in number, menu_rec out menu%rowtype); -- 특정 메뉴만 가져오는 프로시저
+ procedure get_menu_detail
+ (p_menu_id in number, menu_rec out sys_refcursor,
+ menu_order_count out number, menu_review_avg_score out number,
+ p_order_by_review_date_desc out sys_refcursor,
+ p_order_by_rating_desc out sys_refcursor,
+ p_order_by_review_date_asc out sys_refcursor); -- 특정 메뉴, 주문 횟수, 리뷰 평점, 리뷰 리스트 가져오는 프로시저
+ procedure insert_menu
+ (p_name in menu.name%type,
+ p_price in menu.price%type,
+ p_category in menu.category%type,
+ p_menu_desc in menu.menu_desc%type,
+ p_menu_path in menu.menu_path%type); -- 메뉴 추가
+ procedure update_menu
+ (p_menu_id in menu.menu_id%type,
+ p_name in menu.name%type,
+ p_price in menu.price%type,
+ p_category in menu.category%type,
+ p_menu_desc in menu.menu_desc%type,
+ p_menu_path in menu.menu_path%type); -- 메뉴 수정
+ procedure delete_menu(p_menu_id in number); -- 특정 메뉴 삭제
+end;
+
+-- 패키지 바디 부분
+create or replace package body menu_package
+as
+ procedure get_menu_list(p_menu_name in varchar2 default '', p_cursor out sys_refcursor)
+ as
+  sql_query varchar2(500) := 'select * from menu where name like :p_menu_name';
+ begin
+  
+  open p_cursor for
+   sql_query using '%' || p_menu_name || '%';
+ end;
+ 
+ procedure get_menu_detail(p_menu_id in number, menu_rec out menu%rowtype)
+ as
+ begin
+  select * into menu_rec
+  from menu
+  where menu_id = p_menu_id;
+ end;
+ 
+ procedure get_menu_detail
+ (p_menu_id in number, menu_rec out sys_refcursor,
+ menu_order_count out number, menu_review_avg_score out number,
+ p_order_by_review_date_desc out sys_refcursor,
+ p_order_by_rating_desc out sys_refcursor,
+ p_order_by_review_date_asc out sys_refcursor)
+ as
+ begin
+    -- 특정 메뉴 일정 기간동안 주문 받은 횟수
+    select 
+    sum(od.quantity) into menu_order_count
+    from
+    order_detail od
+    inner join
+    (
+    select 
+     order_id
+    from user_order
+    where sysdate - order_date <= 7 and menu_menu_id = p_menu_id -- 여기서 특정 메뉴는 1번 치즈버거
+    ) uo
+    on uo.order_id = od.user_order_order_id;
+    
+    -- 특정 메뉴 일정 기간 동안의 리뷰 평점
+     select 
+     round(avg(rating),2) as avg_score into menu_review_avg_score
+     from review
+     where menu_menu_id = p_menu_id 
+     and sysdate - review_date <= 7;
+     
+     -- 특정 메뉴 가져오기
+     open menu_rec for
+     select * 
+     from menu where menu_id = p_menu_id;
+     
+     -- 특정 메뉴의 리뷰 리스트 가져오기
+     open p_order_by_review_date_desc for
+    select 
+		review_id,
+		title,
+		content,
+        rating,
+		to_char(review_date,'YYYY-MM-dd') as review_date
+	 from review
+          where menu_menu_id = p_menu_id
+          and sysdate - review_date <= 7
+          order by review_date desc;
+
+     open p_order_by_rating_desc for
+    select 
+		review_id,
+		title,
+		content,
+        rating,
+		to_char(review_date,'YYYY-MM-dd') as review_date
+	 from review
+          where menu_menu_id = p_menu_id
+          and sysdate - review_date <= 7
+          order by rating desc;
+
+     open p_order_by_review_date_asc for
+    select 
+		review_id,
+		title,
+		content,
+        rating,
+		to_char(review_date,'YYYY-MM-dd') as review_date
+	 from review
+          where menu_menu_id = p_menu_id
+          and sysdate - review_date <= 7
+          order by review_date asc;
+ end;
+ 
+ procedure insert_menu
+ (p_name in menu.name%type,
+ p_price in menu.price%type,
+ p_category in menu.category%type,
+ p_menu_desc in menu.menu_desc%type,
+ p_menu_path in menu.menu_path%type) -- 메뉴 추가
+ as
+ begin
+  insert into menu 
+  (name, price, category, menu_desc, menu_path)
+  values
+  (p_name, p_price, p_category, p_menu_desc, p_menu_path);
+  commit;
+ end;
+ 
+ procedure update_menu
+ (p_menu_id in menu.menu_id%type,
+ p_name in menu.name%type,
+ p_price in menu.price%type,
+ p_category in menu.category%type,
+ p_menu_desc in menu.menu_desc%type,
+ p_menu_path in menu.menu_path%type) -- 메뉴 수정
+ as
+ begin
+  update menu
+  set name = p_name, price = p_price, category = p_category,
+  menu_desc = p_menu_desc, menu_path = p_menu_path
+  where menu_id = p_menu_id;
+  commit;
+ end;
+ 
+ procedure delete_menu(p_menu_id in number)
+ as
+ begin
+  delete from menu where menu_id = p_menu_id;
+  commit;
+ end;
+
+-- 카테고리 찾는 부분
+  PROCEDURE find_category(
+    p_menu_category IN menu.category%TYPE, 
+    p_menu_rec OUT SYS_REFCURSOR
+) AS
+BEGIN
+    OPEN p_menu_rec FOR
+    SELECT * FROM menu
+    WHERE category = p_menu_category;
+END;
+end;
