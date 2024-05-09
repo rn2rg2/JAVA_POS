@@ -17,4 +17,5 @@ public Optional<MenuStatsInfo> findOrderCountByName(String name);
 public List<Menu> findByCategory(String category);
 
 public List<Menu> findAll(String name);
+public void insertMenu(Menu menu);
 }
