@@ -147,6 +147,13 @@ public class AdminRegisterdMenuList extends JPanel{
 			menuUpdateAndDeletePanel.setLayout(new GridLayout(1, 2, 0, 0));
         	
             JButton menuUpdateBtn = new JButton("수정");
+            menuUpdateBtn.addActionListener(new ActionListener() {
+    			public void actionPerformed(ActionEvent e) {
+    				// 여기에 menu_id가 와야함
+    				int id = menu.getMenu_id();
+    				
+    			}
+            });
             menuUpdateBtn.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
             menuUpdateAndDeletePanel.add(menuUpdateBtn);
             
