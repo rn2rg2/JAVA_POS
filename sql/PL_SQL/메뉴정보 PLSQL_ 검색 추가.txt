@@ -25,8 +25,10 @@ as
  p_menu_desc in menu.menu_desc%type,
  p_menu_path in menu.menu_path%type); -- 메뉴 수정
  procedure delete_menu(p_menu_id in number); -- 특정 메뉴 삭제
+ PROCEDURE find_category(p_menu_category IN menu.category%TYPE,-- 카테고리별 메뉴 불러오기
+    p_menu_rec OUT SYS_REFCURSOR);
 end;
-
+/
 -- 패키지 바디 부분
 create or replace package body menu_package
 as
