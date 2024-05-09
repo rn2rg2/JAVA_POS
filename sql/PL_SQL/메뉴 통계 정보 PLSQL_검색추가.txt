@@ -16,6 +16,14 @@ procedure get_menu_rank
  begin
   open p_cursor for
     select
+     rank,
+     category,
+     name,
+     avg_score,
+     order_count
+   from
+   (
+    select
  rank() over(order by s.order_count desc nulls last) as rank,
  m.category,
  m.name,
@@ -31,34 +39,38 @@ select
 from
 (
     select
-     menu_menu_id as menu_id,
+     menu_id as menu_id,
      avg(rating) as avg_score
     from review
     where sysdate - review_date <= 7 -- in변수로 받으면 원하는 기간 설정 가능
-    group by menu_menu_id
+    group by menu_id
 ) avge
 inner join
 (
 select 
     sum(od.quantity) as order_count,
-    uo.menu_menu_id as menu_id
+    uo.menu_id as menu_id
     from
     order_detail od
     inner join
     (
-    select 
-     order_id,
-     menu_menu_id
-    from user_order
-    where sysdate - order_date <= 7
+select
+ user_order.order_id,
+ order_detail.menu_id
+from user_order
+inner join
+order_detail
+on user_order.order_id = order_detail.order_id
+where sysdate - user_order.order_date <= 7
     ) uo
-    on uo.order_id = od.user_order_order_id
-    group by uo.menu_menu_id
+    on uo.order_id = od.order_id
+    group by uo.menu_id
 ) cnt
 on avge.menu_id = cnt.menu_id
 ) s
 on m.menu_id = s.menu_id
-where m.name like '%' || p_menu_name || '%';
+)
+where name like '%' || p_menu_name || '%';
  end;
  
  procedure get_menu_order_count
@@ -92,13 +104,17 @@ where m.name like '%' || p_menu_name || '%';
     order_detail od
     inner join
     (
-    select 
-     order_id,
-     order_date
-    from user_order
-    where sysdate - order_date <= 7 and menu_menu_id = v_menu_id
+   select
+    user_order.order_id,
+    user_order.order_date,
+    order_detail.menu_id
+   from user_order
+   inner join
+   order_detail
+   on user_order.order_id = order_detail.order_id
+   where sysdate - user_order.order_date <= 7 and order_detail.menu_id = v_menu_id
     ) uo
-    on uo.order_id = od.user_order_order_id
+    on uo.order_id = od.order_id
     group by round(sysdate - uo.order_date)
     ) b
    on a.g = b.g
@@ -134,13 +150,11 @@ avg(rating) as avg_score,
 round(sysdate - review_date) as g
 from review
 where sysdate - review_date <= 7
-and menu_menu_id = v_menu_id
+and menu_id = v_menu_id
 group by round(sysdate - review_date)
 ) b
 on a.g = b.g
 order by a.g desc;
  end;
 end menu_stats_info;
-
-
 

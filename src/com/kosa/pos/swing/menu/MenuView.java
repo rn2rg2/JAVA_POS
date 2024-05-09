@@ -254,6 +254,10 @@ public class MenuView extends JPanel {
 		Total.setForeground(new Color(0, 0, 0));
 		Total.setBounds(753, 530, 191, 29);
 		add(Total);
+
+		JPanel panel = new JPanel();
+		panel.setBounds(956, 6, 278, 638);
+		add(panel);
 	}
 
 	private void loadMenuByCategory(String category) {
@@ -329,5 +333,4 @@ public class MenuView extends JPanel {
 		sidebarOrder.add(menuName);
 	}
 
-	// 메뉴추가 된 갯수를 파악해서 grid사용할것인지 flow 를 사용할것인지를 판단
 }
