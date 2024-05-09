@@ -10,6 +10,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
 
 public class MenuPanel extends JPanel {
 	private MenuSidebarPanel msbp = new MenuSidebarPanel(); // SidebarPanelManager.getSidebarPanelManager();
@@ -21,6 +23,8 @@ public class MenuPanel extends JPanel {
 	static Map<String, Integer> menuTotalPriceMap = new HashMap<>(); // 메뉴별 총 가격을 저장할 맵
 	
 	public MenuPanel(String menuname, int price, JPanel msbpport) {
+		setBackground(new Color(254, 255, 255));
+		setBorder(new LineBorder(new Color(207, 201, 214)));
 
 		setLayout(null);
 		// System.out.println("menuname : "+ menuname + " 가격 : "+ price );
@@ -51,30 +55,30 @@ public class MenuPanel extends JPanel {
 				System.out.println(price);
 			}
 		});
+		
+				JButton menu_plus = new JButton("+");
+				menu_plus.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						int count = MenuView.getClickCount(menuname);
+						count++; // 클릭 횟수 증가
+						MenuView.updateClickCount(menuname, count);
+						MenuSidebarPanel msbp = MenuView.getMenuSidebarPanel(menuname);
+						if (msbp == null) {
+							msbp = new MenuSidebarPanel();
+							MenuView.addMenuSidebarPanel(menuname, msbp); // Add the MenuSidebarPanel to MenuView
+						}
+						
+						msbp.updateSidebar(count, menuname, price); // 사이드바 업데이트
+						calculateTotalOrderPrice(menuname, count, price);
+						msbpport.add(msbp, 0); // 변경된 MenuSidebarPanel을 패널의 맨 위에 추가 // 변경된 MenuSidebarPanel 추가
+						msbpport.revalidate(); // 레이아웃 갱신
+						msbpport.repaint(); // 변경된 내용을 다시 그림
 
-		JButton menu_plus = new JButton("+");
-		menu_plus.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				int count = MenuView.getClickCount(menuname);
-				count++; // 클릭 횟수 증가
-				MenuView.updateClickCount(menuname, count);
-				MenuSidebarPanel msbp = MenuView.getMenuSidebarPanel(menuname);
-				if (msbp == null) {
-					msbp = new MenuSidebarPanel();
-					MenuView.addMenuSidebarPanel(menuname, msbp); // Add the MenuSidebarPanel to MenuView
-				}
-				
-				msbp.updateSidebar(count, menuname, price); // 사이드바 업데이트
-				calculateTotalOrderPrice(menuname, count, price);
-				msbpport.add(msbp, 0); // 변경된 MenuSidebarPanel을 패널의 맨 위에 추가 // 변경된 MenuSidebarPanel 추가
-				msbpport.revalidate(); // 레이아웃 갱신
-				msbpport.repaint(); // 변경된 내용을 다시 그림
-
-			}
-		});
-		menu_plus.setBounds(89, 239, 77, 29);
-		add(menu_plus);
+					}
+				});
+				menu_plus.setBounds(89, 239, 77, 29);
+				add(menu_plus);
 
 		menu_minus.setBounds(0, 239, 77, 29);
 		add(menu_minus);
@@ -99,7 +103,7 @@ public class MenuPanel extends JPanel {
 	}
 	public void calculateTotalOrderPrice(String menuname, int price, int count) {
 		menuTotalPriceMap.put(menuname, price*count);
-	    int totalOrderPrice = 0;
+		int totalOrderPrice = 0;
 	    for (int prices : MenuPanel.menuTotalPriceMap.values()) {
 	        totalOrderPrice += prices;
 	    }

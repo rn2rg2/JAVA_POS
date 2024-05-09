@@ -1,4 +1,4 @@
-package com.kosa.pos.swing;
+package com.kosa.pos.swing.Admin;
 
 import java.awt.Color;
 import java.awt.Graphics;
