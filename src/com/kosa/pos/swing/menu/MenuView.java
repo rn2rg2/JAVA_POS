@@ -3,8 +3,11 @@ package com.kosa.pos.swing.menu;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -15,6 +18,7 @@ import java.util.Map;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -23,14 +27,12 @@ import javax.swing.SwingConstants;
 import com.kosa.pos.dao.MenuDAO;
 import com.kosa.pos.dao.MenuDAOImpl;
 import com.kosa.pos.dto.Menu;
-import com.kosa.pos.swing.main.CardLayoutManager;
-import com.kosa.pos.swing.main.ContentPaneManager;
-import java.awt.FlowLayout;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import com.kosa.pos.swing.main.Index;
+import com.kosa.pos.swing.savePoint.CompletePaymentDialog;
 
 public class MenuView extends JPanel {
 	MenuDAO menudao = new MenuDAOImpl();
+	Index indexFrame;
 	/**
 	 * @wbp.nonvisual location=418,41
 	 */
@@ -50,7 +52,6 @@ public class MenuView extends JPanel {
 	static JLabel Total = new JLabel(0 + " 원");
 
 	public MenuView() {
-
 		setBackground(new Color(255, 255, 255));
 
 		// 메뉴 패널의 크기를 인덱스 패널과 동일하게 설정
@@ -179,7 +180,7 @@ public class MenuView extends JPanel {
 		add(sidepanel);
 		msbpport.setBackground(new Color(255, 255, 255));
 		msbpport.setLayout(new GridLayout(0, 1, 0, 15)); // Set the layout here
-		
+
 //		JPanel msbpport = new JPanel();
 //		msbpport.setLayout(new GridLayout(0, 1, 0, 15)); // 4개의 열, 간격은 15픽셀
 //		for (int i = 0; i < 10; i++) {
@@ -220,8 +221,12 @@ public class MenuView extends JPanel {
 
 		ImageIcon pay = new ImageIcon("./img/menu/diycheckout-payment-button.png");
 		JButton paybtn = new JButton(pay);
-		paybtn.addActionListener(
-				e -> CardLayoutManager.getCardLayout().show(ContentPaneManager.getContentPane(), "cp"));
+		paybtn.addActionListener(e -> {
+			CompletePaymentDialog dialog = new CompletePaymentDialog();
+			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setModal(true); // 모달 다이얼로그로 설정
+			dialog.setVisible(true); // 다이얼로그를 보여줌
+		});
 		paybtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -323,6 +328,6 @@ public class MenuView extends JPanel {
 		sidebarOrder.remove(menuName);
 		sidebarOrder.add(menuName);
 	}
-	
+
 	// 메뉴추가 된 갯수를 파악해서 grid사용할것인지 flow 를 사용할것인지를 판단
 }

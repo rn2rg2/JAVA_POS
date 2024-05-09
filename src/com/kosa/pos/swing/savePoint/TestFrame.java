@@ -55,7 +55,7 @@ public class TestFrame extends JFrame {
 		container.add(initialPanel, "Initial");
 		container.add(keyboardPanel, "Keyboard");
 
-		CompletePaymentDialog completePaymentDialog = new CompletePaymentDialog(this);
+		CompletePaymentDialog completePaymentDialog = new CompletePaymentDialog();
 		completePaymentDialog.setModal(true);
 		completePaymentDialog.setVisible(true);
 	}

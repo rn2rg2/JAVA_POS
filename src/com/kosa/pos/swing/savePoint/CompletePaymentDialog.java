@@ -8,13 +8,14 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 
+import com.kosa.pos.swing.main.CardLayoutManager;
+import com.kosa.pos.swing.main.ContentPaneManager;
+
 public class CompletePaymentDialog extends JDialog {
 
 	private static final long serialVersionUID = 1L;
-	private TestFrame testFrame;
 
-	public CompletePaymentDialog(TestFrame testFrame) {
-		this.testFrame = testFrame;
+	public CompletePaymentDialog() {
 		initUI();
 	}
 
@@ -46,7 +47,7 @@ public class CompletePaymentDialog extends JDialog {
 		yesButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				testFrame.showKeyboardPanel();
+				CardLayoutManager.getCardLayout().show(ContentPaneManager.getContentPane(), "keyboard");
 			}
 		});
 

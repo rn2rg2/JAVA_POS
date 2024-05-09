@@ -8,28 +8,36 @@ import javax.swing.JPanel;
 import com.kosa.pos.swing.menu.MenuDetailPanel;
 import com.kosa.pos.swing.menu.MenuView;
 import com.kosa.pos.swing.menu.menutest;
+import com.kosa.pos.swing.savePoint.KeyboardPanel;
 
 public class Index extends JFrame {
-	//싱글톤으로 지정
+	// 싱글톤으로 지정
 	private JPanel contentPane;
-    private CardLayout cardLayout;
-    
+	private CardLayout cardLayout;
+
 	public Index() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(500, 500, 1250, 700);
 		cardLayout = CardLayoutManager.getCardLayout();
-		//contentPane = new JPanel(cardLayout);
+		// contentPane = new JPanel(cardLayout);
 		contentPane = ContentPaneManager.getContentPane();
-		
+
 		add(contentPane);
 		MenuView menuPanel = new MenuView();
 		MenuDetailPanel mdp = new MenuDetailPanel();
+		KeyboardPanel keyboardPanel = new KeyboardPanel();
 
 		menutest cp = new menutest();
 
 		contentPane.add(menuPanel, "menu");
 		contentPane.add(mdp, "menudetail");
 		contentPane.add(cp, "cp");
-        cardLayout.show(contentPane, "menu");         
+		contentPane.add(keyboardPanel, "keyboard");
+
+		cardLayout.show(contentPane, "menu");
+	}
+
+	public void showKeyboardPanel() {
+		cardLayout.show(contentPane, "Keyboard");
 	}
 }
