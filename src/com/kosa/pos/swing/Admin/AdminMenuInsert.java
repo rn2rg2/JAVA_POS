@@ -1,25 +1,35 @@
 package com.kosa.pos.swing.Admin;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
-import javax.swing.JTextArea;
+
+import com.kosa.pos.dao.MenuDAO;
+import com.kosa.pos.dao.MenuDAOImpl;
+import com.kosa.pos.dto.Menu;
 
 public class AdminMenuInsert extends JPanel{
 	private JTextField menuNameTextField;
 	private JTextField categoryNameTextField;
 	private JTextField priceTextField;
 	private AdminMain adminMain;
+	private JLabel menuPath;
+	private JTextArea menuDescTextArea;
+	private File menuImage;
 	
 	/**
 	 * Create the application.
@@ -29,10 +39,17 @@ public class AdminMenuInsert extends JPanel{
 		initialize();
 		setSize(743, 666);
 		setLocation(227, 0);
-		setVisible(false);
+		setVisible(true);
 		adminMain.getMainPanel().add(this);
 	}
+	
+	public void setMenuImageFile(File menuImage) {
+		this.menuImage = menuImage;
+	}
 
+	public File getMenuImageFile() {
+		return this.menuImage;
+	}
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -108,7 +125,7 @@ public class AdminMenuInsert extends JPanel{
 		menuDescLabel.setBounds(26, 20, 101, 35);
 		menuDescPanel.add(menuDescLabel);
 		
-		JTextArea menuDescTextArea = new JTextArea();
+		menuDescTextArea = new JTextArea();
 		menuDescTextArea.setBounds(139, 10, 520, 56);
 		menuDescPanel.add(menuDescTextArea);
 		
@@ -142,9 +159,103 @@ public class AdminMenuInsert extends JPanel{
 		menuPathLabel.setBounds(22, 20, 117, 35);
 		menuPathPanel.add(menuPathLabel);
 		
-		JButton btnNewButton = new JButton("수정");
+		JButton btnNewButton_1 = new JButton("파일 업로드");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+	            JFileChooser fileChooser = new JFileChooser();
+	            int returnValue = fileChooser.showOpenDialog(null);
+	            
+	            if (returnValue == JFileChooser.APPROVE_OPTION) {
+	                File selectedFile = fileChooser.getSelectedFile();
+	                // 선택된 파일에 대한 작업을 수행합니다.
+	                AdminMenuInsert.this.menuPath.setText(selectedFile.getAbsolutePath());
+	                AdminMenuInsert.this.setMenuImageFile(selectedFile);
+//	                System.out.println("선택한 파일: " + selectedFile.getAbsolutePath());
+	            }
+		        
+			}
+		});
+		btnNewButton_1.setFont(new Font("굴림", Font.PLAIN, 16));
+		btnNewButton_1.setBounds(151, 23, 155, 31);
+		menuPathPanel.add(btnNewButton_1);
+		
+		menuPath = new JLabel("");
+		menuPath.setHorizontalAlignment(SwingConstants.CENTER);
+		menuPath.setFont(new Font("굴림", Font.PLAIN, 12));
+		menuPath.setBounds(319, 20, 340, 35);
+		menuPathPanel.add(menuPath);
+		
+		JButton btnNewButton = new JButton("등록");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				String menuName = AdminMenuInsert.this.menuNameTextField.getText();
+				String category = AdminMenuInsert.this.categoryNameTextField.getText();
+				int price = Integer.parseInt(AdminMenuInsert.this.priceTextField.getText());
+				String menuDesc = AdminMenuInsert.this.menuDescTextArea.getText();
+				File menuImage = AdminMenuInsert.this.getMenuImageFile();
+				
+				AdminMenuInsert.this.menuInsert(menuName, category, price, menuDesc, menuImage);
+			}
+		});
 		btnNewButton.setFont(new Font("굴림", Font.PLAIN, 20));
 		btnNewButton.setBounds(30, 529, 671, 67);
 		add(btnNewButton);
+	}
+	
+	public void menuInsert(String menuName, String category, int price, String menuDesc, File menuImage) {
+		// 1. 파일명 확보
+		String fileSeperator = File.separator;
+		String fileAbsoluteName = menuImage.getAbsolutePath();
+		int index = fileAbsoluteName.lastIndexOf(fileSeperator);
+		String fileName = fileAbsoluteName.substring(index+1); // 파일명 확보
+		
+		String fileSaveRoute = File.separator + "images" + File.separator + fileName;
+		
+		
+		// 2. /images/파일명에 이미지 파일 저장
+		File saveFile = new File(fileSaveRoute);
+		if(!saveFile.getParentFile().exists())
+			saveFile.getParentFile().mkdirs();
+		
+		try {
+			
+			FileInputStream fileInputStream = new FileInputStream(menuImage);
+			FileOutputStream fileOutputStream = new FileOutputStream(fileSaveRoute);
+			
+			// 파일에서 읽어온 바이트를 저장할 버퍼
+            byte[] buffer = new byte[1024];
+            int length;
+            
+            // 파일에서 데이터를 읽어와서 다른 파일에 쓰기
+            while ((length = fileInputStream.read(buffer)) > 0) {
+                fileOutputStream.write(buffer, 0, length);
+            }
+            
+            // 스트림 닫기
+            fileInputStream.close();
+            fileOutputStream.close();
+            
+		} catch (IOException e) {
+	        System.err.println("파일 복사 중 오류가 발생했습니다: " + e.getMessage());
+	    }
+		
+		
+		// 3. callablestatement로 db에 insert
+		Menu menu = new Menu();
+		menu.setCategory(category);
+		menu.setName(menuName);
+		menu.setMenu_desc(menuDesc);
+		menu.setPrice(price);
+		menu.setMenu_path(fileSaveRoute);
+		
+		MenuDAO menuDao = new MenuDAOImpl();
+		menuDao.insertMenu(menu);
+		
+		// 4. 화면 새로 고침
+		this.adminMain.setAdminMenuInsert(new AdminMenuInsert(this.adminMain));
+		this.setVisible(false);
+		this.adminMain.getMainPanel().remove(this);
 	}
 }

@@ -65,6 +65,10 @@ public class AdminMain {
 	public void setAdminBestMenuList(AdminBestMenuList adminBestMenuList) {
 		this.adminBestMenuList = adminBestMenuList;
 	}
+	
+	public void setAdminMenuInsert(AdminMenuInsert adminMenuInsert) {
+		this.adminMenuInsert = adminMenuInsert;
+	}
 
 	/**
 	 * Initialize the contents of the frame.
