@@ -1,4 +1,4 @@
-package com.kosa.pos.swing;
+package com.kosa.pos.swing.menu;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -29,7 +29,7 @@ import com.kosa.pos.dto.Menu;
 import com.kosa.pos.dto.MenuDetail;
 import com.kosa.pos.dto.Review;
 
-public class Detail {
+public class MenuDetailPanel {
 
 	private JFrame frame;
 
@@ -40,7 +40,7 @@ public class Detail {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Detail window = new Detail();
+					MenuDetailPanel window = new MenuDetailPanel();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -52,7 +52,7 @@ public class Detail {
 	/**
 	 * Create the application.
 	 */
-	public Detail() {
+	public MenuDetailPanel() {
 		initialize();
 	}
 

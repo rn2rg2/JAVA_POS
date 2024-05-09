@@ -6,6 +6,8 @@ import javax.swing.JLabel;
 import java.awt.Dimension;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+import java.awt.Color;
+import javax.swing.border.LineBorder;
 
 public class MenuSidebarPanel extends JPanel {
 	private JLabel side_name;
@@ -15,6 +17,7 @@ public class MenuSidebarPanel extends JPanel {
 	 * Create the panel.
 	 */
 	public MenuSidebarPanel() {
+		setBackground(new Color(255, 255, 255));
 		setLayout(null);
 
 		side_name = new JLabel("햄버거거거");

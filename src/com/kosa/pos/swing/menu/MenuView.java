@@ -23,6 +23,8 @@ import com.kosa.pos.dao.MenuDAOImpl;
 import com.kosa.pos.dto.Menu;
 import com.kosa.pos.swing.main.CardLayoutManager;
 import com.kosa.pos.swing.main.ContentPaneManager;
+import javax.swing.SwingConstants;
+import java.awt.Font;
 
 public class MenuView extends JPanel {
 	MenuDAO menudao = new MenuDAOImpl();
@@ -44,7 +46,7 @@ public class MenuView extends JPanel {
 	static JLabel Total = new JLabel(0+" 원");
 	public MenuView() {
 
-		setBackground(new Color(0, 0, 0));
+		setBackground(new Color(255, 255, 255));
 
 		// 메뉴 패널의 크기를 인덱스 패널과 동일하게 설정
 
@@ -69,6 +71,7 @@ public class MenuView extends JPanel {
 		}
 
 		JPanel viewport = new JPanel();
+		viewport.setBackground(new Color(202, 202, 202));
 		viewport.setLayout(new GridLayout(0, 4, 10, 10)); // 4개의 열, 간격은 15픽셀
 		for (MenuPanel menuPanel : menuPanels) {
 			viewport.add(menuPanel);
@@ -89,7 +92,7 @@ public class MenuView extends JPanel {
 				loadMenuByCategory("돈카츠");
 			}
 		});
-		Category1.setBounds(0, 0, 123, 40);
+		Category1.setBounds(0, 0, 123, 48);
 		add(Category1);
 
 		JButton Category2 = new JButton("마제소바");
@@ -99,7 +102,7 @@ public class MenuView extends JPanel {
 				loadMenuByCategory("마제소바");
 			}
 		});
-		Category2.setBounds(0, 40, 123, 40);
+		Category2.setBounds(0, 46, 123, 48);
 		add(Category2);
 
 		JButton Category3 = new JButton("냉소바");
@@ -109,7 +112,7 @@ public class MenuView extends JPanel {
 				loadMenuByCategory("냉소바");
 			}
 		});
-		Category3.setBounds(129, 0, 123, 40);
+		Category3.setBounds(118, 0, 123, 48);
 		add(Category3);
 
 		JButton Category4 = new JButton("온소바");
@@ -119,7 +122,7 @@ public class MenuView extends JPanel {
 				loadMenuByCategory("온소바");
 			}
 		});
-		Category4.setBounds(129, 40, 123, 40);
+		Category4.setBounds(118, 46, 123, 48);
 		add(Category4);
 
 		JButton Category6 = new JButton("우동");
@@ -129,7 +132,7 @@ public class MenuView extends JPanel {
 				loadMenuByCategory("우동");
 			}
 		});
-		Category6.setBounds(264, 40, 123, 40);
+		Category6.setBounds(239, 46, 123, 48);
 		add(Category6);
 
 		JButton Category5 = new JButton("음료");
@@ -139,15 +142,17 @@ public class MenuView extends JPanel {
 				loadMenuByCategory("음료");
 			}
 		});
-		Category5.setBounds(264, 0, 123, 40);
+		Category5.setBounds(239, 0, 123, 48);
 		add(Category5);
 		// !카테고리 버튼
 
 		// sidebar scroll
 		JPanel sidepanel = new JPanel();
+		sidepanel.setBackground(new Color(255, 255, 255));
 		sidepanel.setLayout(new BoxLayout(sidepanel, BoxLayout.Y_AXIS));
 		sidepanel.setBounds(753, 92, 190, 420);
 		add(sidepanel);
+		msbpport.setBackground(new Color(255, 255, 255));
 		msbpport.setLayout(new GridLayout(0, 1, 0, 15)); // Set the layout here
 //		JPanel msbpport = new JPanel();
 //		msbpport.setLayout(new GridLayout(0, 1, 0, 15)); // 4개의 열, 간격은 15픽셀
@@ -165,6 +170,23 @@ public class MenuView extends JPanel {
 		// 장바구니 & 결제 버튼
 		ImageIcon cancel = new ImageIcon("./img/menu/images.png");
 		JButton deletebtn = new JButton(cancel);
+		deletebtn.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				msbpport.removeAll();
+		        // 화면을 다시 그리기 위해 revalidate()와 repaint() 호출
+				msbpport.revalidate(); // 레이아웃 갱신
+				msbpport.repaint(); // 변경된 내용을 다시 그림
+		        Total.setText(Integer.toString(0)+" 원");
+		        for (String key : clickCountManager.keySet()) {
+		            clickCountManager.put(key, 0);
+		        }
+		        for (String key : MenuPanel.menuTotalPriceMap.keySet()) {
+		            MenuPanel.menuTotalPriceMap.put(key, 0);
+		        }
+		        
+			}
+		});
 		deletebtn.setBounds(753, 562, 191, 40);
 		deletebtn.setPreferredSize(new Dimension(cancel.getIconWidth(), cancel.getIconHeight()));
 		// 버튼의 크기를 이미지의 크기에 맞게 설정합니다.
@@ -176,7 +198,7 @@ public class MenuView extends JPanel {
 				e -> CardLayoutManager.getCardLayout().show(ContentPaneManager.getContentPane(), "cp"));
 		paybtn.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(MouseEvent e) { 
 
 			}
 		});
@@ -194,9 +216,11 @@ public class MenuView extends JPanel {
 		});
 		mgrbtn.setBounds(827, 6, 117, 29);
 		add(mgrbtn);
+		Total.setHorizontalAlignment(SwingConstants.TRAILING);
+		Total.setFont(new Font("Lucida Grande", Font.PLAIN, 24));
 
-		
-		Total.setForeground(new Color(255, 255, 255));
+		// 가격 총합 
+		Total.setForeground(new Color(0, 0, 0));
 		Total.setBounds(753, 530, 191, 29);
 		add(Total);
 	}
@@ -255,6 +279,7 @@ public class MenuView extends JPanel {
 			msbpport.remove(sidebarPanel); // 컨테이너에서 사이드바 제거
 			msbpport.revalidate();
 			msbpport.repaint();
+			
 		}
 	}
 
