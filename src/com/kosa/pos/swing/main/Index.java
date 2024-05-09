@@ -5,6 +5,7 @@ import java.awt.CardLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import com.kosa.pos.swing.menu.MenuDetailPanel;
 import com.kosa.pos.swing.menu.MenuView;
 import com.kosa.pos.swing.menu.menutest;
 
@@ -15,18 +16,19 @@ public class Index extends JFrame {
     
 	public Index() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(500, 500, 950, 700);
+		setBounds(500, 500, 1250, 700);
 		cardLayout = CardLayoutManager.getCardLayout();
 		//contentPane = new JPanel(cardLayout);
 		contentPane = ContentPaneManager.getContentPane();
 		
 		add(contentPane);
 		MenuView menuPanel = new MenuView();
-
+		MenuDetailPanel mdp = new MenuDetailPanel();
 
 		menutest cp = new menutest();
 
 		contentPane.add(menuPanel, "menu");
+		contentPane.add(mdp, "menudetail");
 		contentPane.add(cp, "cp");
         cardLayout.show(contentPane, "menu");         
 	}

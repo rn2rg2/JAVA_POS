@@ -29,25 +29,7 @@ import com.kosa.pos.dto.Menu;
 import com.kosa.pos.dto.MenuDetail;
 import com.kosa.pos.dto.Review;
 
-public class MenuDetailPanel {
-
-	private JFrame frame;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MenuDetailPanel window = new MenuDetailPanel();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+public class MenuDetailPanel extends JPanel {
 
 	/**
 	 * Create the application.
@@ -84,14 +66,9 @@ public class MenuDetailPanel {
 		double avgScore = menuDetail.getAvgScore();
 		int count = menuDetail.getCount();
 		
-		frame = new JFrame();
-		frame.setBounds(100, 100, 984, 703);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(0, 0, 970, 666);
-		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		JPanel menuImage = new JPanel();

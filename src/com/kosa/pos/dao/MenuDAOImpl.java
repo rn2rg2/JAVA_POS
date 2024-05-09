@@ -214,7 +214,6 @@ public class MenuDAOImpl implements MenuDAO {
 			CallableStatement callableStatement = connection.prepareCall(runSP);
 			callableStatement.setString(1, name);
 			callableStatement.registerOutParameter(2, OracleTypes.CURSOR); // 인기 메뉴
-			
 			callableStatement.execute();
 	        
 			ResultSet menuRank = (ResultSet) callableStatement.getObject(2);
@@ -256,25 +255,25 @@ public class MenuDAOImpl implements MenuDAO {
 		 List<Menu> menuList = new ArrayList<>(); // 메뉴 객체를 담을 리스트
 		    try {
 		        // 쿼리문 작성
-		        String sql = "SELECT * FROM menu where category = ?";
+		        String sql = "{ call menu_package.find_category(?, ?) }";
 
 		        // PreparedStatement 객체 생성 후 쿼리 실행
-		        pstmt = connection.prepareStatement(sql);
-		        pstmt.setString(1, category);
-		        rs = pstmt.executeQuery();
-
-		        // 결과 처리
-		        while (rs.next()) {
-		            // 각 레코드마다 Menu 객체를 생성하고 결과를 설정한 후 리스트에 추가
-		            Menu menu = new Menu();
-		            menu.setMenu_id(rs.getInt("MENU_ID"));
-		            menu.setName(rs.getString("NAME"));
-		            menu.setPrice(rs.getInt("PRICE"));
-		            menu.setCategory(rs.getString("CATEGORY"));
-		            menu.setMenu_desc(rs.getString("MENU_DESC"));
-		            menu.setMenu_path(rs.getString("MENU_PATH"));
+		        CallableStatement callableStatement = connection.prepareCall(sql);
+		        callableStatement.setString(1, category);
+				callableStatement.registerOutParameter(2, OracleTypes.CURSOR); // 메뉴의 모든 데이터
+				callableStatement.execute();
+				
+				ResultSet menubycategory = (ResultSet) callableStatement.getObject(2);
+				while(menubycategory.next()) {
+					Menu menu = new Menu();
+					menu.setMenu_id(menubycategory.getInt("MENU_ID"));
+					menu.setName(menubycategory.getString("NAME"));
+					menu.setPrice(menubycategory.getInt("PRICE"));
+					menu.setCategory(menubycategory.getString("CATEGORY"));
+		            menu.setMenu_desc(menubycategory.getString("MENU_DESC"));
+		            menu.setMenu_path(menubycategory.getString("MENU_PATH"));
 		            menuList.add(menu);
-		        }
+				}
 		    } catch (SQLException e) {
 		        e.printStackTrace();
 		    } finally {
