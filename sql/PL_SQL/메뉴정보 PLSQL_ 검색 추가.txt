@@ -156,4 +156,15 @@ as
   delete from menu where menu_id = p_menu_id;
   commit;
  end;
+
+--카테고리 불러오기
+  PROCEDURE find_category(
+    p_menu_category IN menu.category%TYPE, 
+    p_menu_rec OUT SYS_REFCURSOR
+) AS
+BEGIN
+    OPEN p_menu_rec FOR
+    SELECT * FROM menu
+    WHERE category = p_menu_category;
+END;
 end;
