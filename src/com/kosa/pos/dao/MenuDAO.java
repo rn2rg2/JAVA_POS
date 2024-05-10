@@ -15,7 +15,6 @@ public interface MenuDAO {
 
 	public Menu findByName(String menuName);
 
-<<<<<<< HEAD
 	public List<MenuDetail> findBestMenuAll(String name);
 
 	public Optional<MenuStatsInfo> findOrderCountByName(String name);
@@ -27,11 +26,8 @@ public interface MenuDAO {
 	public void insertMenu(Menu menu);
 
 	public void deleteMenu(int menuId);
-=======
-public List<Menu> findAll(String name);
-public void insertMenu(Menu menu);
-public List<MenuRanking> getMenuRanking();
-public int getTotalOrderWithoutDrink();
-public void deleteMenu(int menuId);
->>>>>>> master
+
+	public List<MenuRanking> getMenuRanking();
+
+	public int getTotalOrderWithoutDrink();
 }
