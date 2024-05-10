@@ -19,7 +19,7 @@ public List<Menu> findByCategory(String category);
 
 public List<Menu> findAll(String name);
 public void insertMenu(Menu menu);
-
 public List<MenuRanking> getMenuRanking();
 public int getTotalOrderWithoutDrink();
+public void deleteMenu(int menuId);
 }

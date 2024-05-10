@@ -366,7 +366,37 @@ public class MenuDAOImpl implements MenuDAO {
 		}
 		
 	}
+  
+	@Override
+	public void deleteMenu(int menuId) {
+		String runSP = "{ call menu_package.delete_menu(?) }";
+		
+		try {
+	        // PreparedStatement 객체 생성 후 쿼리 실행
+			CallableStatement callableStatement = connection.prepareCall(runSP);
+			callableStatement.setInt(1, menuId);
+			
+			callableStatement.execute();
+	       	        
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+	        // 리소스 해제
+	        try {
+	            if (rs != null)
+	                rs.close();
+	            if (stmt != null)
+	                stmt.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+		}
+		
+	}
+	
 
+
+  @Override
 	public List<MenuRanking> getMenuRanking() {
 	    List<MenuRanking> menuRankingList = new ArrayList<>();
 	    ResultSet resultSet = null;

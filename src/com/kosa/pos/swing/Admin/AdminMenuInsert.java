@@ -257,5 +257,19 @@ public class AdminMenuInsert extends JPanel{
 		this.adminMain.setAdminMenuInsert(new AdminMenuInsert(this.adminMain));
 		this.setVisible(false);
 		this.adminMain.getMainPanel().remove(this);
+		
+		// 등록 했을 때 등록화면, 인기메뉴 화면을 다시 불러야함
+		AdminRegisterdMenuList arm = AdminMenuInsert.this.adminMain.getAdminRegisterdMenuList();
+		AdminMenuInsert.this.adminMain.setAdminRegisterdMenuList(new AdminRegisterdMenuList(AdminMenuInsert.this.adminMain));
+		AdminMenuInsert.this.adminMain.getAdminRegisterdMenuList().setVisible(false);
+		arm.setVisible(false);
+		AdminMenuInsert.this.adminMain.getMainPanel().remove(arm);
+		
+		AdminBestMenuList abm = AdminMenuInsert.this.adminMain.getAdminBestMenuList();
+		AdminMenuInsert.this.adminMain.setAdminBestMenuList(new AdminBestMenuList(AdminMenuInsert.this.adminMain));
+		AdminMenuInsert.this.adminMain.getAdminBestMenuList().setVisible(false);
+		abm.setVisible(false);
+		AdminMenuInsert.this.adminMain.getMainPanel().remove(abm);
+		
 	}
 }
