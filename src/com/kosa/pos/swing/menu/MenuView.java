@@ -226,16 +226,25 @@ public class MenuView extends JPanel {
 		ImageIcon pay = new ImageIcon("./img/menu/diycheckout-payment-button.png");
 		JButton paybtn = new JButton(pay);
 		paybtn.addActionListener(e -> {
+			int userId = orderDao.insertOrder()[0]; // 결제 후 전화번호 입력하면 userId 업데이트해야 함
+			int orderId = orderDao.insertOrder()[1];
+			System.out.println(userId + ", " + orderId);
+
+			// orderId를 이용하여 clickCountManager에 담겨있는 <메뉴명, 수량>을 order_detail 테이블에 삽입
+			System.out.println(clickCountManager);
+			for (Map.Entry<String, Integer> entry : clickCountManager.entrySet()) {
+				String menuName = entry.getKey();
+				int quantity = entry.getValue();
+				Menu menu = menudao.findByName(menuName); // 메뉴이름을 통해 menu_id 가져오기
+				if (menu != null) { // order_detail 테이블에 구매한 메뉴 insert
+					orderDao.insertOrderDetail(orderId, menu.getMenu_id(), quantity);
+				}
+			}
+
 			CompletePaymentDialog dialog = new CompletePaymentDialog();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setModal(true); // 모달 다이얼로그로 설정
 			dialog.setVisible(true); // 다이얼로그를 보여줌
-
-			System.out.println(clickCountManager);
-
-			int userId = 0;
-			userId = orderDao.insertOrder();
-			System.out.println(userId);
 		});
 
 		paybtn.setPreferredSize(new Dimension(pay.getIconWidth(), pay.getIconHeight()));
