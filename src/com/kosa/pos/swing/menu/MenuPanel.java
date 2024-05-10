@@ -3,6 +3,7 @@ package com.kosa.pos.swing.menu;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
@@ -96,6 +97,8 @@ public class MenuPanel extends JPanel {
 
 		
 		ImageIcon imgpath = new ImageIcon(menuimgPath);
+		Image img = imgpath.getImage().getScaledInstance(170, 156, Image.SCALE_SMOOTH);
+		imgpath = new ImageIcon(img);
 		JLabel menu_img = new JLabel(imgpath);
 		menu_img.addMouseListener(new MouseAdapter() {
 			@Override
