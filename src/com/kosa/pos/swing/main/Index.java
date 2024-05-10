@@ -25,6 +25,7 @@ public class Index extends JFrame {
 		add(contentPane);
 		MenuView menuPanel = new MenuView();
 		MenuDetailPanel mdp = new MenuDetailPanel();
+		mdp.setName("mdp");
 		KeyboardPanel keyboardPanel = new KeyboardPanel();
 
 		menutest cp = new menutest();
