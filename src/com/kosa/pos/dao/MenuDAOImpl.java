@@ -403,7 +403,7 @@ public class MenuDAOImpl implements MenuDAO {
 		}
 
 	}
-  
+
 	@Override
 	public void deleteMenu(int menuId) {
 		String runSP = "{ call menu_package.delete_menu(?) }";
@@ -431,40 +431,39 @@ public class MenuDAOImpl implements MenuDAO {
 
 	}
 
-
-  @Override
+	@Override
 	public List<MenuRanking> getMenuRanking() {
-	    List<MenuRanking> menuRankingList = new ArrayList<>();
-	    ResultSet resultSet = null;
-	    try {
-	        String sql = "{ call menu_package.GET_MENU_RANKING_TOP3(?) }";
-	        CallableStatement callableStatement = connection.prepareCall(sql);
-	        callableStatement.registerOutParameter(1, OracleTypes.CURSOR);
-	        callableStatement.execute();
-	        resultSet = (ResultSet) callableStatement.getObject(1);
-	        while (resultSet.next()) {
-	            MenuRanking menuRanking = new MenuRanking();
-	            menuRanking.setMenuName(resultSet.getString("MENU_NAME"));
-	            menuRanking.setTotal_order(resultSet.getInt("TOTAL_ORDERS"));
-	            menuRanking.setTotal_percentage(resultSet.getDouble("ORDER_PERCENTAGE"));
-	            menuRankingList.add(menuRanking);
-	        }
-	       
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    } finally {
-	        if (resultSet != null) {
-	            try {
-	                resultSet.close();
-	            } catch (SQLException e) {
-	                e.printStackTrace();
-	            }
-	        }
-	        // Add connection closing if needed
-	    }
-	    return menuRankingList;
+		List<MenuRanking> menuRankingList = new ArrayList<>();
+		ResultSet resultSet = null;
+		try {
+			String sql = "{ call menu_package.GET_MENU_RANKING_TOP3(?) }";
+			CallableStatement callableStatement = connection.prepareCall(sql);
+			callableStatement.registerOutParameter(1, OracleTypes.CURSOR);
+			callableStatement.execute();
+			resultSet = (ResultSet) callableStatement.getObject(1);
+			while (resultSet.next()) {
+				MenuRanking menuRanking = new MenuRanking();
+				menuRanking.setMenuName(resultSet.getString("MENU_NAME"));
+				menuRanking.setTotal_order(resultSet.getInt("TOTAL_ORDERS"));
+				menuRanking.setTotal_percentage(resultSet.getDouble("ORDER_PERCENTAGE"));
+				menuRankingList.add(menuRanking);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (resultSet != null) {
+				try {
+					resultSet.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			// Add connection closing if needed
+		}
+		return menuRankingList;
 	}
-	
+
 	@Override
 	public int getTotalOrderWithoutDrink() {
 		int totalqawithoutdrink = 0;
@@ -472,22 +471,51 @@ public class MenuDAOImpl implements MenuDAO {
 		try {
 			String sql = "{ call menu_package.Total_Quantity_WithoutDrink(?) }";
 			CallableStatement callableStatement = connection.prepareCall(sql);
-	        callableStatement.registerOutParameter(1, OracleTypes.NUMBER);
-	        callableStatement.execute();
-	        
-	        totalqawithoutdrink = callableStatement.getInt(1);
-		}catch (SQLException e) {
-	        e.printStackTrace();
-	    }finally {
-	        if (cs != null) {
-	            try {
-	            	cs.close();
-	            } catch (SQLException e) {
-	                e.printStackTrace();
-	            }
-	        }
-	        // Add connection closing if needed
-	    }
+			callableStatement.registerOutParameter(1, OracleTypes.NUMBER);
+			callableStatement.execute();
+
+			totalqawithoutdrink = callableStatement.getInt(1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (cs != null) {
+				try {
+					cs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			// Add connection closing if needed
+		}
 		return totalqawithoutdrink;
+	}
+
+	// orderId를 받아서 order_detail에서 menuId List 반환
+	public List<Integer> fetchMenuIdByOrderId(int orderId) {
+		List<Integer> menuIds = new ArrayList<>();
+		try {
+			cstmt = connection.prepareCall("{ call menu_package.get_menu_ids_by_order_id(?, ?) }");
+
+			cstmt.setInt(1, orderId);
+			cstmt.registerOutParameter(2, OracleTypes.CURSOR);
+			cstmt.execute();
+
+			rs = (ResultSet) cstmt.getObject(2);
+			while (rs.next()) {
+				menuIds.add(rs.getInt("menu_id"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("fetchMenuIdByOrderId에서 SQLException 발생: " + e.getMessage());
+		} finally {
+			if (cstmt != null) {
+				try {
+					cstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return menuIds;
 	}
 }

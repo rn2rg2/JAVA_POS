@@ -9,12 +9,15 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import com.kosa.pos.dao.UserDAO;
+import com.kosa.pos.swing.common.OrderState;
 import com.kosa.pos.swing.main.CardLayoutManager;
 import com.kosa.pos.swing.main.ContentPaneManager;
 
 public class CompleteSignUpDialog extends JDialog {
 
 	private static final long serialVersionUID = 1L;
+	UserDAO userDao = new UserDAO();
 
 	public CompleteSignUpDialog() {
 		setBounds(100, 100, 450, 300);
@@ -29,6 +32,10 @@ public class CompleteSignUpDialog extends JDialog {
 		JButton btnOk = new JButton("적립하기");
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				int userId = OrderState.getUserId();
+				int orderId = OrderState.getOrderId();
+				userDao.updateUserId(userId, orderId);
+
 				dispose();
 				CardLayoutManager.getCardLayout().show(ContentPaneManager.getContentPane(), "review");
 			}
@@ -42,7 +49,6 @@ public class CompleteSignUpDialog extends JDialog {
 		// TODO
 		// 1. "적립하기" 버튼 눌렀을 때 point column update하는 이벤트리스너 생성
 		// 2. "적립하기" 버튼 눌렀을 때 "적립 완료" + 적립된 포인트 보여주는 JDialog와 연결
-		// 3. "적립하기" 버튼 눌렀을 때 리뷰 작성 화면으로 이동
 	}
 
 }

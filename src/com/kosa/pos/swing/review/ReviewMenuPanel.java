@@ -11,8 +11,17 @@ import javax.swing.SwingConstants;
 public class ReviewMenuPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
+	private String path;
+	private String name;
+	private int count;
+	private double avg;
 
-	public ReviewMenuPanel() {
+	public ReviewMenuPanel(String path, String name, int count, double avg) {
+		this.path = path;
+		this.name = name;
+		this.count = count;
+		this.avg = avg;
+
 		setPreferredSize(new Dimension(950, 185));
 		setLayout(null);
 
@@ -25,7 +34,7 @@ public class ReviewMenuPanel extends JPanel {
 		add(contentPanel);
 		contentPanel.setLayout(null);
 
-		JLabel menuNameLabel = new JLabel("");
+		JLabel menuNameLabel = new JLabel(name);
 		menuNameLabel.setFont(new Font("굴림", Font.PLAIN, 25));
 		menuNameLabel.setBounds(12, 21, 301, 50);
 		contentPanel.add(menuNameLabel);
@@ -35,7 +44,7 @@ public class ReviewMenuPanel extends JPanel {
 		orderCountLabel.setBounds(12, 89, 80, 39);
 		contentPanel.add(orderCountLabel);
 
-		JLabel orderCount = new JLabel("");
+		JLabel orderCount = new JLabel(count + "");
 		orderCount.setHorizontalAlignment(SwingConstants.CENTER);
 		orderCount.setFont(new Font("굴림", Font.PLAIN, 20));
 		orderCount.setBounds(92, 89, 99, 39);
@@ -46,7 +55,7 @@ public class ReviewMenuPanel extends JPanel {
 		ratingAvgLabel.setBounds(222, 89, 99, 39);
 		contentPanel.add(ratingAvgLabel);
 
-		JLabel orderCount_1 = new JLabel("");
+		JLabel orderCount_1 = new JLabel(avg + "");
 		orderCount_1.setHorizontalAlignment(SwingConstants.CENTER);
 		orderCount_1.setFont(new Font("굴림", Font.PLAIN, 20));
 		orderCount_1.setBounds(328, 89, 99, 39);
@@ -60,4 +69,5 @@ public class ReviewMenuPanel extends JPanel {
 	// TODO
 	// 1. ReviewMenuPanel 생성자에 매개변수 추가
 	// (필요한 매개변수: 메뉴명, 주문수, 별점 평균 -> menu_id만 가져와서 다 처리할 수도 있을 듯)
+	// "리뷰 쓰러가기" 버튼 누르면 JDialog 띄우기
 }

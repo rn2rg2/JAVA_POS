@@ -16,6 +16,7 @@ public class CompletePaymentDialog extends JDialog {
 	private static final long serialVersionUID = 1L;
 
 	public CompletePaymentDialog() {
+
 		initUI();
 	}
 

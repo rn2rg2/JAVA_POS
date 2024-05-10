@@ -12,8 +12,8 @@ public class OrderDAO {
 	private CallableStatement stmt = null;
 
 	// 사용자가 "결제" 버튼을 눌렀을 때 user_order에 데이터 삽입.
-	// 아직 로그인이 된 상태가 아니므로 비회원 주문으로 진행한 뒤, 로그인을 하면 데이터 업데이트
-	// 비회원 user_id를 반환
+	// 아직 로그인이 된 상태가 아니므로 비회원 주문으로 진행한 뒤, 로그인을 하면 데이터 업데이트 해야 함
+	// 비회원 user_id와 해당 주문의 order_id를 반환
 	public int[] insertOrder() {
 		int[] ids = new int[2];
 		try {

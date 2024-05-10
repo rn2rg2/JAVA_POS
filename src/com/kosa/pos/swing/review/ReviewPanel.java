@@ -4,16 +4,22 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
+import java.util.Optional;
 
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import com.kosa.pos.dao.MenuDAOImpl;
+import com.kosa.pos.dto.MenuDetail;
+import com.kosa.pos.swing.common.OrderState;
+
 public class ReviewPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
+	private MenuDAOImpl menuDao = new MenuDAOImpl();
 
 	public ReviewPanel() {
 		// ReviewPanel 크기를 index 패널과 동일하게 설정
@@ -59,13 +65,21 @@ public class ReviewPanel extends JPanel {
 		JPanel contentPanel = new JPanel();
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS)); // Y_AXIS로 설정하여 수직 배치
 
-		// test로 reviewMenuPanel 10개 추가
-		for (int i = 0; i < 10; i++) { // 예시로 10개의 리뷰 메뉴 패널을 추가
-			ReviewMenuPanel reviewMenuPanel = new ReviewMenuPanel();
-			contentPanel.add(reviewMenuPanel); // contentPanel에 ReviewMenuPanel 추가
-			if (i < 9) { // 마지막 패널을 제외하고 각 패널 사이에 간격 추가
-				contentPanel.add(Box.createVerticalStrut(10)); // 10픽셀 간격
-			}
+		// orderId 저장
+		int orderId = OrderState.getOrderId();
+		System.out.println("OrderState에서 받아온 orderId:" + orderId);
+
+		List<Integer> menuIds = menuDao.fetchMenuIdByOrderId(orderId);
+		System.out.println("menuIds: " + menuIds);
+
+		for (Integer menuId : menuIds) {
+			Optional<MenuDetail> menuDetail = menuDao.findById(menuId);
+
+			ReviewMenuPanel reviewMenuPanel = new ReviewMenuPanel(menuDetail.get().getMenu().getMenu_path(),
+					menuDetail.get().getMenu().getName(), menuDetail.get().getCount(), menuDetail.get().getAvgScore());
+			contentPanel.add(reviewMenuPanel);
+			System.out.println("Menu Detail: " + menuDetail.get());
+
 		}
 
 		JScrollPane scrollPane = new JScrollPane(contentPanel);

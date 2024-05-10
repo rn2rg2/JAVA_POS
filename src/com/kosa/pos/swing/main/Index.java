@@ -9,7 +9,6 @@ import com.kosa.pos.swing.Admin.AdminMainPanel;
 import com.kosa.pos.swing.menu.MenuDetailPanel;
 import com.kosa.pos.swing.menu.MenuView;
 import com.kosa.pos.swing.menu.menutest;
-import com.kosa.pos.swing.review.ReviewPanel;
 import com.kosa.pos.swing.savePoint.KeyboardPanel;
 
 public class Index extends JFrame {
@@ -32,9 +31,6 @@ public class Index extends JFrame {
 
 		AdminMainPanel adminPanel = new AdminMainPanel();
 
-		ReviewPanel reviewPanel = new ReviewPanel();
-
-
 		menutest cp = new menutest();
 
 		contentPane.add(menuPanel, "menu");
@@ -43,9 +39,6 @@ public class Index extends JFrame {
 		contentPane.add(keyboardPanel, "keyboard");
 
 		contentPane.add(adminPanel, "adminPanel");
-
-		contentPane.add(reviewPanel, "review");
-
 
 		cardLayout.show(contentPane, "menu");
 	}
