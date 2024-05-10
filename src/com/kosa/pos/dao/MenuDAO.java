@@ -30,4 +30,6 @@ public interface MenuDAO {
 	public List<MenuRanking> getMenuRanking();
 
 	public int getTotalOrderWithoutDrink();
+
+	public List<Integer> fetchMenuIdByOrderId(int orderId);
 }

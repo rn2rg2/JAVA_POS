@@ -12,12 +12,12 @@ import lombok.NoArgsConstructor;
 public class MenuDetail {
 	private int rank;
 	private Menu menu;
-	
+
 	private int count;
 	private double avgScore;
-	
+
 	private List<Review> orderByReviewDateDescList;
 	private List<Review> orderByRatingDescList;
 	private List<Review> orderByReviewDateAscList;
-	
+
 }

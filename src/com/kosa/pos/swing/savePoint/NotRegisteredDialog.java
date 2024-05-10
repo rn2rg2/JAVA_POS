@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import com.kosa.pos.dao.UserDAO;
+import com.kosa.pos.swing.common.OrderState;
 
 public class NotRegisteredDialog extends JDialog {
 
@@ -49,9 +50,10 @@ public class NotRegisteredDialog extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 				UserDAO userDao = new UserDAO();
-				int isSuccess = userDao.signUp(long_userInput);
+				int userId = userDao.signUp(long_userInput); // 새로 회원가입한 user_id
+				OrderState.setUserId(userId); // CompleteSignUpDialog에 userId 넘겨주기 위한 static 변수 업데이트
 
-				if (isSuccess == 1) {
+				if (userId != 0) {
 					System.out.println("회원가입 완료");
 					CompleteSignUpDialog csu = new CompleteSignUpDialog();
 					csu.setVisible(true);

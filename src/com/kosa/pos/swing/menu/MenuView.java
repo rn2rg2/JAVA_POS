@@ -30,9 +30,11 @@ import com.kosa.pos.dao.OrderDAO;
 import com.kosa.pos.dao.UserDAO;
 import com.kosa.pos.dto.Menu;
 import com.kosa.pos.dto.MenuRanking;
+import com.kosa.pos.swing.common.OrderState;
 import com.kosa.pos.swing.main.CardLayoutManager;
 import com.kosa.pos.swing.main.ContentPaneManager;
 import com.kosa.pos.swing.main.Index;
+import com.kosa.pos.swing.review.ReviewPanel;
 import com.kosa.pos.swing.savePoint.CompletePaymentDialog;
 
 public class MenuView extends JPanel {
@@ -231,10 +233,14 @@ public class MenuView extends JPanel {
 		// 결제버튼
 		ImageIcon pay = new ImageIcon("./img/menu/diycheckout-payment-button.png");
 		JButton paybtn = new JButton(pay);
+
 		paybtn.addActionListener(e -> {
-			int userId = orderDao.insertOrder()[0]; // 결제 후 전화번호 입력하면 userId 업데이트해야 함
-			int orderId = orderDao.insertOrder()[1];
-			System.out.println(userId + ", " + orderId);
+			int[] insertOrderResult = orderDao.insertOrder();
+
+			int tempUserId = insertOrderResult[0]; // 비회원 user_id
+			int orderId = insertOrderResult[1]; // 결제 후 전화번호 입력하면 userId 업데이트 할 때 사용
+			OrderState.setOrderId(orderId); // 다음 패널에 orderId를 넘겨주기 위해 static 변수 업데이트
+			System.out.println("MenuView에서의 orderId: " + orderId);
 
 			// orderId를 이용하여 clickCountManager에 담겨있는 <메뉴명, 수량>을 order_detail 테이블에 삽입
 			System.out.println(clickCountManager);
@@ -247,6 +253,12 @@ public class MenuView extends JPanel {
 				}
 			}
 
+			// 중요: 리뷰 패널 생성 및 카드 레이아웃에 추가
+			// -> reviewPanel 인스턴스 생성 시점에 orderId가 존재해야하므로 뒤로 뺐음
+			ReviewPanel reviewPanel = new ReviewPanel();
+			ContentPaneManager.getContentPane().add(reviewPanel, "review");
+
+			// 결제 완료 패널 띄우기
 			CompletePaymentDialog dialog = new CompletePaymentDialog();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setModal(true); // 모달 다이얼로그로 설정

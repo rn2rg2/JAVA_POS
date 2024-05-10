@@ -13,6 +13,9 @@ import javax.swing.border.EmptyBorder;
 public class KeyboardPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
+	private int userId;
+	private int orderId;
+
 	JLabel userInput;
 	JButton submitButton;
 
@@ -75,4 +78,21 @@ public class KeyboardPanel extends JPanel {
 
 		setVisible(true);
 	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+
+	public int getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(int orderId) {
+		this.orderId = orderId;
+	}
+
 }
