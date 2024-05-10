@@ -33,9 +33,9 @@ public class MenuShowRanks extends JPanel {
 		add(OrderCount);
 
 		JLabel OrderCountshow = new JLabel(
-		Integer.toString(orderCount) + " (" + Double.toString(orderPercentage) + ") ");
+		Integer.toString(orderCount) + " (" + Double.toString(orderPercentage) + "%) ");
 		OrderCountshow.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
-		OrderCountshow.setBounds(106, 68, 105, 39);
+		OrderCountshow.setBounds(91, 68, 105, 39);
 		add(OrderCountshow);
 		
 		String graph = generateGraph(orderPercentage);
