@@ -19,7 +19,7 @@ public class Index extends JFrame {
 
 	public Index() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(500, 500, 1250, 700); //1250
+		setBounds(500, 500, 950, 700); //1250
 		cardLayout = CardLayoutManager.getCardLayout();
 		// contentPane = new JPanel(cardLayout);
 		contentPane = ContentPaneManager.getContentPane();
