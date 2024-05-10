@@ -158,6 +158,26 @@ public class AdminRegisterdMenuList extends JPanel{
             menuUpdateAndDeletePanel.add(menuUpdateBtn);
             
             JButton menuDeleteBtn = new JButton("삭제");
+            menuDeleteBtn.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					int id = menu.getMenu_id();
+					menuDao.deleteMenu(id);
+					
+					AdminRegisterdMenuList.this.adminMain.setAdminRegisterdMenuList(new AdminRegisterdMenuList(AdminRegisterdMenuList.this.adminMain));
+					AdminRegisterdMenuList.this.setVisible(false);
+					AdminRegisterdMenuList.this.adminMain.getMainPanel().remove(AdminRegisterdMenuList.this);
+					
+					// 삭제 했을 때 인기메뉴 화면을 갱신해야함
+					AdminBestMenuList abm = AdminRegisterdMenuList.this.adminMain.getAdminBestMenuList();
+					AdminRegisterdMenuList.this.adminMain.setAdminBestMenuList(new AdminBestMenuList(AdminRegisterdMenuList.this.adminMain));
+					AdminRegisterdMenuList.this.adminMain.getAdminBestMenuList().setVisible(false);
+					abm.setVisible(false);
+					AdminRegisterdMenuList.this.adminMain.getMainPanel().remove(abm);
+					
+				}
+            	
+            });
             menuDeleteBtn.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
             menuUpdateAndDeletePanel.add(menuUpdateBtn);
             menuUpdateAndDeletePanel.add(menuDeleteBtn);
