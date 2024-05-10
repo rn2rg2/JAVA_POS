@@ -18,4 +18,5 @@ public List<Menu> findByCategory(String category);
 
 public List<Menu> findAll(String name);
 public void insertMenu(Menu menu);
+public void deleteMenu(int menuId);
 }
