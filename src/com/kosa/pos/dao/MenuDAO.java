@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.kosa.pos.dto.Menu;
 import com.kosa.pos.dto.MenuDetail;
+import com.kosa.pos.dto.MenuRanking;
 import com.kosa.pos.dto.MenuStatsInfo;
 
 public interface MenuDAO {
@@ -18,5 +19,7 @@ public List<Menu> findByCategory(String category);
 
 public List<Menu> findAll(String name);
 public void insertMenu(Menu menu);
+public List<MenuRanking> getMenuRanking();
+public int getTotalOrderWithoutDrink();
 public void deleteMenu(int menuId);
 }

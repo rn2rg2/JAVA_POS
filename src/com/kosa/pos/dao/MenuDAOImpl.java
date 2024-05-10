@@ -13,6 +13,7 @@ import java.util.Optional;
 import com.kosa.pos.dbconnection.DBConnection;
 import com.kosa.pos.dto.Menu;
 import com.kosa.pos.dto.MenuDetail;
+import com.kosa.pos.dto.MenuRanking;
 import com.kosa.pos.dto.MenuStatsInfo;
 import com.kosa.pos.dto.Review;
 
@@ -365,7 +366,7 @@ public class MenuDAOImpl implements MenuDAO {
 		}
 		
 	}
-
+  
 	@Override
 	public void deleteMenu(int menuId) {
 		String runSP = "{ call menu_package.delete_menu(?) }";
@@ -394,4 +395,63 @@ public class MenuDAOImpl implements MenuDAO {
 	}
 	
 
+
+  @Override
+	public List<MenuRanking> getMenuRanking() {
+	    List<MenuRanking> menuRankingList = new ArrayList<>();
+	    ResultSet resultSet = null;
+	    try {
+	        String sql = "{ call menu_package.GET_MENU_RANKING_TOP3(?) }";
+	        CallableStatement callableStatement = connection.prepareCall(sql);
+	        callableStatement.registerOutParameter(1, OracleTypes.CURSOR);
+	        callableStatement.execute();
+	        resultSet = (ResultSet) callableStatement.getObject(1);
+	        while (resultSet.next()) {
+	            MenuRanking menuRanking = new MenuRanking();
+	            menuRanking.setMenuName(resultSet.getString("MENU_NAME"));
+	            menuRanking.setTotal_order(resultSet.getInt("TOTAL_ORDERS"));
+	            menuRanking.setTotal_percentage(resultSet.getDouble("ORDER_PERCENTAGE"));
+	            menuRankingList.add(menuRanking);
+	        }
+	       
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        if (resultSet != null) {
+	            try {
+	                resultSet.close();
+	            } catch (SQLException e) {
+	                e.printStackTrace();
+	            }
+	        }
+	        // Add connection closing if needed
+	    }
+	    return menuRankingList;
+	}
+	
+	@Override
+	public int getTotalOrderWithoutDrink() {
+		int totalqawithoutdrink = 0;
+		CallableStatement cs = null;
+		try {
+			String sql = "{ call menu_package.Total_Quantity_WithoutDrink(?) }";
+			CallableStatement callableStatement = connection.prepareCall(sql);
+	        callableStatement.registerOutParameter(1, OracleTypes.NUMBER);
+	        callableStatement.execute();
+	        
+	        totalqawithoutdrink = callableStatement.getInt(1);
+		}catch (SQLException e) {
+	        e.printStackTrace();
+	    }finally {
+	        if (cs != null) {
+	            try {
+	            	cs.close();
+	            } catch (SQLException e) {
+	                e.printStackTrace();
+	            }
+	        }
+	        // Add connection closing if needed
+	    }
+		return totalqawithoutdrink;
+	}
 }

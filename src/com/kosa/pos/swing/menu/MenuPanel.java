@@ -31,6 +31,7 @@ public class MenuPanel extends JPanel {
 		setBackground(new Color(254, 255, 255));
 		setBorder(new LineBorder(new Color(207, 201, 214)));
 		setLayout(null);
+		setPreferredSize(new Dimension(170, 274));
 		// System.out.println("menuname : "+ menuname + " 가격 : "+ price );
 
 		JButton menu_minus = new JButton("-");
@@ -117,7 +118,7 @@ public class MenuPanel extends JPanel {
 		menu_img.setBounds(0, 0, 170, 156);
 		add(menu_img);
 
-		setPreferredSize(new Dimension(170, 274));
+		
 
 		JLabel menu_price = new JLabel(Integer.toString(price));
 		menu_price.setHorizontalAlignment(SwingConstants.CENTER);
