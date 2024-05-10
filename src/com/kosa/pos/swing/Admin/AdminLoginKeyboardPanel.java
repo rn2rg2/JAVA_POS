@@ -34,7 +34,7 @@ public class AdminLoginKeyboardPanel extends JPanel {
 		add(topPanel);
 		topPanel.setLayout(null);
 
-		JLabel pleasePhoneLbl = new JLabel("전화번호를 입력해주세요.");
+		JLabel pleasePhoneLbl = new JLabel("비밀번호를 입력해주세요.");
 		pleasePhoneLbl.setFont(new Font("굴림", Font.PLAIN, 20));
 		pleasePhoneLbl.setBounds(183, 5, 234, 40);
 		topPanel.add(pleasePhoneLbl);
