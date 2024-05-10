@@ -86,10 +86,11 @@ public class MenuView extends JPanel {
 
 		JPanel viewport = new JPanel();
 		if (menulist.size() <= 4) {
-			FlowLayout flowLayout = new FlowLayout(FlowLayout.LEFT, 0, 0); // 오른쪽 정렬, 가로 간격 5, 세로 간격 5
+			FlowLayout flowLayout = new FlowLayout(FlowLayout.LEFT);
+			
 			viewport.setLayout(flowLayout);
 		} else {
-			viewport.setLayout(new GridLayout(0, 4)); // 4개의 열
+			viewport.setLayout(new GridLayout(0, 4,1,1)); // 4개의 열
 		}
 
 		for (MenuPanel menuPanel : menuPanels) {
@@ -286,6 +287,7 @@ public class MenuView extends JPanel {
 
 		// 메뉴 순위
 		JPanel MenuRank = new JPanel();
+		MenuRank.setBackground(new Color(255, 255, 255));
 		MenuRank.setBounds(956, 6, 278, 638);
 		add(MenuRank);
 		MenuRank.setLayout(null);
@@ -297,6 +299,7 @@ public class MenuView extends JPanel {
 		MenuRank.add(lblNewLabel);
 
 		JPanel MenuRankShowPane = new JPanel();
+		MenuRankShowPane.setBackground(new Color(255, 255, 255));
 		MenuRankShowPane.setBounds(6, 135, 266, 497);
 		MenuRank.add(MenuRankShowPane);
 		List<MenuRanking> menurank = menudao.getMenuRanking();
@@ -310,6 +313,7 @@ public class MenuView extends JPanel {
 		MenuRank.add(lblNewLabel_1);
 
 		JLabel totalqalab = new JLabel("총 " + Integer.toString(totalqa) + " 회");
+		totalqalab.setForeground(new Color(152, 30, 34));
 		totalqalab.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
 		totalqalab.setHorizontalAlignment(SwingConstants.CENTER);
 		totalqalab.setBounds(181, 79, 91, 44);
@@ -329,10 +333,6 @@ public class MenuView extends JPanel {
 		// !메뉴 순위
 	}
 
-	private void loadMenuRank() {
-		// List<Menu> menulist = menudao.
-	}
-
 	private void loadMenuByCategory(String category) {
 		System.out.println(category + " 눌림");
 		List<Menu> menulist = menudao.findByCategory(category);
@@ -345,10 +345,10 @@ public class MenuView extends JPanel {
 		}
 		JPanel viewport = new JPanel();
 		if (menulist.size() <= 4) {
-			FlowLayout flowLayout = new FlowLayout(FlowLayout.LEFT, 0, 0); // 오른쪽 정렬, 가로 간격 5, 세로 간격 5
+			FlowLayout flowLayout = new FlowLayout(FlowLayout.LEFT,3, 0); // 오른쪽 정렬, 가로 간격 5, 세로 간격 5
 			viewport.setLayout(flowLayout);
 		} else {
-			viewport.setLayout(new GridLayout(0, 4)); // 4개의 열
+			viewport.setLayout(new GridLayout(0, 4,1,1)); // 4개의 열
 		}
 
 		for (MenuPanel menuPanel : menuPanels) {

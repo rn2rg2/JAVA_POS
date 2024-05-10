@@ -97,9 +97,10 @@ public class MenuPanel extends JPanel {
 
 		
 		ImageIcon imgpath = new ImageIcon(menuimgPath);
-		Image img = imgpath.getImage().getScaledInstance(170, 156, Image.SCALE_SMOOTH);
+		Image img = imgpath.getImage().getScaledInstance(170, 156, Image.SCALE_AREA_AVERAGING);
 		imgpath = new ImageIcon(img);
 		JLabel menu_img = new JLabel(imgpath);
+		menu_img.setVerticalAlignment(SwingConstants.TOP);
 		menu_img.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -118,7 +119,6 @@ public class MenuPanel extends JPanel {
 				
 			}
 		});
-		menu_img.setHorizontalAlignment(SwingConstants.CENTER);
 		menu_img.setBounds(0, 0, 170, 156);
 		add(menu_img);
 
