@@ -27,6 +27,7 @@ import javax.swing.SwingConstants;
 import com.kosa.pos.dao.MenuDAO;
 import com.kosa.pos.dao.MenuDAOImpl;
 import com.kosa.pos.dto.Menu;
+import com.kosa.pos.dto.MenuRanking;
 import com.kosa.pos.swing.main.Index;
 import com.kosa.pos.swing.savePoint.CompletePaymentDialog;
 
@@ -255,26 +256,54 @@ public class MenuView extends JPanel {
 		Total.setBounds(753, 530, 191, 29);
 		add(Total);
 
-		JPanel panel = new JPanel();
-		panel.setBounds(956, 6, 278, 638);
-		add(panel);
-		panel.setLayout(null);
 		
-		JLabel lblNewLabel_3 = new JLabel("메뉴 순위");
-		lblNewLabel_3.setFont(new Font("Academy Engraved LET", Font.PLAIN, 30));
-		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_3.setBounds(6, 6, 266, 48);
-		panel.add(lblNewLabel_3);
+		// 메뉴 순위
+		JPanel MenuRank = new JPanel();
+		MenuRank.setBounds(956, 6, 278, 638);
+		add(MenuRank);
+		MenuRank.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setBounds(6, 93, 74, 33);
-		panel.add(lblNewLabel);
+		JLabel lblNewLabel = new JLabel("메뉴 순위");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setFont(new Font("Malayalam MN", Font.PLAIN, 45));
+		lblNewLabel.setBounds(6, 6, 266, 88);
+		MenuRank.add(lblNewLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("18개");
-		lblNewLabel_1.setBounds(92, 101, 180, 16);
-		panel.add(lblNewLabel_1);
-	}
+		JPanel MenuRankShowPane = new JPanel();
+		MenuRankShowPane.setBounds(6, 135, 266, 497);
+		MenuRank.add(MenuRankShowPane);
+		List<MenuRanking> menurank = menudao.getMenuRanking();
+		int totalqa = menudao.getTotalOrderWithoutDrink();
+		
+		MenuRankShowPane.setLayout(new GridLayout(menurank.size(), 1)); // 그리드 레이아웃 설정
+		
+		JLabel lblNewLabel_1 = new JLabel("총 주문 횟수(음료 제외) : ");
+		lblNewLabel_1.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		lblNewLabel_1.setBounds(6, 79, 163, 44);
+		MenuRank.add(lblNewLabel_1);
+		
+		JLabel totalqalab = new JLabel("총 " +Integer.toString(totalqa)+ " 회");
+		totalqalab.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+		totalqalab.setHorizontalAlignment(SwingConstants.CENTER);
+		totalqalab.setBounds(181, 79, 91, 44);
+		MenuRank.add(totalqalab);
 
+		// 각 메뉴 정보를 표시하는 컴포넌트를 반복하여 생성하여 패널에 추가
+		for (int i = 0; i < menurank.size(); i++) {
+		    MenuRanking menuRanking = menurank.get(i); // 현재 메뉴 랭킹 정보
+		    int rank = i + 1; // 순위
+		    String menuName = menuRanking.getMenuName(); // 메뉴 이름
+		    int orderCount = menuRanking.getTotal_order(); // 주문 횟수
+		    double orderPercentage = menuRanking.getTotal_percentage(); // 주문 퍼센티지
+		    // 각 메뉴 정보를 표시하는 MenuShowRanks 객체 생성
+		    MenuShowRanks menuRankInfo = new MenuShowRanks(rank, menuName, orderCount, orderPercentage);
+		    MenuRankShowPane.add(menuRankInfo); // 패널에 추가
+		}
+		//!메뉴 순위
+	}
+	private void loadMenuRank() {
+		//List<Menu> menulist = menudao.
+	}
 	private void loadMenuByCategory(String category) {
 		System.out.println(category + " 눌림");
 		List<Menu> menulist = menudao.findByCategory(category);
@@ -347,5 +376,4 @@ public class MenuView extends JPanel {
 		sidebarOrder.remove(menuName);
 		sidebarOrder.add(menuName);
 	}
-
 }
