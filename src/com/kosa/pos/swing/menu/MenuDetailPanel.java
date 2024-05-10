@@ -2,6 +2,7 @@ package com.kosa.pos.swing.menu;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -35,6 +36,7 @@ public class MenuDetailPanel extends JPanel{
 	 * Create the application.
 	 */
 	public MenuDetailPanel() {
+		setPreferredSize(new Dimension(900, 650));
 		initialize();
 	}
 
@@ -71,7 +73,6 @@ public class MenuDetailPanel extends JPanel{
 		JPanel panel = new JPanel();
 		panel.setBounds(0, 0, 970, 666);
 		panel.setLayout(null);
-		
 		JPanel menuImage = new JPanel();
 		menuImage.setBorder(new LineBorder(new Color(0, 0, 0)));
 		menuImage.setBounds(59, 46, 409, 321);
