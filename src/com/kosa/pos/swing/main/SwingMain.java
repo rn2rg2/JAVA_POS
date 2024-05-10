@@ -1,7 +1,6 @@
 package com.kosa.pos.swing.main;
 
 import java.awt.EventQueue;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.kosa.pos.dao.MenuDAO;

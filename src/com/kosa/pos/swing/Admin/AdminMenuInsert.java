@@ -1,3 +1,4 @@
+
 package com.kosa.pos.swing.Admin;
 
 import java.awt.Color;

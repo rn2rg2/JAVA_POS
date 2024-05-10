@@ -27,6 +27,7 @@ import javax.swing.SwingConstants;
 import com.kosa.pos.dao.MenuDAO;
 import com.kosa.pos.dao.MenuDAOImpl;
 import com.kosa.pos.dao.OrderDAO;
+import com.kosa.pos.dao.UserDAO;
 import com.kosa.pos.dto.Menu;
 import com.kosa.pos.dto.MenuRanking;
 import com.kosa.pos.swing.common.OrderState;
@@ -80,17 +81,18 @@ public class MenuView extends JPanel {
 		// MenuPanel을 생성하여 ArrayList에 추가
 
 		for (int i = 0; i < menulist.size(); i++) {
-			menuPanel = new MenuPanel(menulist.get(i).getName(), menulist.get(i).getPrice(), msbpport,
-					menulist.get(i).getMenu_id());
+			menuPanel = new MenuPanel(menulist.get(i).getName(), menulist.get(i).getPrice(), msbpport, menulist.get(i).getMenu_id()
+					, menulist.get(i).getMenu_path());
 			menuPanels.add(menuPanel);
 		}
 
 		JPanel viewport = new JPanel();
 		if (menulist.size() <= 4) {
-			FlowLayout flowLayout = new FlowLayout(FlowLayout.LEFT, 0, 0); // 오른쪽 정렬, 가로 간격 5, 세로 간격 5
+			FlowLayout flowLayout = new FlowLayout(FlowLayout.LEFT);
+			
 			viewport.setLayout(flowLayout);
 		} else {
-			viewport.setLayout(new GridLayout(0, 4)); // 4개의 열
+			viewport.setLayout(new GridLayout(0, 4,1,1)); // 4개의 열
 		}
 
 		for (MenuPanel menuPanel : menuPanels) {
@@ -272,7 +274,17 @@ public class MenuView extends JPanel {
 		mgrbtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				CardLayoutManager.getCardLayout().show(ContentPaneManager.getContentPane(), "adminPanel");
+				// 먼저 키보드 패널을 불러온다.
+				CardLayoutManager.getCardLayout().show(ContentPaneManager.getContentPane(), "adminKeyboard");
+				
+				// 입력한 값이 관리자 계정 정보와 맞는지 확인
+				
+				
+				// 맞으면 아래 로직 실행
+//				CardLayoutManager.getCardLayout().show(ContentPaneManager.getContentPane(), "adminPanel");
+				
+				// 틀리면 키보드 패널 새로 생성
+				
 			}
 		});
 		mgrbtn.setBounds(827, 6, 117, 29);
@@ -287,6 +299,7 @@ public class MenuView extends JPanel {
 
 		// 메뉴 순위
 		JPanel MenuRank = new JPanel();
+		MenuRank.setBackground(new Color(255, 255, 255));
 		MenuRank.setBounds(956, 6, 278, 638);
 		add(MenuRank);
 		MenuRank.setLayout(null);
@@ -298,6 +311,7 @@ public class MenuView extends JPanel {
 		MenuRank.add(lblNewLabel);
 
 		JPanel MenuRankShowPane = new JPanel();
+		MenuRankShowPane.setBackground(new Color(255, 255, 255));
 		MenuRankShowPane.setBounds(6, 135, 266, 497);
 		MenuRank.add(MenuRankShowPane);
 		List<MenuRanking> menurank = menudao.getMenuRanking();
@@ -311,6 +325,7 @@ public class MenuView extends JPanel {
 		MenuRank.add(lblNewLabel_1);
 
 		JLabel totalqalab = new JLabel("총 " + Integer.toString(totalqa) + " 회");
+		totalqalab.setForeground(new Color(152, 30, 34));
 		totalqalab.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
 		totalqalab.setHorizontalAlignment(SwingConstants.CENTER);
 		totalqalab.setBounds(181, 79, 91, 44);
@@ -330,26 +345,22 @@ public class MenuView extends JPanel {
 		// !메뉴 순위
 	}
 
-	private void loadMenuRank() {
-		// List<Menu> menulist = menudao.
-	}
-
 	private void loadMenuByCategory(String category) {
 		System.out.println(category + " 눌림");
 		List<Menu> menulist = menudao.findByCategory(category);
 		menuPanels = new ArrayList<>();
 
 		for (int i = 0; i < menulist.size(); i++) {
-			menuPanel = new MenuPanel(menulist.get(i).getName(), menulist.get(i).getPrice(), msbpport,
-					menulist.get(i).getMenu_id()); // msbpport
+			menuPanel = new MenuPanel(menulist.get(i).getName(), menulist.get(i).getPrice(), msbpport, menulist.get(i).getMenu_id()
+					,menulist.get(i).getMenu_path()); 
 			menuPanels.add(menuPanel);
 		}
 		JPanel viewport = new JPanel();
 		if (menulist.size() <= 4) {
-			FlowLayout flowLayout = new FlowLayout(FlowLayout.LEFT, 0, 0); // 오른쪽 정렬, 가로 간격 5, 세로 간격 5
+			FlowLayout flowLayout = new FlowLayout(FlowLayout.LEFT,3, 0); // 오른쪽 정렬, 가로 간격 5, 세로 간격 5
 			viewport.setLayout(flowLayout);
 		} else {
-			viewport.setLayout(new GridLayout(0, 4)); // 4개의 열
+			viewport.setLayout(new GridLayout(0, 4,1,1)); // 4개의 열
 		}
 
 		for (MenuPanel menuPanel : menuPanels) {

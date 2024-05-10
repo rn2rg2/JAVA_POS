@@ -3,11 +3,13 @@ package com.kosa.pos.swing.menu;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -27,7 +29,7 @@ public class MenuPanel extends JPanel {
 	JLabel menu_name;
 	static Map<String, Integer> menuTotalPriceMap = new HashMap<>(); // 메뉴별 총 가격을 저장할 맵
 
-	public MenuPanel(String menuname, int price, JPanel msbpport, int menuId) {
+	public MenuPanel(String menuname, int price, JPanel msbpport, int menuId, String menuimgPath) {
 		setBackground(new Color(254, 255, 255));
 		setBorder(new LineBorder(new Color(207, 201, 214)));
 		setLayout(null);
@@ -93,7 +95,12 @@ public class MenuPanel extends JPanel {
 		menu_name.setBounds(0, 168, 170, 29);
 		add(menu_name);
 
-		JLabel menu_img = new JLabel("New label");
+		
+		ImageIcon imgpath = new ImageIcon(menuimgPath);
+		Image img = imgpath.getImage().getScaledInstance(170, 156, Image.SCALE_AREA_AVERAGING);
+		imgpath = new ImageIcon(img);
+		JLabel menu_img = new JLabel(imgpath);
+		menu_img.setVerticalAlignment(SwingConstants.TOP);
 		menu_img.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -108,12 +115,10 @@ public class MenuPanel extends JPanel {
 						break;
 					}
 				}
-					
 				CardLayoutManager.getCardLayout().show(ContentPaneManager.getContentPane(), "menudetail");
 				
 			}
 		});
-		menu_img.setHorizontalAlignment(SwingConstants.CENTER);
 		menu_img.setBounds(0, 0, 170, 156);
 		add(menu_img);
 
