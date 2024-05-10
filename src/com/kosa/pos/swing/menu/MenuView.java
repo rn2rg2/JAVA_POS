@@ -73,7 +73,7 @@ public class MenuView extends JPanel {
 		// MenuPanel을 생성하여 ArrayList에 추가
 
 		for (int i = 0; i < menulist.size(); i++) {
-			menuPanel = new MenuPanel(menulist.get(i).getName(), menulist.get(i).getPrice(), msbpport);
+			menuPanel = new MenuPanel(menulist.get(i).getName(), menulist.get(i).getPrice(), msbpport, menulist.get(i).getMenu_id());
 			menuPanels.add(menuPanel);
 		}
 
@@ -281,7 +281,7 @@ public class MenuView extends JPanel {
 		menuPanels = new ArrayList<>();
 
 		for (int i = 0; i < menulist.size(); i++) {
-			menuPanel = new MenuPanel(menulist.get(i).getName(), menulist.get(i).getPrice(), msbpport); // msbpport
+			menuPanel = new MenuPanel(menulist.get(i).getName(), menulist.get(i).getPrice(), msbpport, menulist.get(i).getMenu_id()); // msbpport
 			menuPanels.add(menuPanel);
 		}
 		JPanel viewport = new JPanel();
