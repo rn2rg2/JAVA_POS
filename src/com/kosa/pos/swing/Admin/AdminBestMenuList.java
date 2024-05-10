@@ -37,6 +37,9 @@ public class AdminBestMenuList extends JPanel {
 		this(adminMain, null);
 	}
 	
+	/**
+	 * @wbp.parser.constructor
+	 */
 	public AdminBestMenuList(AdminMainPanel adminMain, String keyword) {
 		this.keyword = keyword;
 		this.adminMain = adminMain;
@@ -82,6 +85,12 @@ public class AdminBestMenuList extends JPanel {
 		rankLabel_1_1_1_1.setFont(new Font("굴림", Font.PLAIN, 20));
 		rankLabel_1_1_1_1.setBounds(536, 10, 103, 32);
 		panel.add(rankLabel_1_1_1_1);
+		
+		JLabel lblNewLabel_1 = new JLabel("메뉴명을 입력해주세요");
+		lblNewLabel_1.setForeground(new Color(63, 63, 63));
+		lblNewLabel_1.setFont(new Font("Lucida Grande", Font.ITALIC, 13));
+		lblNewLabel_1.setBounds(30, 156, 126, 16);
+		add(lblNewLabel_1);
 	}
 
 	/**
@@ -102,13 +111,14 @@ public class AdminBestMenuList extends JPanel {
 		add(lblNewLabel);
 		
 		textField = new JTextField();
+		textField.setForeground(new Color(0, 0, 0));
 		textField.setBounds(30, 103, 564, 45);
 		add(textField);
 		textField.setColumns(10);
 		if(keyword != null) textField.setText(keyword);
 		
 		MenuDAO menuDao = new MenuDAOImpl();
-		List<MenuDetail> menuRankList = menuDao.findBestMenuAll(textField.getText() + "");
+		List<MenuDetail> menuRankList = menuDao.findBestMenuAll(textField.getText());
 		
 		JButton btnNewButton = new JButton("검색");
 		btnNewButton.addActionListener(new ActionListener() {
