@@ -9,6 +9,9 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import com.kosa.pos.swing.main.CardLayoutManager;
+import com.kosa.pos.swing.main.ContentPaneManager;
+
 public class SaveCompleteDialog extends JDialog {
 
 	private static final long serialVersionUID = 1L;
@@ -36,10 +39,11 @@ public class SaveCompleteDialog extends JDialog {
 		btnClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose(); // 다이얼로그를 닫는 메서드
+				CardLayoutManager.getCardLayout().show(ContentPaneManager.getContentPane(), "review");
 			}
 		});
 	}
 	// TODO
-	// 1. 적립 완료 "닫기" 버튼 눌렀을 때 메인 화면으로 전환
+	// 1. 적립 완료 "닫기" 버튼 눌렀을 때 리뷰쓰기 화면으로 전환
 	// 2. 몇 포인트 적립 됐는지 보여주는 JLabel 추가하기
 }
