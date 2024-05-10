@@ -2,6 +2,7 @@ package com.kosa.pos.swing.menu;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -28,13 +29,25 @@ import com.kosa.pos.dao.ReviewDAOImpl;
 import com.kosa.pos.dto.Menu;
 import com.kosa.pos.dto.MenuDetail;
 import com.kosa.pos.dto.Review;
+import com.kosa.pos.swing.main.CardLayoutManager;
+import com.kosa.pos.swing.main.ContentPaneManager;
 
 public class MenuDetailPanel extends JPanel{
 
+	private int menuId = 1;
+	
 	/**
 	 * Create the application.
 	 */
 	public MenuDetailPanel() {
+		this(1);
+//		setPreferredSize(new Dimension(900, 650));
+//		initialize();
+	}
+	
+	public MenuDetailPanel(int menuId) {
+		this.menuId = menuId;
+		setPreferredSize(new Dimension(900, 650));
 		initialize();
 	}
 
@@ -44,7 +57,7 @@ public class MenuDetailPanel extends JPanel{
 	private void initialize() {
 		
 		// 파라미터 값이 넘어왔을 때 => menu_id = 8
-		int menuId = 1;
+//		int menuId = 1;
 		MenuDAOImpl menuDaoImpl = new MenuDAOImpl();
 		Optional<MenuDetail> _menuDetail = menuDaoImpl.findById(menuId);
 		if(_menuDetail.isEmpty()) return;
@@ -65,13 +78,17 @@ public class MenuDetailPanel extends JPanel{
 		// 리뷰 통계 데이터 가져오기
 		double avgScore = menuDetail.getAvgScore();
 		int count = menuDetail.getCount();
+		setLayout(null);
 		
 		
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 970, 666);
+		panel.setBounds(0, 0, 989, 671);
 		panel.setLayout(null);
+
+		add(panel);
 		
+
 		JPanel menuImage = new JPanel();
 		menuImage.setBorder(new LineBorder(new Color(0, 0, 0)));
 		menuImage.setBounds(59, 46, 409, 321);
@@ -86,7 +103,7 @@ public class MenuDetailPanel extends JPanel{
 		menuImage.setLayout(null);
 		
 		JLabel lblNewLabel_6 = new JLabel("New label");
-		ImageIcon icon = new ImageIcon("C:\\\\Users\\\\KOSA\\\\Desktop\\\\이종섭\\\\프로젝트 - 1차\\\\햄버거 사진.jpg");
+		ImageIcon icon = new ImageIcon(menu.getMenu_path());
 		
 		lblNewLabel_6.setIcon(icon);
 		lblNewLabel_6.setBounds(0, 0, 409, 321);
@@ -356,6 +373,7 @@ public class MenuDetailPanel extends JPanel{
 		btnNewButton.setFont(new Font("굴림", Font.PLAIN, 18));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				CardLayoutManager.getCardLayout().show(ContentPaneManager.getContentPane(), "menu");
 			}
 		});
 		btnNewButton.setBounds(644, 573, 290, 65);

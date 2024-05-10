@@ -5,9 +5,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -18,6 +15,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
+import com.kosa.pos.common.FileUploadLogic;
 import com.kosa.pos.dao.MenuDAO;
 import com.kosa.pos.dao.MenuDAOImpl;
 import com.kosa.pos.dto.Menu;
@@ -206,40 +204,7 @@ public class AdminMenuInsert extends JPanel{
 	
 	public void menuInsert(String menuName, String category, int price, String menuDesc, File menuImage) {
 		// 1. 파일명 확보
-		String fileSeperator = File.separator;
-		String fileAbsoluteName = menuImage.getAbsolutePath();
-		int index = fileAbsoluteName.lastIndexOf(fileSeperator);
-		String fileName = fileAbsoluteName.substring(index+1); // 파일명 확보
-		
-		String fileSaveRoute = File.separator + "images" + File.separator + fileName;
-		
-		
-		// 2. /images/파일명에 이미지 파일 저장
-		File saveFile = new File(fileSaveRoute);
-		if(!saveFile.getParentFile().exists())
-			saveFile.getParentFile().mkdirs();
-		
-		try {
-			
-			FileInputStream fileInputStream = new FileInputStream(menuImage);
-			FileOutputStream fileOutputStream = new FileOutputStream(fileSaveRoute);
-			
-			// 파일에서 읽어온 바이트를 저장할 버퍼
-            byte[] buffer = new byte[1024];
-            int length;
-            
-            // 파일에서 데이터를 읽어와서 다른 파일에 쓰기
-            while ((length = fileInputStream.read(buffer)) > 0) {
-                fileOutputStream.write(buffer, 0, length);
-            }
-            
-            // 스트림 닫기
-            fileInputStream.close();
-            fileOutputStream.close();
-            
-		} catch (IOException e) {
-	        System.err.println("파일 복사 중 오류가 발생했습니다: " + e.getMessage());
-	    }
+		String fileSaveRoute = FileUploadLogic.fileUploadLogic(menuImage);
 		
 		
 		// 3. callablestatement로 db에 insert
