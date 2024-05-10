@@ -21,7 +21,7 @@ public class AdminStatsInfo extends JPanel {
 	private JTextField textField;
 	private String[] xData = {"24-05-01","24-05-02","24-05-03","24-05-04","24-05-05","24-05-06","24-05-07"};
 	private double[] yData = {1,10,20,13,14,15,21};
-	private AdminMain adminMain;
+	private AdminMainPanel adminMain;
 	
 	
 	public void setData(String[] xData, double[] yData) {
@@ -31,7 +31,7 @@ public class AdminStatsInfo extends JPanel {
 		
 	}
 	
-	public AdminStatsInfo(AdminMain adminMain, String[] xData, double[] yData) {
+	public AdminStatsInfo(AdminMainPanel adminMain, String[] xData, double[] yData) {
 		this.adminMain = adminMain;
 		this.xData = xData;
 		this.yData = yData;
@@ -47,7 +47,7 @@ public class AdminStatsInfo extends JPanel {
 	/**
 	 * Create the application.
 	 */
-	public AdminStatsInfo(AdminMain adminMain) {
+	public AdminStatsInfo(AdminMainPanel adminMain) {
 		this.adminMain = adminMain;
 		initialize();
 		setSize(743, 666);

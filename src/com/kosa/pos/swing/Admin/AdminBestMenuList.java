@@ -27,17 +27,17 @@ import java.awt.event.ActionEvent;
 
 public class AdminBestMenuList extends JPanel {
 	private JTextField textField;
-	private AdminMain adminMain;
+	private AdminMainPanel adminMain;
 	private String keyword;
 	
 	/**
 	 * Create the application.
 	 */
-	public AdminBestMenuList(AdminMain adminMain) {
+	public AdminBestMenuList(AdminMainPanel adminMain) {
 		this(adminMain, null);
 	}
 	
-	public AdminBestMenuList(AdminMain adminMain, String keyword) {
+	public AdminBestMenuList(AdminMainPanel adminMain, String keyword) {
 		this.keyword = keyword;
 		this.adminMain = adminMain;
 		initialize();

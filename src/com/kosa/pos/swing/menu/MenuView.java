@@ -28,6 +28,8 @@ import com.kosa.pos.dao.MenuDAO;
 import com.kosa.pos.dao.MenuDAOImpl;
 import com.kosa.pos.dto.Menu;
 import com.kosa.pos.dto.MenuRanking;
+import com.kosa.pos.swing.main.CardLayoutManager;
+import com.kosa.pos.swing.main.ContentPaneManager;
 import com.kosa.pos.swing.main.Index;
 import com.kosa.pos.swing.savePoint.CompletePaymentDialog;
 
@@ -243,7 +245,7 @@ public class MenuView extends JPanel {
 		mgrbtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-
+				CardLayoutManager.getCardLayout().show(ContentPaneManager.getContentPane(), "adminPanel");
 			}
 		});
 		mgrbtn.setBounds(827, 6, 117, 29);
