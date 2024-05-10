@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import com.kosa.pos.swing.menu.MenuDetailPanel;
 import com.kosa.pos.swing.menu.MenuView;
 import com.kosa.pos.swing.menu.menutest;
+import com.kosa.pos.swing.review.ReviewPanel;
 import com.kosa.pos.swing.savePoint.KeyboardPanel;
 
 public class Index extends JFrame {
@@ -26,6 +27,7 @@ public class Index extends JFrame {
 		MenuView menuPanel = new MenuView();
 		MenuDetailPanel mdp = new MenuDetailPanel();
 		KeyboardPanel keyboardPanel = new KeyboardPanel();
+		ReviewPanel reviewPanel = new ReviewPanel();
 
 		menutest cp = new menutest();
 
@@ -33,11 +35,8 @@ public class Index extends JFrame {
 		contentPane.add(mdp, "menudetail");
 		contentPane.add(cp, "cp");
 		contentPane.add(keyboardPanel, "keyboard");
+		contentPane.add(reviewPanel, "review");
 
 		cardLayout.show(contentPane, "menu");
-	}
-
-	public void showKeyboardPanel() {
-		cardLayout.show(contentPane, "Keyboard");
 	}
 }

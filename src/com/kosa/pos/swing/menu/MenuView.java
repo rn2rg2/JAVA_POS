@@ -26,12 +26,14 @@ import javax.swing.SwingConstants;
 
 import com.kosa.pos.dao.MenuDAO;
 import com.kosa.pos.dao.MenuDAOImpl;
+import com.kosa.pos.dao.OrderDAO;
 import com.kosa.pos.dto.Menu;
 import com.kosa.pos.swing.main.Index;
 import com.kosa.pos.swing.savePoint.CompletePaymentDialog;
 
 public class MenuView extends JPanel {
 	MenuDAO menudao = new MenuDAOImpl();
+	OrderDAO orderDao = new OrderDAO();
 	Index indexFrame;
 	/**
 	 * @wbp.nonvisual location=418,41
@@ -195,6 +197,7 @@ public class MenuView extends JPanel {
 		// !sidebar scroll
 
 		// 장바구니 & 결제 버튼
+		// 삭제버튼
 		ImageIcon cancel = new ImageIcon("./img/menu/images.png");
 		JButton deletebtn = new JButton(cancel);
 		deletebtn.addMouseListener(new MouseAdapter() {
@@ -219,6 +222,7 @@ public class MenuView extends JPanel {
 		// 버튼의 크기를 이미지의 크기에 맞게 설정합니다.
 		add(deletebtn);
 
+		// 결제버튼
 		ImageIcon pay = new ImageIcon("./img/menu/diycheckout-payment-button.png");
 		JButton paybtn = new JButton(pay);
 		paybtn.addActionListener(e -> {
@@ -226,13 +230,14 @@ public class MenuView extends JPanel {
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setModal(true); // 모달 다이얼로그로 설정
 			dialog.setVisible(true); // 다이얼로그를 보여줌
-		});
-		paybtn.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
 
-			}
+			System.out.println(clickCountManager);
+
+			int userId = 0;
+			userId = orderDao.insertOrder();
+			System.out.println(userId);
 		});
+
 		paybtn.setPreferredSize(new Dimension(pay.getIconWidth(), pay.getIconHeight()));
 		paybtn.setBounds(753, 604, 191, 40);
 		add(paybtn);
@@ -259,17 +264,17 @@ public class MenuView extends JPanel {
 		panel.setBounds(956, 6, 278, 638);
 		add(panel);
 		panel.setLayout(null);
-		
+
 		JLabel lblNewLabel_3 = new JLabel("메뉴 순위");
 		lblNewLabel_3.setFont(new Font("Academy Engraved LET", Font.PLAIN, 30));
 		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_3.setBounds(6, 6, 266, 48);
 		panel.add(lblNewLabel_3);
-		
+
 		JLabel lblNewLabel = new JLabel("New label");
 		lblNewLabel.setBounds(6, 93, 74, 33);
 		panel.add(lblNewLabel);
-		
+
 		JLabel lblNewLabel_1 = new JLabel("18개");
 		lblNewLabel_1.setBounds(92, 101, 180, 16);
 		panel.add(lblNewLabel_1);
