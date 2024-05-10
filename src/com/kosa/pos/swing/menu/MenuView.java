@@ -26,6 +26,7 @@ import javax.swing.SwingConstants;
 
 import com.kosa.pos.dao.MenuDAO;
 import com.kosa.pos.dao.MenuDAOImpl;
+import com.kosa.pos.dao.OrderDAO;
 import com.kosa.pos.dto.Menu;
 import com.kosa.pos.dto.MenuRanking;
 import com.kosa.pos.swing.main.Index;
@@ -33,6 +34,7 @@ import com.kosa.pos.swing.savePoint.CompletePaymentDialog;
 
 public class MenuView extends JPanel {
 	MenuDAO menudao = new MenuDAOImpl();
+	OrderDAO orderDao = new OrderDAO();
 	Index indexFrame;
 	/**
 	 * @wbp.nonvisual location=418,41
@@ -74,7 +76,8 @@ public class MenuView extends JPanel {
 		// MenuPanel을 생성하여 ArrayList에 추가
 
 		for (int i = 0; i < menulist.size(); i++) {
-			menuPanel = new MenuPanel(menulist.get(i).getName(), menulist.get(i).getPrice(), msbpport, menulist.get(i).getMenu_id());
+			menuPanel = new MenuPanel(menulist.get(i).getName(), menulist.get(i).getPrice(), msbpport,
+					menulist.get(i).getMenu_id());
 			menuPanels.add(menuPanel);
 		}
 
@@ -196,6 +199,7 @@ public class MenuView extends JPanel {
 		// !sidebar scroll
 
 		// 장바구니 & 결제 버튼
+		// 삭제버튼
 		ImageIcon cancel = new ImageIcon("./img/menu/images.png");
 		JButton deletebtn = new JButton(cancel);
 		deletebtn.addMouseListener(new MouseAdapter() {
@@ -220,20 +224,31 @@ public class MenuView extends JPanel {
 		// 버튼의 크기를 이미지의 크기에 맞게 설정합니다.
 		add(deletebtn);
 
+		// 결제버튼
 		ImageIcon pay = new ImageIcon("./img/menu/diycheckout-payment-button.png");
 		JButton paybtn = new JButton(pay);
 		paybtn.addActionListener(e -> {
+			int userId = orderDao.insertOrder()[0]; // 결제 후 전화번호 입력하면 userId 업데이트해야 함
+			int orderId = orderDao.insertOrder()[1];
+			System.out.println(userId + ", " + orderId);
+
+			// orderId를 이용하여 clickCountManager에 담겨있는 <메뉴명, 수량>을 order_detail 테이블에 삽입
+			System.out.println(clickCountManager);
+			for (Map.Entry<String, Integer> entry : clickCountManager.entrySet()) {
+				String menuName = entry.getKey();
+				int quantity = entry.getValue();
+				Menu menu = menudao.findByName(menuName); // 메뉴이름을 통해 menu_id 가져오기
+				if (menu != null) { // order_detail 테이블에 구매한 메뉴 insert
+					orderDao.insertOrderDetail(orderId, menu.getMenu_id(), quantity);
+				}
+			}
+
 			CompletePaymentDialog dialog = new CompletePaymentDialog();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setModal(true); // 모달 다이얼로그로 설정
 			dialog.setVisible(true); // 다이얼로그를 보여줌
 		});
-		paybtn.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
 
-			}
-		});
 		paybtn.setPreferredSize(new Dimension(pay.getIconWidth(), pay.getIconHeight()));
 		paybtn.setBounds(753, 604, 191, 40);
 		add(paybtn);
@@ -256,33 +271,32 @@ public class MenuView extends JPanel {
 		Total.setBounds(753, 530, 191, 29);
 		add(Total);
 
-		
 		// 메뉴 순위
 		JPanel MenuRank = new JPanel();
 		MenuRank.setBounds(956, 6, 278, 638);
 		add(MenuRank);
 		MenuRank.setLayout(null);
-		
+
 		JLabel lblNewLabel = new JLabel("메뉴 순위");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Malayalam MN", Font.PLAIN, 45));
 		lblNewLabel.setBounds(6, 6, 266, 88);
 		MenuRank.add(lblNewLabel);
-		
+
 		JPanel MenuRankShowPane = new JPanel();
 		MenuRankShowPane.setBounds(6, 135, 266, 497);
 		MenuRank.add(MenuRankShowPane);
 		List<MenuRanking> menurank = menudao.getMenuRanking();
 		int totalqa = menudao.getTotalOrderWithoutDrink();
-		
+
 		MenuRankShowPane.setLayout(new GridLayout(menurank.size(), 1)); // 그리드 레이아웃 설정
-		
+
 		JLabel lblNewLabel_1 = new JLabel("총 주문 횟수(음료 제외) : ");
 		lblNewLabel_1.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		lblNewLabel_1.setBounds(6, 79, 163, 44);
 		MenuRank.add(lblNewLabel_1);
-		
-		JLabel totalqalab = new JLabel("총 " +Integer.toString(totalqa)+ " 회");
+
+		JLabel totalqalab = new JLabel("총 " + Integer.toString(totalqa) + " 회");
 		totalqalab.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
 		totalqalab.setHorizontalAlignment(SwingConstants.CENTER);
 		totalqalab.setBounds(181, 79, 91, 44);
@@ -290,27 +304,30 @@ public class MenuView extends JPanel {
 
 		// 각 메뉴 정보를 표시하는 컴포넌트를 반복하여 생성하여 패널에 추가
 		for (int i = 0; i < menurank.size(); i++) {
-		    MenuRanking menuRanking = menurank.get(i); // 현재 메뉴 랭킹 정보
-		    int rank = i + 1; // 순위
-		    String menuName = menuRanking.getMenuName(); // 메뉴 이름
-		    int orderCount = menuRanking.getTotal_order(); // 주문 횟수
-		    double orderPercentage = menuRanking.getTotal_percentage(); // 주문 퍼센티지
-		    // 각 메뉴 정보를 표시하는 MenuShowRanks 객체 생성
-		    MenuShowRanks menuRankInfo = new MenuShowRanks(rank, menuName, orderCount, orderPercentage);
-		    MenuRankShowPane.add(menuRankInfo); // 패널에 추가
+			MenuRanking menuRanking = menurank.get(i); // 현재 메뉴 랭킹 정보
+			int rank = i + 1; // 순위
+			String menuName = menuRanking.getMenuName(); // 메뉴 이름
+			int orderCount = menuRanking.getTotal_order(); // 주문 횟수
+			double orderPercentage = menuRanking.getTotal_percentage(); // 주문 퍼센티지
+			// 각 메뉴 정보를 표시하는 MenuShowRanks 객체 생성
+			MenuShowRanks menuRankInfo = new MenuShowRanks(rank, menuName, orderCount, orderPercentage);
+			MenuRankShowPane.add(menuRankInfo); // 패널에 추가
 		}
-		//!메뉴 순위
+		// !메뉴 순위
 	}
+
 	private void loadMenuRank() {
-		//List<Menu> menulist = menudao.
+		// List<Menu> menulist = menudao.
 	}
+
 	private void loadMenuByCategory(String category) {
 		System.out.println(category + " 눌림");
 		List<Menu> menulist = menudao.findByCategory(category);
 		menuPanels = new ArrayList<>();
 
 		for (int i = 0; i < menulist.size(); i++) {
-			menuPanel = new MenuPanel(menulist.get(i).getName(), menulist.get(i).getPrice(), msbpport, menulist.get(i).getMenu_id()); // msbpport
+			menuPanel = new MenuPanel(menulist.get(i).getName(), menulist.get(i).getPrice(), msbpport,
+					menulist.get(i).getMenu_id()); // msbpport
 			menuPanels.add(menuPanel);
 		}
 		JPanel viewport = new JPanel();

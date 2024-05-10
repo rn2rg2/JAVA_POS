@@ -9,17 +9,29 @@ import com.kosa.pos.dto.MenuRanking;
 import com.kosa.pos.dto.MenuStatsInfo;
 
 public interface MenuDAO {
-public List<Menu> findall();
-public Optional<MenuDetail> findById(int menuId);
+	public List<Menu> findall();
 
-public List<MenuDetail> findBestMenuAll(String name);
-public Optional<MenuStatsInfo> findOrderCountByName(String name);
+	public Optional<MenuDetail> findById(int menuId);
 
-public List<Menu> findByCategory(String category);
+	public Menu findByName(String menuName);
 
+<<<<<<< HEAD
+	public List<MenuDetail> findBestMenuAll(String name);
+
+	public Optional<MenuStatsInfo> findOrderCountByName(String name);
+
+	public List<Menu> findByCategory(String category);
+
+	public List<Menu> findAll(String name);
+
+	public void insertMenu(Menu menu);
+
+	public void deleteMenu(int menuId);
+=======
 public List<Menu> findAll(String name);
 public void insertMenu(Menu menu);
 public List<MenuRanking> getMenuRanking();
 public int getTotalOrderWithoutDrink();
 public void deleteMenu(int menuId);
+>>>>>>> master
 }
