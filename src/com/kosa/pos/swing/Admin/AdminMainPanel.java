@@ -16,11 +16,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
+
+import com.kosa.pos.swing.main.CardLayoutManager;
+import com.kosa.pos.swing.main.ContentPaneManager;
+
 import java.awt.CardLayout;
 
-public class AdminMain {
+public class AdminMainPanel extends JPanel{
 
-	private JFrame frame;
+//	private JFrame frame;
 	private JPanel mainPanel = new JPanel();
 	private AdminRegisterdMenuList adminRegisterdMenuList = new AdminRegisterdMenuList(this);
 	private AdminMenuInsert adminMenuInsert = new AdminMenuInsert(this);
@@ -30,23 +34,23 @@ public class AdminMain {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AdminMain window = new AdminMain();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					AdminMainPanel window = new AdminMainPanel();
+//					window.frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the application.
 	 */
-	public AdminMain() {
+	public AdminMainPanel() {
 		initialize();
 	}
 	
@@ -82,17 +86,19 @@ public class AdminMain {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 984, 703);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		setLayout(null);
+//		frame = new JFrame();
+//		frame.setBounds(100, 100, 984, 703);
+//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		frame.getContentPane().setLayout(null);
 		
 //		JPanel mainPanel = new JPanel();
 //		mainPanel.setBounds(0, 0, 970, 666);
 //		frame.getContentPane().add(mainPanel);
 //		mainPanel.setLayout(null);
-		mainPanel.setBounds(0, 0, 970, 666);
-		frame.getContentPane().add(mainPanel);
+		mainPanel.setBounds(0, 0, 1073, 665);
+//		frame.getContentPane().add(mainPanel);
+		add(mainPanel);
 		mainPanel.setLayout(null);
 
 		
@@ -152,12 +158,12 @@ public class AdminMain {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				btnNewButton_1.setForeground(Color.red);
-				frame.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			}
 			@Override
 			public void mouseExited(MouseEvent e) {
 				btnNewButton_1.setForeground(Color.black);
-				frame.setCursor(Cursor.getDefaultCursor());
+				setCursor(Cursor.getDefaultCursor());
 			}
 		});
 		btnNewButton_1.addActionListener(new ActionListener() {
@@ -184,12 +190,12 @@ public class AdminMain {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				btnNewButton_1_1.setForeground(Color.red);
-				frame.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			}
 			@Override
 			public void mouseExited(MouseEvent e) {
 				btnNewButton_1_1.setForeground(Color.black);
-				frame.setCursor(Cursor.getDefaultCursor());
+				setCursor(Cursor.getDefaultCursor());
 			}
 		});
 		
@@ -221,12 +227,12 @@ public class AdminMain {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				btnNewButton_2.setForeground(Color.red);
-				frame.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			}
 			@Override
 			public void mouseExited(MouseEvent e) {
 				btnNewButton_2.setForeground(Color.black);
-				frame.setCursor(Cursor.getDefaultCursor());
+				setCursor(Cursor.getDefaultCursor());
 			}
 		});
 		
@@ -252,12 +258,12 @@ public class AdminMain {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				btnNewButton_2_1.setForeground(Color.red);
-				frame.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			}
 			@Override
 			public void mouseExited(MouseEvent e) {
 				btnNewButton_2_1.setForeground(Color.black);
-				frame.setCursor(Cursor.getDefaultCursor());
+				setCursor(Cursor.getDefaultCursor());
 			}
 		});
 		
@@ -275,6 +281,16 @@ public class AdminMain {
 		btnNewButton_2_1.setBorderPainted(false);
 		btnNewButton_2_1.setBounds(12, 262, 216, 42);
 		menuPanel.add(btnNewButton_2_1);
+		
+		JButton btnNewButton = new JButton("메인 화면 돌아가기");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CardLayoutManager.getCardLayout().show(ContentPaneManager.getContentPane(), "menu");
+			}
+		});
+		btnNewButton.setFont(new Font("굴림", Font.PLAIN, 16));
+		btnNewButton.setBounds(12, 598, 193, 46);
+		menuPanel.add(btnNewButton);
 		
 
 		
