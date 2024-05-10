@@ -27,6 +27,7 @@ import javax.swing.SwingConstants;
 import com.kosa.pos.dao.MenuDAO;
 import com.kosa.pos.dao.MenuDAOImpl;
 import com.kosa.pos.dao.OrderDAO;
+import com.kosa.pos.dao.UserDAO;
 import com.kosa.pos.dto.Menu;
 import com.kosa.pos.dto.MenuRanking;
 import com.kosa.pos.swing.main.CardLayoutManager;
@@ -260,7 +261,17 @@ public class MenuView extends JPanel {
 		mgrbtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				CardLayoutManager.getCardLayout().show(ContentPaneManager.getContentPane(), "adminPanel");
+				// 먼저 키보드 패널을 불러온다.
+				CardLayoutManager.getCardLayout().show(ContentPaneManager.getContentPane(), "adminKeyboard");
+				
+				// 입력한 값이 관리자 계정 정보와 맞는지 확인
+				
+				
+				// 맞으면 아래 로직 실행
+//				CardLayoutManager.getCardLayout().show(ContentPaneManager.getContentPane(), "adminPanel");
+				
+				// 틀리면 키보드 패널 새로 생성
+				
 			}
 		});
 		mgrbtn.setBounds(827, 6, 117, 29);

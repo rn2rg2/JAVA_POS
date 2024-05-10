@@ -5,6 +5,7 @@ import java.awt.CardLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import com.kosa.pos.swing.Admin.AdminLoginKeyboardPanel;
 import com.kosa.pos.swing.Admin.AdminMainPanel;
 import com.kosa.pos.swing.menu.MenuDetailPanel;
 import com.kosa.pos.swing.menu.MenuView;
@@ -29,6 +30,7 @@ public class Index extends JFrame {
 		MenuDetailPanel mdp = new MenuDetailPanel();
 		mdp.setName("mdp");
 		KeyboardPanel keyboardPanel = new KeyboardPanel();
+		AdminLoginKeyboardPanel adminKeyboardPanel = new AdminLoginKeyboardPanel();
 
 		AdminMainPanel adminPanel = new AdminMainPanel();
 
@@ -41,6 +43,7 @@ public class Index extends JFrame {
 		contentPane.add(mdp, "menudetail");
 		contentPane.add(cp, "cp");
 		contentPane.add(keyboardPanel, "keyboard");
+		contentPane.add(adminKeyboardPanel, "adminKeyboard");
 
 		contentPane.add(adminPanel, "adminPanel");
 
