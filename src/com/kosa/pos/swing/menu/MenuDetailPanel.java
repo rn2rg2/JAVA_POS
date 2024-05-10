@@ -3,19 +3,17 @@ package com.kosa.pos.swing.menu;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -25,7 +23,6 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 import com.kosa.pos.dao.MenuDAOImpl;
-import com.kosa.pos.dao.ReviewDAOImpl;
 import com.kosa.pos.dto.Menu;
 import com.kosa.pos.dto.MenuDetail;
 import com.kosa.pos.dto.Review;
@@ -103,9 +100,11 @@ public class MenuDetailPanel extends JPanel{
 		menuImage.setLayout(null);
 		
 		JLabel lblNewLabel_6 = new JLabel("New label");
-		ImageIcon icon = new ImageIcon(menu.getMenu_path());
 		
-		lblNewLabel_6.setIcon(icon);
+		ImageIcon imgpath = new ImageIcon(menu.getMenu_path());
+		Image img = imgpath.getImage().getScaledInstance(409, 321, Image.SCALE_SMOOTH);
+		imgpath = new ImageIcon(img);
+		lblNewLabel_6.setIcon(imgpath);
 		lblNewLabel_6.setBounds(0, 0, 409, 321);
 		menuImage.add(lblNewLabel_6);
 		
