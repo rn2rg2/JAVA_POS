@@ -57,5 +57,7 @@ public class ReviewMenuPanel extends JPanel {
 		writeReviewButton.setBounds(711, 66, 171, 48);
 		add(writeReviewButton);
 	}
-
+	// TODO
+	// 1. ReviewMenuPanel 생성자에 매개변수 추가
+	// (필요한 매개변수: 메뉴명, 주문수, 별점 평균 -> menu_id만 가져와서 다 처리할 수도 있을 듯)
 }

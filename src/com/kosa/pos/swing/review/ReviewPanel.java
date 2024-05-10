@@ -8,29 +8,12 @@ import java.awt.event.ActionListener;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.SwingUtilities;
 
 public class ReviewPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
-
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				JFrame frame = new JFrame("Review Panel Demo");
-				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				frame.setSize(950, 650); // 창의 크기 설정
-				frame.setLocationRelativeTo(null); // 화면 중앙에 위치시킴
-
-				ReviewPanel reviewPanel = new ReviewPanel(); // ReviewPanel 인스턴스 생성
-				frame.getContentPane().add(reviewPanel); // JFrame에 ReviewPanel 추가
-				frame.setVisible(true); // 창을 보이게 설정
-			}
-		});
-	}
 
 	public ReviewPanel() {
 		// ReviewPanel 크기를 index 패널과 동일하게 설정
@@ -76,7 +59,7 @@ public class ReviewPanel extends JPanel {
 		JPanel contentPanel = new JPanel();
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS)); // Y_AXIS로 설정하여 수직 배치
 
-		// 가정: ReviewMenuPanel이라는 클래스가 이미 정의되어 있으며, 이를 여러 개 추가할 것입니다.
+		// test로 reviewMenuPanel 10개 추가
 		for (int i = 0; i < 10; i++) { // 예시로 10개의 리뷰 메뉴 패널을 추가
 			ReviewMenuPanel reviewMenuPanel = new ReviewMenuPanel();
 			contentPanel.add(reviewMenuPanel); // contentPanel에 ReviewMenuPanel 추가

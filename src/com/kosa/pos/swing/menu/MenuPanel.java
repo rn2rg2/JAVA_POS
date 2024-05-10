@@ -101,6 +101,16 @@ public class MenuPanel extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("이미지 눌림");
+				MenuDetailPanel mdp = new MenuDetailPanel(menuId);
+				mdp.setName("mdp");
+				Component[] compList = ContentPaneManager.getContentPane().getComponents();
+				for(Component c : compList) {
+					if(c.getName() != null && c.getName().equals("mdp")) {
+						ContentPaneManager.getContentPane().remove(c);
+						ContentPaneManager.getContentPane().add(mdp,"menudetail");
+						break;
+					}
+				}
 				CardLayoutManager.getCardLayout().show(ContentPaneManager.getContentPane(), "menudetail");
 				
 			}

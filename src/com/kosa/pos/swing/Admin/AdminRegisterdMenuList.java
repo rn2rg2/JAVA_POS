@@ -25,13 +25,13 @@ import com.kosa.pos.dto.Menu;
 public class AdminRegisterdMenuList extends JPanel{
 
 	private JTextField textField;
-	private AdminMain adminMain;
+	private AdminMainPanel adminMain;
 	private String keyword;
 	
 	/**
 	 * Create the application.
 	 */
-	public AdminRegisterdMenuList(AdminMain adminMain) {
+	public AdminRegisterdMenuList(AdminMainPanel adminMain) {
 		this.adminMain = adminMain;
 		initialize();
 		setSize(743, 666);
@@ -41,7 +41,7 @@ public class AdminRegisterdMenuList extends JPanel{
 		adminMain.getMainPanel().add(this);
 	}
 	
-	public AdminRegisterdMenuList(AdminMain adminMain, String keyword) {
+	public AdminRegisterdMenuList(AdminMainPanel adminMain, String keyword) {
 		this.keyword = keyword;
 		this.adminMain = adminMain;
 		initialize();

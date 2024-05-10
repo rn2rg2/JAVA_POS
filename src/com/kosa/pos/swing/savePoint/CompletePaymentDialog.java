@@ -52,7 +52,6 @@ public class CompletePaymentDialog extends JDialog {
 		});
 
 		// TODO
-		// 1. CompletePaymentDialog를 결제 패널에서 결제 버튼을 눌렀을 때 띄워지도록 변경하기
-		// 2. "아니요" 버튼 눌렀을 때 동작 -> 메인 화면으로 돌아가기
+		// 1. "아니요" 버튼 눌렀을 때 동작 -> 메인 화면으로 돌아가기
 	}
 }

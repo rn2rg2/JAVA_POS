@@ -24,7 +24,7 @@ public class AdminMenuInsert extends JPanel{
 	private JTextField menuNameTextField;
 	private JTextField categoryNameTextField;
 	private JTextField priceTextField;
-	private AdminMain adminMain;
+	private AdminMainPanel adminMain;
 	private JLabel menuPath;
 	private JTextArea menuDescTextArea;
 	private File menuImage;
@@ -32,7 +32,7 @@ public class AdminMenuInsert extends JPanel{
 	/**
 	 * Create the application.
 	 */
-	public AdminMenuInsert(AdminMain adminMain) {
+	public AdminMenuInsert(AdminMainPanel adminMain) {
 		this.adminMain = adminMain;
 		initialize();
 		setSize(743, 666);

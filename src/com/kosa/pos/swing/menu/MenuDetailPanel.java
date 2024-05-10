@@ -40,12 +40,15 @@ public class MenuDetailPanel extends JPanel{
 	 * Create the application.
 	 */
 	public MenuDetailPanel() {
-		setPreferredSize(new Dimension(900, 650));
-		initialize();
+		this(1);
+//		setPreferredSize(new Dimension(900, 650));
+//		initialize();
 	}
 	
 	public MenuDetailPanel(int menuId) {
 		this.menuId = menuId;
+		setPreferredSize(new Dimension(900, 650));
+		initialize();
 	}
 
 	/**
@@ -100,7 +103,7 @@ public class MenuDetailPanel extends JPanel{
 		menuImage.setLayout(null);
 		
 		JLabel lblNewLabel_6 = new JLabel("New label");
-		ImageIcon icon = new ImageIcon("C:\\\\Users\\\\KOSA\\\\Desktop\\\\이종섭\\\\프로젝트 - 1차\\\\햄버거 사진.jpg");
+		ImageIcon icon = new ImageIcon(menu.getMenu_path());
 		
 		lblNewLabel_6.setIcon(icon);
 		lblNewLabel_6.setBounds(0, 0, 409, 321);
