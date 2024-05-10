@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -27,7 +28,7 @@ public class MenuPanel extends JPanel {
 	JLabel menu_name;
 	static Map<String, Integer> menuTotalPriceMap = new HashMap<>(); // 메뉴별 총 가격을 저장할 맵
 
-	public MenuPanel(String menuname, int price, JPanel msbpport, int menuId) {
+	public MenuPanel(String menuname, int price, JPanel msbpport, int menuId, String menuimgPath) {
 		setBackground(new Color(254, 255, 255));
 		setBorder(new LineBorder(new Color(207, 201, 214)));
 		setLayout(null);
@@ -93,23 +94,13 @@ public class MenuPanel extends JPanel {
 		menu_name.setBounds(0, 168, 170, 29);
 		add(menu_name);
 
-		JLabel menu_img = new JLabel("New label");
+		
+		ImageIcon imgpath = new ImageIcon(menuimgPath);
+		JLabel menu_img = new JLabel(imgpath);
 		menu_img.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("이미지 눌림");
-//				MenuDetailPanel mdp = new MenuDetailPanel(menuId);
-//				mdp.setName("mdp");
-//				Component[] compList = ContentPaneManager.getContentPane().getComponents();
-//				for(Component c : compList) {
-//					if(c.getName() != null && c.getName().equals("mdp")) {
-//						System.out.println("sss");
-//						ContentPaneManager.getContentPane().remove(c);
-//						break;
-//					}
-//				}
-//					
-//				ContentPaneManager.getContentPane().add(mdp,"menudetail");
 				CardLayoutManager.getCardLayout().show(ContentPaneManager.getContentPane(), "menudetail");
 				
 			}
