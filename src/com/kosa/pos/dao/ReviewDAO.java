@@ -6,6 +6,7 @@ import java.util.Map;
 import com.kosa.pos.dto.Review;
 
 public interface ReviewDAO {
-public List<Review> findByMenuId(int id);
-public Map<String, Double> reviewCountandAvgFindByMenuId(int id);
+	public List<Review> findByMenuId(int id);
+	public Map<String, Double> reviewCountandAvgFindByMenuId(int id);
+	public void insertReview(String title, String content, int rating, int menuId, int orderId);
 }

@@ -7,16 +7,20 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ReviewMenuPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
+	private int menuId;
 	private String path;
 	private String name;
 	private int count;
 	private double avg;
 
-	public ReviewMenuPanel(String path, String name, int count, double avg) {
+	public ReviewMenuPanel(int menuId, String path, String name, int count, double avg) {
+		this.menuId = menuId;
 		this.path = path;
 		this.name = name;
 		this.count = count;
@@ -44,7 +48,7 @@ public class ReviewMenuPanel extends JPanel {
 		orderCountLabel.setBounds(12, 89, 80, 39);
 		contentPanel.add(orderCountLabel);
 
-		JLabel orderCount = new JLabel(count + "");
+		JLabel orderCount = new JLabel(String.valueOf(count));
 		orderCount.setHorizontalAlignment(SwingConstants.CENTER);
 		orderCount.setFont(new Font("굴림", Font.PLAIN, 20));
 		orderCount.setBounds(92, 89, 99, 39);
@@ -55,19 +59,22 @@ public class ReviewMenuPanel extends JPanel {
 		ratingAvgLabel.setBounds(222, 89, 99, 39);
 		contentPanel.add(ratingAvgLabel);
 
-		JLabel orderCount_1 = new JLabel(avg + "");
-		orderCount_1.setHorizontalAlignment(SwingConstants.CENTER);
-		orderCount_1.setFont(new Font("굴림", Font.PLAIN, 20));
-		orderCount_1.setBounds(328, 89, 99, 39);
-		contentPanel.add(orderCount_1);
+		JLabel ratingAvg = new JLabel(String.format("%.2f", avg));
+		ratingAvg.setHorizontalAlignment(SwingConstants.CENTER);
+		ratingAvg.setFont(new Font("굴림", Font.PLAIN, 20));
+		ratingAvg.setBounds(328, 89, 99, 39);
+		contentPanel.add(ratingAvg);
 
 		JButton writeReviewButton = new JButton("리뷰 쓰러가기");
+		writeReviewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ReviewWriteDialog rwd = new ReviewWriteDialog(menuId, path, name, count, avg);
+				rwd.setModal(true);
+				rwd.setVisible(true);
+			}
+		});
 		writeReviewButton.setFont(new Font("굴림", Font.PLAIN, 20));
 		writeReviewButton.setBounds(711, 66, 171, 48);
 		add(writeReviewButton);
 	}
-	// TODO
-	// 1. ReviewMenuPanel 생성자에 매개변수 추가
-	// (필요한 매개변수: 메뉴명, 주문수, 별점 평균 -> menu_id만 가져와서 다 처리할 수도 있을 듯)
-	// "리뷰 쓰러가기" 버튼 누르면 JDialog 띄우기
 }
