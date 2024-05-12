@@ -44,6 +44,5 @@ public class SaveCompleteDialog extends JDialog {
 		});
 	}
 	// TODO
-	// 1. 적립 완료 "닫기" 버튼 눌렀을 때 리뷰쓰기 화면으로 전환
-	// 2. 몇 포인트 적립 됐는지 보여주는 JLabel 추가하기
+	// 몇 포인트 적립 됐는지 보여주는 JLabel 추가하기
 }

@@ -44,6 +44,7 @@ public class OrderDAO {
 			stmt.setInt(1, orderId);
 			stmt.setInt(2, menuId);
 			stmt.setInt(3, quantity);
+			
 			stmt.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -55,6 +56,5 @@ public class OrderDAO {
 				se.printStackTrace();
 			}
 		}
-
 	}
 }

@@ -16,6 +16,8 @@ import javax.swing.JScrollPane;
 import com.kosa.pos.dao.MenuDAOImpl;
 import com.kosa.pos.dto.MenuDetail;
 import com.kosa.pos.swing.common.OrderState;
+import com.kosa.pos.swing.main.CardLayoutManager;
+import com.kosa.pos.swing.main.ContentPaneManager;
 
 public class ReviewPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -56,6 +58,7 @@ public class ReviewPanel extends JPanel {
 		quitBtn.setFont(new Font("굴림", Font.PLAIN, 20));
 		quitBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				CardLayoutManager.getCardLayout().show(ContentPaneManager.getContentPane(), "menu");
 			}
 		});
 		quitBtn.setBounds(785, 18, 106, 28);
@@ -72,10 +75,11 @@ public class ReviewPanel extends JPanel {
 		List<Integer> menuIds = menuDao.fetchMenuIdByOrderId(orderId);
 		System.out.println("menuIds: " + menuIds);
 
+		// menuId List를 이용해 ReviewMenuPanel 생성
 		for (Integer menuId : menuIds) {
 			Optional<MenuDetail> menuDetail = menuDao.findById(menuId);
 
-			ReviewMenuPanel reviewMenuPanel = new ReviewMenuPanel(menuDetail.get().getMenu().getMenu_path(),
+			ReviewMenuPanel reviewMenuPanel = new ReviewMenuPanel(menuId, menuDetail.get().getMenu().getMenu_path(),
 					menuDetail.get().getMenu().getName(), menuDetail.get().getCount(), menuDetail.get().getAvgScore());
 			contentPanel.add(reviewMenuPanel);
 			System.out.println("Menu Detail: " + menuDetail.get());
