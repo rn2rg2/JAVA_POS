@@ -19,6 +19,8 @@ public interface MenuDAO {
 	public List<MenuGetRankNReview> findBestMenuAll(String name);
 
 	public Optional<MenuStatsInfo> findOrderCountByName(String name);
+	
+	public Optional<MenuStatsInfo> findOrderCountByName();
 
 	public List<Menu> findByCategory(String category);
 
