@@ -1,5 +1,6 @@
 package com.kosa.pos.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,6 +18,7 @@ public class ReviewDAOImpl implements ReviewDAO{
 
 	private Connection connection = DBConnection.getConnection();
 	private Statement stmt = null;
+	private CallableStatement cstmt = null;
 	private PreparedStatement pstmt = null;
 	private ResultSet rs = null;
 	
@@ -100,5 +102,30 @@ public class ReviewDAOImpl implements ReviewDAO{
 	        }
 		}
 		return null;
+	}
+	
+	@Override
+	public void insertReview(String title, String content, int rating, int menuId, int orderId) {
+		try {
+			cstmt = connection.prepareCall("{call review_pkg.insert_review(?,?,?,?,?)}");
+			cstmt.setString(1, title);
+			cstmt.setString(2, content);
+			cstmt.setInt(3, rating);
+			cstmt.setInt(4, menuId);
+			cstmt.setInt(5, orderId);
+			
+			cstmt.execute();
+			System.out.println("리뷰 작성 완료");
+		} catch (SQLException se) {
+			se.printStackTrace();
+		} finally {
+			try {
+				if (cstmt != null) {
+					cstmt.close();
+				}
+			} catch (SQLException se) {
+				se.printStackTrace();
+			}
+		}
 	}
 }

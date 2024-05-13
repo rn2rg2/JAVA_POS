@@ -11,6 +11,8 @@ import javax.swing.SwingConstants;
 
 import com.kosa.pos.dao.UserDAO;
 import com.kosa.pos.swing.common.OrderState;
+import com.kosa.pos.swing.main.CardLayoutManager;
+import com.kosa.pos.swing.main.ContentPaneManager;
 
 public class NotRegisteredDialog extends JDialog {
 
@@ -65,10 +67,9 @@ public class NotRegisteredDialog extends JDialog {
 		/* "아니요" 버튼 */
 		btnNo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				dispose();
+				CardLayoutManager.getCardLayout().show(ContentPaneManager.getContentPane(), "menu");
 			}
 		});
 	}
-	// TODO
-	// 1. 가입 "아니요" 버튼 눌렀을 때 동작 -> 메인 화면으로 이동
 }

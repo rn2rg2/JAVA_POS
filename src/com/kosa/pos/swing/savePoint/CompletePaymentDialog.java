@@ -40,6 +40,12 @@ public class CompletePaymentDialog extends JDialog {
 		getContentPane().add(yesButton);
 
 		JButton noButton = new JButton("아니요");
+		noButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				CardLayoutManager.getCardLayout().show(ContentPaneManager.getContentPane(), "menu");
+			}
+		});
 		noButton.setFont(new Font("굴림", Font.PLAIN, 17));
 		noButton.setBounds(362, 269, 147, 54);
 		getContentPane().add(noButton);
@@ -51,8 +57,5 @@ public class CompletePaymentDialog extends JDialog {
 				CardLayoutManager.getCardLayout().show(ContentPaneManager.getContentPane(), "keyboard");
 			}
 		});
-
-		// TODO
-		// 1. "아니요" 버튼 눌렀을 때 동작 -> 메인 화면으로 돌아가기
 	}
 }

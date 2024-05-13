@@ -61,10 +61,12 @@ public class KeyboardActionListener implements ActionListener {
 					userDao.updateUserId(userId, orderId);
 
 					SaveCompleteDialog scd = new SaveCompleteDialog();
+					scd.setModal(true);
 					scd.setVisible(true);
 
 				} else { // 가입 안 된 전화번호
 					NotRegisteredDialog nrd = new NotRegisteredDialog(long_userInput);
+					nrd.setModal(true);
 					nrd.setVisible(true);
 				}
 			} else { // 숫자 버튼 입력
