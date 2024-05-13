@@ -4,13 +4,13 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -22,8 +22,7 @@ import com.kosa.pos.dao.MenuDAO;
 import com.kosa.pos.dao.MenuDAOImpl;
 import com.kosa.pos.dto.Menu;
 import com.kosa.pos.dto.MenuDetail;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import com.kosa.pos.dto.MenuGetRankNReview;
 
 public class AdminBestMenuList extends JPanel {
 	private JTextField textField;
@@ -118,7 +117,7 @@ public class AdminBestMenuList extends JPanel {
 		if(keyword != null) textField.setText(keyword);
 		
 		MenuDAO menuDao = new MenuDAOImpl();
-		List<MenuDetail> menuRankList = menuDao.findBestMenuAll(textField.getText());
+		List<MenuGetRankNReview> menuRankList = menuDao.findBestMenuAll(textField.getText());
 		
 		JButton btnNewButton = new JButton("검색");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -150,8 +149,7 @@ public class AdminBestMenuList extends JPanel {
 		
 		for (int i = 0; i < menuRankList.size(); i++) {
 			
-			MenuDetail menuDetail = menuRankList.get(i);
-			Menu menu = menuDetail.getMenu();
+			MenuGetRankNReview menuDetail = menuRankList.get(i);
 			
 			JPanel gridLayoutPanel = new JPanel();
 	        gridLayoutPanel.setLayout(new GridLayout(0, 5, 0, 0));
@@ -160,7 +158,7 @@ public class AdminBestMenuList extends JPanel {
 			JPanel menuIdPanel = new JPanel();
 			menuIdPanel.setLayout(new BorderLayout());
         	
-            JLabel menuIdLabel = new JLabel(menuDetail.getRank() + ""); // 순위
+            JLabel menuIdLabel = new JLabel(Integer.toString(i+1)); // 순위
             menuIdLabel.setHorizontalAlignment(JLabel.CENTER);
             menuIdLabel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
             menuIdPanel.add(menuIdLabel, BorderLayout.CENTER);
@@ -169,7 +167,7 @@ public class AdminBestMenuList extends JPanel {
 			JPanel menucategoryPanel = new JPanel();
 			menucategoryPanel.setLayout(new BorderLayout());
         	
-            JLabel menucategoryLabel = new JLabel(menu.getCategory()); // 카테고리
+            JLabel menucategoryLabel = new JLabel(menuDetail.getCategory()); // 카테고리
             menucategoryLabel.setHorizontalAlignment(JLabel.CENTER);
             menucategoryLabel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
             menucategoryPanel.add(menucategoryLabel, BorderLayout.CENTER);
@@ -178,7 +176,7 @@ public class AdminBestMenuList extends JPanel {
 			JPanel menuNamePanel = new JPanel();
 			menuNamePanel.setLayout(new BorderLayout());
         	
-            JLabel menuNameLabel = new JLabel(menu.getName()); // 이름
+            JLabel menuNameLabel = new JLabel(menuDetail.getMenuName()); // 이름
             menuNameLabel.setHorizontalAlignment(JLabel.CENTER);
             menuNameLabel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
             menuNamePanel.add(menuNameLabel, BorderLayout.CENTER);
@@ -187,7 +185,7 @@ public class AdminBestMenuList extends JPanel {
 			JPanel menuOrderCountPanel = new JPanel();
 			menuOrderCountPanel.setLayout(new BorderLayout());
         	
-            JLabel menuOrderCountLabel = new JLabel(menuDetail.getCount() + ""); // 주문 횟수
+            JLabel menuOrderCountLabel = new JLabel(menuDetail.getTotalOrders() + ""); // 주문 횟수
             menuOrderCountLabel.setHorizontalAlignment(JLabel.CENTER);
             menuOrderCountLabel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
             menuOrderCountPanel.add(menuOrderCountLabel, BorderLayout.CENTER);
@@ -196,7 +194,7 @@ public class AdminBestMenuList extends JPanel {
 			JPanel menuReviewAvgScorePanel = new JPanel();
 			menuReviewAvgScorePanel.setLayout(new BorderLayout());
         	
-            JLabel menuReviewAvgScoreLabel = new JLabel(menuDetail.getAvgScore() + ""); // 리뷰 평점
+            JLabel menuReviewAvgScoreLabel = new JLabel(menuDetail.getAvgReview() + ""); // 리뷰 평점
             menuReviewAvgScoreLabel.setHorizontalAlignment(JLabel.CENTER);
             menuReviewAvgScoreLabel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
             menuReviewAvgScorePanel.add(menuReviewAvgScoreLabel, BorderLayout.CENTER);
