@@ -1,12 +1,3 @@
-create or replace package menu_stats_info
-as
- procedure get_menu_rank(p_menu_name in varchar2 default '',p_cursor out sys_refcursor); -- 인기메뉴 가져오기 (주문 개수 순)
- procedure get_menu_order_count(p_menu_name in varchar2, p_cursor out sys_refcursor); -- 특정 메뉴 최근 주문 개수 가져오기
- procedure get_menu_review_avg_score(p_menu_name in varchar2, p_cursor out sys_refcursor); -- 특정 메뉴 최근 리뷰 평점 가져오기
- PROCEDURE GET_MENU_RANKING (p_menu_name IN VARCHAR2 DEFAULT NULL,p_result OUT SYS_REFCURSOR); -- 인기메뉴 정보 모두 가져오기(주문 개수 순)
-end;
-/
-
 create or replace package body menu_stats_info
 as
 procedure get_menu_rank
@@ -72,55 +63,38 @@ on m.menu_id = s.menu_id
 where name like '%' || p_menu_name || '%';
  end;
 
- procedure get_menu_order_count
+ procedure GET_MENU_GRAPHSEARCH_DATA
  (p_menu_name in varchar2, p_cursor out sys_refcursor)
- is
- v_menu_id number;
- begin
-    select menu_id 
-    into v_menu_id
-    from menu
-    where name = p_menu_name;
+    is
+        v_menu_id number;
+    begin
+        select menu_id 
+        into v_menu_id
+        from menu
+        where name = p_menu_name;
+        
+        open p_cursor for
+        WITH DateRange AS (
+        SELECT TRUNC(SYSDATE) - LEVEL + 1 AS OrderDate
+        FROM dual
+        CONNECT BY LEVEL <= 7
+    )
+SELECT 
+    DateRange.OrderDate,
+    SUM(CASE WHEN ORDER_DETAIL.MENU_ID = v_menu_id THEN ORDER_DETAIL.QUANTITY ELSE 0 END) AS MENU_QUANTITY
+FROM 
+    DateRange
+LEFT JOIN 
+    USER_ORDER ON TRUNC(USER_ORDER.ORDER_DATE) = DateRange.OrderDate
+LEFT JOIN
+    ORDER_DETAIL ON USER_ORDER.ORDER_ID = ORDER_DETAIL.ORDER_ID
+GROUP BY 
+    DateRange.OrderDate
+ORDER BY 
+    DateRange.OrderDate;
+end;
 
-    open p_cursor for
-     select
-     to_char(a.day,'YY-MM-DD') as day,
-     nvl(b.total,0) as total
-    from
-    (
-    select 
-    level-1 as g,
-    sysdate-(level-1) as day
-    from dual
-    connect by level <= 7
-    ) a
-    left outer join
-    (
-    select 
-    sum(od.quantity) as total,
-    round(sysdate - uo.order_date) as g
-    from
-    order_detail od
-    inner join
-    (
-   select
-    user_order.order_id,
-    user_order.order_date,
-    order_detail.menu_id
-   from user_order
-   inner join
-   order_detail
-   on user_order.order_id = order_detail.order_id
-   where sysdate - user_order.order_date <= 7 and order_detail.menu_id = v_menu_id
-    ) uo
-    on uo.order_id = od.order_id
-    group by round(sysdate - uo.order_date)
-    ) b
-   on a.g = b.g
-   order by a.g desc;
- end;
-
- procedure get_menu_review_avg_score
+procedure get_menu_review_avg_score
  (p_menu_name in varchar2, p_cursor out sys_refcursor)
  is
  v_menu_id number;
@@ -155,8 +129,9 @@ group by round(sysdate - review_date)
 on a.g = b.g
 order by a.g desc;
  end;
- 
- PROCEDURE GET_MENU_RANKING (
+
+
+PROCEDURE GET_MENU_RANKING (
     p_menu_name IN VARCHAR2 DEFAULT NULL,
     p_result OUT SYS_REFCURSOR
 )
@@ -187,6 +162,30 @@ BEGIN
         WHERE p_menu_name IS NULL OR MENU_NAME = p_menu_name
         ORDER BY TOTAL_ORDERS DESC;
 END;
- 
+
+PROCEDURE GET_GRAPH_DATA (
+    p_result OUT SYS_REFCURSOR)
+AS
+BEGIN
+    OPEN p_result FOR 
+        WITH DateRange AS (
+            SELECT TRUNC(SYSDATE) - LEVEL + 1 AS OrderDate
+            FROM dual
+        CONNECT BY LEVEL <= 7
+)
+    SELECT 
+        DateRange.OrderDate,
+        SUM(ORDER_DETAIL.QUANTITY) AS TotalOrders
+    FROM 
+        DateRange
+    LEFT JOIN 
+        USER_ORDER ON TRUNC(USER_ORDER.ORDER_DATE) = DateRange.OrderDate
+    LEFT JOIN
+        ORDER_DETAIL ON USER_ORDER.ORDER_ID = ORDER_DETAIL.ORDER_ID
+    GROUP BY 
+        DateRange.OrderDate
+    ORDER BY 
+       DateRange.OrderDate;
+END;
+
 end menu_stats_info;
-/
