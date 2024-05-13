@@ -12,7 +12,7 @@ import javax.swing.border.EmptyBorder;
 
 import com.kosa.pos.swing.main.CardLayoutManager;
 import com.kosa.pos.swing.main.ContentPaneManager;
-import com.kosa.pos.swing.payment.KeyboardActionListener;
+import com.kosa.pos.swing.signUp.KeyboardActionListener;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;

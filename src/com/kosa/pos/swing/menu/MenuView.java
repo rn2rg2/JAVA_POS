@@ -33,8 +33,8 @@ import com.kosa.pos.swing.common.OrderState;
 import com.kosa.pos.swing.main.CardLayoutManager;
 import com.kosa.pos.swing.main.ContentPaneManager;
 import com.kosa.pos.swing.main.Index;
-import com.kosa.pos.swing.payment.CompletePaymentDialog;
 import com.kosa.pos.swing.review.ReviewPanel;
+import com.kosa.pos.swing.signUp.CompletePaymentDialog;
 
 public class MenuView extends JPanel {
 	MenuDAO menudao = new MenuDAOImpl();
