@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -334,9 +335,16 @@ public class MenuView extends JPanel {
 			int rank = i + 1; // 순위
 			String menuName = menuRanking.getMenuName(); // 메뉴 이름
 			int orderCount = menuRanking.getTotal_order(); // 주문 횟수
+			
 			double orderPercentage = menuRanking.getTotal_percentage(); // 주문 퍼센티지
+
+			// DecimalFormat 객체 생성
+			DecimalFormat df = new DecimalFormat("#.#");
+
+			// 형식화된 문자열로 변환
+			String formattedAvgReview = df.format(orderPercentage);
 			// 각 메뉴 정보를 표시하는 MenuShowRanks 객체 생성
-			MenuShowRanks menuRankInfo = new MenuShowRanks(rank, menuName, orderCount, orderPercentage);
+			MenuShowRanks menuRankInfo = new MenuShowRanks(rank, menuName, orderCount, formattedAvgReview);
 			MenuRankShowPane.add(menuRankInfo); // 패널에 추가
 		}
 		// !메뉴 순위
