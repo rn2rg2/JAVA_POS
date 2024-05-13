@@ -1,0 +1,22 @@
+create or replace package review_pkg
+is
+    procedure insert_review(p_title in varchar2, p_content in varchar2, p_rating in number, p_menu_id in number, p_order_id in number);
+end;
+/
+
+create or replace package body review_pkg
+is
+    procedure insert_review(p_title in varchar2, p_content in varchar2, p_rating in number, p_menu_id in number, p_order_id in number)
+    is
+        v_detail_id number;
+    begin
+        select detail_id
+        into v_detail_id
+        from order_detail
+        where menu_id = p_menu_id and order_id = p_order_id;
+
+        insert into review(title, content, rating, review_date, menu_id, detail_id)
+        values(p_title, p_content, p_rating, sysdate, p_menu_id, v_detail_id);
+    end;
+end;
+/

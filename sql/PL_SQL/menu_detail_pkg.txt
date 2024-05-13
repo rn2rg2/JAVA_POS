@@ -1,0 +1,56 @@
+create or replace package menu_detail
+as
+    procedure get_menu_info
+    (p_menu_id in number,
+    p_menu out temp_menu%rowtype);
+    procedure get_menu_review_list
+    (p_menu_id in number,
+    p_cursor out sys_refcursor);
+    procedure get_menu_stats_info
+    (p_menu_id in number, 
+    p_review_count out number,
+    p_review_rating_avg out number);
+end;
+/
+
+create or replace package body menu_detail
+as
+    procedure get_menu_info
+    (p_menu_id in number, p_menu out temp_menu%rowtype)
+    is
+    begin
+      select
+       *
+      into p_menu
+      from temp_menu
+      where menu_id = p_menu_id;
+    end;
+
+    procedure get_menu_review_list
+    (p_menu_id in number,
+    p_cursor out sys_refcursor)
+    is
+    begin
+      open p_cursor for
+          select * from temp_review
+          where menu_menu_id = p_menu_id
+          and sysdate - review_date <= 7;
+    end;
+
+    procedure get_menu_stats_info
+    (p_menu_id in number, 
+    p_review_count out number,
+    p_review_rating_avg out number)
+    is
+    begin
+     select 
+      count(*) as count,
+      avg(rating) as avg_score
+     into p_review_count, p_review_rating_avg
+     from temp_review
+     where menu_menu_id = p_menu_id
+     and sysdate - review_date <= 7;
+    end;
+
+end;
+/

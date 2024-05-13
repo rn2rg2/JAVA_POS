@@ -1,0 +1,228 @@
+create or replace package menu_package
+as
+ procedure get_menu_list(p_menu_name in varchar2 default '', p_cursor out sys_refcursor); -- 전체 다 가져오는 프로시저
+ procedure get_menu_detail(p_menu_id in number, p_cursor out sys_refcursor); -- 특정 메뉴만 가져오는 프로시저
+ procedure get_menu_detail
+ (p_menu_id in number, menu_rec out sys_refcursor,
+ menu_order_count out number, menu_review_avg_score out number,
+ p_order_by_review_date_desc out sys_refcursor,
+ p_order_by_rating_desc out sys_refcursor,
+ p_order_by_review_date_asc out sys_refcursor); -- 특정 메뉴, 주문 횟수, 리뷰 평점, 리뷰 리스트 가져오는 프로시저
+ procedure get_menu_detail(p_menu_name in varchar2, p_result out sys_refcursor);
+ procedure insert_menu
+ (p_name in menu.name%type,
+ p_price in menu.price%type,
+ p_category in menu.category%type,
+ p_menu_desc in menu.menu_desc%type,
+ p_menu_path in menu.menu_path%type); -- 메뉴 추가
+ procedure update_menu
+ (p_menu_id in menu.menu_id%type,
+ p_name in menu.name%type,
+ p_price in menu.price%type,
+ p_category in menu.category%type,
+ p_menu_desc in menu.menu_desc%type,
+ p_menu_path in menu.menu_path%type); -- 메뉴 수정
+ procedure delete_menu(p_menu_id in number); -- 특정 메뉴 삭제
+ PROCEDURE find_category(p_menu_category IN menu.category%TYPE,-- 카테고리별 메뉴 불러오기
+    p_menu_rec OUT SYS_REFCURSOR);
+Procedure Total_Quantity_WithoutDrink(
+tq_quantity OUT NUMBER); -- 음료를 제외한 모든 주문횟수
+PROCEDURE GET_MENU_RANKING_TOP3 (
+    p_result OUT SYS_REFCURSOR
+); -- 상위 3 개 주문 불러오기 (음료제외)
+procedure get_menu_ids_by_order_id(p_order_id in number, p_menu_ids out sys_refcursor);
+end;
+/
+
+create or replace package body menu_package
+as
+ procedure get_menu_list(p_menu_name in varchar2 default '', p_cursor out sys_refcursor)
+ as
+  sql_query varchar2(500) := 'select * from menu where name like :p_menu_name';
+ begin
+
+  open p_cursor for
+   sql_query using '%' || p_menu_name || '%';
+ end;
+
+ procedure get_menu_detail(p_menu_id in number, p_cursor out sys_refcursor)
+ as
+ begin
+  open p_cursor for
+  select * 
+  from menu
+  where menu_id = p_menu_id;
+ end;
+
+-- 이름을 통해 메뉴 반환
+ procedure get_menu_detail(p_menu_name in varchar2, p_result out sys_refcursor)
+ is
+ begin
+    open p_result for
+        select *
+        from menu
+        where name = p_menu_name;
+ end;
+
+ procedure get_menu_detail
+ (p_menu_id in number, menu_rec out sys_refcursor,
+ menu_order_count out number, menu_review_avg_score out number,
+ p_order_by_review_date_desc out sys_refcursor,
+ p_order_by_rating_desc out sys_refcursor,
+ p_order_by_review_date_asc out sys_refcursor)
+ as
+ begin
+    -- 특정 메뉴 일정 기간동안 주문 받은 횟수
+            SELECT 
+                   SUM(OD.QUANTITY) into menu_order_count
+            FROM ORDER_DETAIL OD
+            JOIN MENU M ON OD.MENU_ID = M.MENU_ID
+            WHERE M.MENU_ID = p_menu_id;
+
+    -- 특정 메뉴 일정 기간 동안의 리뷰 평점
+     select 
+     round(avg(rating),2) as avg_score into menu_review_avg_score
+     from review
+     where menu_id = p_menu_id 
+     and sysdate - review_date <= 7;
+
+     -- 특정 메뉴 가져오기
+     open menu_rec for
+     select * 
+     from menu where menu_id = p_menu_id;
+
+     -- 특정 메뉴의 리뷰 리스트 가져오기
+     open p_order_by_review_date_desc for
+    select 
+		review_id,
+		title,
+		content,
+        rating,
+		to_char(review_date,'YYYY-MM-dd') as review_date
+	 from review
+          where menu_id = p_menu_id
+          and sysdate - review_date <= 7
+          order by review_date desc;
+
+     open p_order_by_rating_desc for
+    select 
+		review_id,
+		title,
+		content,
+        rating,
+		to_char(review_date,'YYYY-MM-dd') as review_date
+	 from review
+          where menu_id = p_menu_id
+          and sysdate - review_date <= 7
+          order by rating desc;
+
+     open p_order_by_review_date_asc for
+    select 
+		review_id,
+		title,
+		content,
+        rating,
+		to_char(review_date,'YYYY-MM-dd') as review_date
+	 from review
+          where menu_id = p_menu_id
+          and sysdate - review_date <= 7
+          order by review_date asc;
+ end;
+
+ procedure insert_menu
+ (p_name in menu.name%type,
+ p_price in menu.price%type,
+ p_category in menu.category%type,
+ p_menu_desc in menu.menu_desc%type,
+ p_menu_path in menu.menu_path%type) -- 메뉴 추가
+ as
+ begin
+  insert into menu 
+  (name, price, category, menu_desc, menu_path)
+  values
+  (p_name, p_price, p_category, p_menu_desc, p_menu_path);
+  commit;
+ end;
+
+ procedure update_menu
+ (p_menu_id in menu.menu_id%type,
+ p_name in menu.name%type,
+ p_price in menu.price%type,
+ p_category in menu.category%type,
+ p_menu_desc in menu.menu_desc%type,
+ p_menu_path in menu.menu_path%type) -- 메뉴 수정
+ as
+ begin
+  update menu
+  set name = p_name, price = p_price, category = p_category,
+  menu_desc = p_menu_desc, menu_path = p_menu_path
+  where menu_id = p_menu_id;
+  commit;
+ end;
+
+ procedure delete_menu(p_menu_id in number)
+ as
+ begin
+  delete from menu where menu_id = p_menu_id;
+  commit;
+ end;
+
+--카테고리 불러오기
+  PROCEDURE find_category(
+    p_menu_category IN menu.category%TYPE, 
+    p_menu_rec OUT SYS_REFCURSOR
+) AS
+BEGIN
+    OPEN p_menu_rec FOR
+    SELECT * FROM menu
+    WHERE category = p_menu_category;
+END;
+
+PROCEDURE GET_MENU_RANKING_TOP3 (
+    p_result OUT SYS_REFCURSOR
+)
+AS
+BEGIN
+    OPEN p_result FOR
+        WITH TotalOrders AS (
+            SELECT SUM(QUANTITY) AS TOTAL_QUANTITY
+            FROM ORDER_DETAIL OD
+            JOIN MENU M ON OD.MENU_ID = M.MENU_ID
+            WHERE M.CATEGORY != '음료'
+        ),
+        MenuOrders AS (
+            SELECT M.NAME AS MENU_NAME, 
+                   SUM(OD.QUANTITY) AS TOTAL_ORDERS
+            FROM ORDER_DETAIL OD
+            JOIN MENU M ON OD.MENU_ID = M.MENU_ID
+            WHERE M.CATEGORY != '음료'
+            GROUP BY M.NAME
+            ORDER BY SUM(OD.QUANTITY) DESC
+        )
+        SELECT MENU_NAME, 
+               TOTAL_ORDERS,
+               TO_CHAR((TOTAL_ORDERS / TO_NUMBER((SELECT TOTAL_QUANTITY FROM TotalOrders))) * 100, 'FM9999.9') AS ORDER_PERCENTAGE
+        FROM MenuOrders
+        WHERE ROWNUM <= 3;
+END;
+
+PROCEDURE Total_Quantity_WithoutDrink(
+    tq_quantity OUT NUMBER)
+    AS
+    BEGIN
+        select sum(OD.quantity) into tq_quantity
+        from order_detail OD join menu M on OD.menu_id = M.menu_id
+        where m.category != '음료';
+end;
+
+-- order_id를 매개변수로 받아 order_detail 테이블에서 menu_id 데이터들 반환
+procedure get_menu_ids_by_order_id(p_order_id in number, p_menu_ids out sys_refcursor)
+is
+begin
+    open p_menu_ids for
+        select menu_id
+        from order_detail
+        where order_id = p_order_id;
+    end;
+end;
+/
