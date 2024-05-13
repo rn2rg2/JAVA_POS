@@ -13,6 +13,7 @@ import java.util.Optional;
 import com.kosa.pos.dbconnection.DBConnection;
 import com.kosa.pos.dto.Menu;
 import com.kosa.pos.dto.MenuDetail;
+import com.kosa.pos.dto.MenuGetRankNReview;
 import com.kosa.pos.dto.MenuRanking;
 import com.kosa.pos.dto.MenuStatsInfo;
 import com.kosa.pos.dto.Review;
@@ -244,8 +245,8 @@ public class MenuDAOImpl implements MenuDAO {
 	}
 
 	@Override
-	public List<MenuDetail> findBestMenuAll(String name) {
-		String runSP = "{ call menu_stats_info.get_menu_rank(?,?) }";
+	public List<MenuGetRankNReview> findBestMenuAll(String name) {
+		String runSP = "{ call menu_stats_info.get_menu_ranking(?,?) }";
 
 		try {
 			// PreparedStatement 객체 생성 후 쿼리 실행
@@ -256,18 +257,13 @@ public class MenuDAOImpl implements MenuDAO {
 
 			ResultSet menuRank = (ResultSet) callableStatement.getObject(2);
 
-			List<MenuDetail> menuRankList = new ArrayList<>();
+			List<MenuGetRankNReview> menuRankList = new ArrayList<>();
 			while (menuRank.next()) {
-				MenuDetail menuDetail = new MenuDetail();
-				menuDetail.setRank(menuRank.getInt("RANK"));
-				menuDetail.setAvgScore(menuRank.getDouble("AVG_SCORE"));
-				menuDetail.setCount(menuRank.getInt("ORDER_COUNT"));
-
-				Menu menu = new Menu();
-				menu.setCategory(menuRank.getString("CATEGORY"));
-				menu.setName(menuRank.getString("NAME"));
-				menuDetail.setMenu(menu);
-
+				MenuGetRankNReview menuDetail = new MenuGetRankNReview();
+				menuDetail.setAvgReview(menuRank.getDouble("AVG_RATING"));
+				menuDetail.setTotalOrders(menuRank.getInt("TOTAL_ORDERS"));
+				menuDetail.setMenuName(menuRank.getString("MENU_NAME"));
+				menuDetail.setCategory(menuRank.getString("CATEGORY"));
 				menuRankList.add(menuDetail);
 
 			}
