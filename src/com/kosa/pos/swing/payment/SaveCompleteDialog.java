@@ -9,12 +9,15 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import com.kosa.pos.dao.UserDAO;
+import com.kosa.pos.swing.common.OrderState;
 import com.kosa.pos.swing.main.CardLayoutManager;
 import com.kosa.pos.swing.main.ContentPaneManager;
 
 public class SaveCompleteDialog extends JDialog {
 
 	private static final long serialVersionUID = 1L;
+	UserDAO userDao = new UserDAO();
 
 	/**
 	 * Create the dialog.
@@ -33,6 +36,17 @@ public class SaveCompleteDialog extends JDialog {
 		btnClose.setBounds(170, 227, 89, 23);
 		getContentPane().add(btnClose);
 
+		JLabel savedPointLabel = new JLabel("포인트:");
+		savedPointLabel.setFont(new Font("굴림", Font.PLAIN, 20));
+		savedPointLabel.setBounds(133, 150, 73, 42);
+		getContentPane().add(savedPointLabel);
+
+		int point = userDao.getPoint(OrderState.getUserId());
+		JLabel savedPoint = new JLabel(point + "");
+		savedPoint.setFont(new Font("굴림", Font.PLAIN, 20));
+		savedPoint.setBounds(218, 150, 144, 42);
+		getContentPane().add(savedPoint);
+
 		setModal(true); // 다이얼로그가 모달임을 설정하여 다이얼로그 뒤의 윈도우를 클릭할 수 없도록 함
 
 		/* 리스너 설정 */
@@ -43,6 +57,4 @@ public class SaveCompleteDialog extends JDialog {
 			}
 		});
 	}
-	// TODO
-	// 몇 포인트 적립 됐는지 보여주는 JLabel 추가하기
 }

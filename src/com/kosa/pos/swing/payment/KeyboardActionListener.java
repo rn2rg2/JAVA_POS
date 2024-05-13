@@ -54,13 +54,13 @@ public class KeyboardActionListener implements ActionListener {
 				UserDAO userDao = new UserDAO();
 				// 가입된 전화번호인지 확인
 				int userId = userDao.checkPhoneNumExists(long_userInput);
+				OrderState.setUserId(userId);
 
 				if (userId != 0) { // 가입된 전화번호
 					keyboard.userInput.setText(""); // keyboard 초기화
 
 					// 기존 비회원으로 저장됐던 order_detail 테이블의 user_id 컬럼을 업데이트
-					int orderId = OrderState.getOrderId();
-					userDao.updateUserId(userId, orderId);
+					userDao.updateUserId(OrderState.getUserId(), OrderState.getOrderId());
 
 					SaveCompleteDialog scd = new SaveCompleteDialog();
 					scd.setModal(true);

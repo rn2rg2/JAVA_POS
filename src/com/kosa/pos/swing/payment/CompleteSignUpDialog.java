@@ -34,7 +34,7 @@ public class CompleteSignUpDialog extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				int userId = OrderState.getUserId();
 				int orderId = OrderState.getOrderId();
-				userDao.updateUserId(userId, orderId);
+				userDao.updateUserId(userId, orderId); // 가입 후 부여받은 user_id로 user_order 테이블의 user_id를 업데이트
 
 				dispose();
 				CardLayoutManager.getCardLayout().show(ContentPaneManager.getContentPane(), "review");

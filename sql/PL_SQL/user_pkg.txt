@@ -25,5 +25,15 @@ is
             rollback;
             raise;
     end;
+    
+    procedure get_point(p_user_id in number, o_point in number)
+    is
+        v_point number;
+    begin
+        select point
+        into v_point
+        from user_info
+        where user_id = p_user_id;
+    end;
 end;
 /
