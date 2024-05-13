@@ -1,74 +1,74 @@
 -- 돈카츠 카테고리
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('돈카츠1', 12000, '돈카츠', '맛있는 돈카츠', '/images/donkatsu1.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('돈카츠2', 13000, '돈카츠', '고기가 촉촉한 돈카츠', '/images/donkatsu2.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('돈카츠3', 11000, '돈카츠', '특제 소스 돈카츠', '/images/donkatsu3.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('돈카츠4', 14000, '돈카츠', '치즈가 들어간 돈카츠', '/images/donkatsu4.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('돈카츠5', 12500, '돈카츠', '일본식 전통 돈카츠', '/images/donkatsu5.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('돈카츠6', 11500, '돈카츠', '허브가 가미된 돈카츠', '/images/donkatsu6.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('돈카츠7', 13500, '돈카츠', '두툼한 돈카츠', '/images/donkatsu7.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('돈카츠8', 14500, '돈카츠', '매운맛 돈카츠', '/images/donkatsu8.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('돈카츠9', 10000, '돈카츠', '소박한 돈카츠', '/images/donkatsu9.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('돈카츠10', 15000, '돈카츠', '고급 돈카츠', '/images/donkatsu10.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('맛있는 돈카츠', 12000, '돈카츠', '맛있는 돈카츠', '.\img\menuimg\Tonkatsu.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('고기가 촉촉한 돈카츠', 13000, '돈카츠', '고기가 촉촉한 돈카츠', '.\img\menuimg\Tonkatsu.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('특제 소스 돈카츠', 11000, '돈카츠', '특제 소스 돈카츠', '.\img\menuimg\Tonkatsu.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('치즈가 들어간 돈카츠', 14000, '돈카츠', '치즈가 들어간 돈카츠', '.\img\menuimg\Tonkatsu.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('일본식 전통 돈카츠', 12500, '돈카츠', '일본식 전통 돈카츠', '.\img\menuimg\Tonkatsu.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('허브가 가미된 돈카츠', 11500, '돈카츠', '허브가 가미된 돈카츠', '.\img\menuimg\Tonkatsu.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('두툼한 돈카츠', 13500, '돈카츠', '두툼한 돈카츠', '.\img\menuimg\Tonkatsu.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('매운맛 돈카츠', 14500, '돈카츠', '매운맛 돈카츠', '.\img\menuimg\Tonkatsu.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('소박한 돈카츠', 10000, '돈카츠', '소박한 돈카츠', '.\img\menuimg\Tonkatsu.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('고급 돈카츠', 15000, '돈카츠', '고급 돈카츠', '.\img\menuimg\Tonkatsu.jpg');
 
 -- 냉소바 카테고리
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('냉소바1', 8000, '냉소바', '시원한 여름 냉소바', '/images/naengsoba1.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('냉소바2', 8500, '냉소바', '특별한 레시피 냉소바', '/images/naengsoba2.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('냉소바3', 9000, '냉소바', '고소한 참깨 냉소바', '/images/naengsoba3.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('냉소바4', 9500, '냉소바', '담백한 맛의 냉소바', '/images/naengsoba4.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('냉소바5', 7800, '냉소바', '전통 일본식 냉소바', '/images/naengsoba5.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('냉소바6', 8200, '냉소바', '육수가 시원한 냉소바', '/images/naengsoba6.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('냉소바7', 8800, '냉소바', '해산물 토핑 냉소바', '/images/naengsoba7.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('냉소바8', 9200, '냉소바', '야채가 풍부한 냉소바', '/images/naengsoba8.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('냉소바9', 9900, '냉소바', '매운맛 냉소바', '/images/naengsoba9.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('냉소바10', 7600, '냉소바', '오리지널 냉소바', '/images/naengsoba10.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('시원한 여름 냉소바', 8000, '냉소바', '시원한 여름 냉소바', '.\img\menuimg\ColdSoba.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('특별한 레시피 냉소바', 8500, '냉소바', '특별한 레시피 냉소바', '.\img\menuimg\ColdSoba.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('고소한 참깨 냉소바', 9000, '냉소바', '고소한 참깨 냉소바', '.\img\menuimg\ColdSoba.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('담백한 맛의 냉소바', 9500, '냉소바', '담백한 맛의 냉소바', '.\img\menuimg\ColdSoba.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('전통 일본식 냉소바', 7800, '냉소바', '전통 일본식 냉소바', '.\img\menuimg\ColdSoba.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('육수가 시원한 냉소바', 8200, '냉소바', '육수가 시원한 냉소바', '.\img\menuimg\ColdSoba.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('해산물 토핑 냉소바', 8800, '냉소바', '해산물 토핑 냉소바', '.\img\menuimg\ColdSoba.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('야채가 풍부한 냉소바', 9200, '냉소바', '야채가 풍부한 냉소바', '.\img\menuimg\ColdSoba.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('매운맛 냉소바', 9900, '냉소바', '매운맛 냉소바', '.\img\menuimg\ColdSoba.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('오리지널 냉소바', 7600, '냉소바', '오리지널 냉소바', '.\img\menuimg\ColdSoba.jpg');
 
 -- 음료 카테고리
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('음료1', 2000, '음료', '아이스 아메리카노', '/images/drink1.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('음료2', 2500, '음료', '따뜻한 녹차', '/images/drink2.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('음료3', 3000, '음료', '레몬 에이드', '/images/drink3.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('음료4', 3500, '음료', '자몽 주스', '/images/drink4.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('음료5', 1800, '음료', '병에 담긴 물', '/images/drink5.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('음료6', 2200, '음료', '카페 라떼', '/images/drink6.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('음료7', 2700, '음료', '토마토 주스', '/images/drink7.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('음료8', 3200, '음료', '블루베리 스무디', '/images/drink8.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('음료9', 3600, '음료', '코코넛 밀크', '/images/drink9.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('음료10', 2300, '음료', '핫 초코', '/images/drink10.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('아이스 아메리카노', 2000, '음료', '아이스 아메리카노', '.\img\menuimg\Cola.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('녹차', 2500, '음료', '따뜻한 녹차', '.\img\menuimg\Cola.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('레몬 에이드', 3000, '음료', '레몬 에이드', '.\img\menuimg\Cola.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('자몽 주스', 3500, '음료', '자몽 주스', '.\img\menuimg\Cola.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('물', 1800, '음료', '물', '.\img\menuimg\Cidar.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('카페 라떼', 2200, '음료', '카페 라떼', '.\img\menuimg\Cidar.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('토마토 주스', 2700, '음료', '토마토 주스', '.\img\menuimg\Cidar.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('블루베리 스무디', 3200, '음료', '블루베리 스무디', '.\img\menuimg\ZeroCola.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('코코넛 밀크', 3600, '음료', '코코넛 밀크', '.\img\menuimg\ZeroCola.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('핫 초코', 2300, '음료', '핫 초코', '.\img\menuimg\ZeroCola.jpg');
 
 -- 마제소바 카테고리
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('마제소바1', 10000, '마제소바', '클래식 마제소바', '/images/mazesoba1.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('마제소바2', 10500, '마제소바', '매콤한 마제소바', '/images/mazesoba2.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('마제소바3', 9800, '마제소바', '해산물 토핑 마제소바', '/images/mazesoba3.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('마제소바4', 11500, '마제소바', '버섯 토핑 마제소바', '/images/mazesoba4.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('마제소바5', 9500, '마제소바', '야채 마제소바', '/images/mazesoba5.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('마제소바6', 11000, '마제소바', '돈육 마제소바', '/images/mazesoba6.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('마제소바7', 10700, '마제소바', '닭고기 마제소바', '/images/mazesoba7.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('마제소바8', 9900, '마제소바', '소고기 마제소바', '/images/mazesoba8.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('마제소바9', 10300, '마제소바', '두부 마제소바', '/images/mazesoba9.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('마제소바10', 9600, '마제소바', '김치 마제소바', '/images/mazesoba10.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('클래식 마제소바', 10000, '마제소바', '클래식 마제소바', '.\img\menuimg\MazeSoba.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('매콤한 마제소바', 10500, '마제소바', '매콤한 마제소바', '.\img\menuimg\MazeSoba.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('해산물 토핑 마제소바', 9800, '마제소바', '해산물 토핑 마제소바', '.\img\menuimg\MazeSoba.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('버섯 토핑 마제소바', 11500, '마제소바', '버섯 토핑 마제소바', '.\img\menuimg\MazeSoba.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('야채 마제소바', 9500, '마제소바', '야채 마제소바', '.\img\menuimg\MazeSoba.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('돈육 마제소바', 11000, '마제소바', '돈육 마제소바', '.\img\menuimg\MazeSoba.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('닭고기 마제소바', 10700, '마제소바', '닭고기 마제소바', '.\img\menuimg\MazeSoba.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('소고기 마제소바', 9900, '마제소바', '소고기 마제소바', '.\img\menuimg\MazeSoba.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('두부 마제소바', 10300, '마제소바', '두부 마제소바', '.\img\menuimg\MazeSoba.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('김치 마제소바', 9600, '마제소바', '김치 마제소바', '.\img\menuimg\MazeSoba.jpg');
 
 -- 온소바 카테고리
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('온소바1', 7500, '온소바', '전통 온소바', '/images/onsoba1.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('온소바2', 8000, '온소바', '김치 온소바', '/images/onsoba2.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('온소바3', 8500, '온소바', '닭고기 온소바', '/images/onsoba3.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('온소바4', 7800, '온소바', '버섯 온소바', '/images/onsoba4.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('온소바5', 8200, '온소바', '야채 온소바', '/images/onsoba5.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('온소바6', 7700, '온소바', '해물 온소바', '/images/onsoba6.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('온소바7', 8100, '온소바', '매운 온소바', '/images/onsoba7.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('온소바8', 8600, '온소바', '소고기 온소바', '/images/onsoba8.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('온소바9', 7900, '온소바', '돈육 온소바', '/images/onsoba9.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('온소바10', 8300, '온소바', '토마토 온소바', '/images/onsoba10.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('전통 온소바', 7500, '온소바', '전통 온소바', '.\img\menuimg\OnSoba.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('김치 온소바', 8000, '온소바', '김치 온소바', '.\img\menuimg\OnSoba.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('닭고기 온소바', 8500, '온소바', '닭고기 온소바', '.\img\menuimg\OnSoba.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('버섯 온소바', 7800, '온소바', '버섯 온소바', '.\img\menuimg\OnSoba.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('야채 온소바', 8200, '온소바', '야채 온소바', '.\img\menuimg\OnSoba.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('해물 온소바', 7700, '온소바', '해물 온소바', '.\img\menuimg\OnSoba.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('매운 온소바', 8100, '온소바', '매운 온소바', '.\img\menuimg\OnSoba.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('소고기 온소바', 8600, '온소바', '소고기 온소바', '.\img\menuimg\OnSoba.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('돈육 온소바', 7900, '온소바', '돈육 온소바', '.\img\menuimg\OnSoba.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('토마토 온소바', 8300, '온소바', '토마토 온소바', '.\img\menuimg\OnSoba.jpg');
 
 -- 우동 카테고리
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('우동1', 7000, '우동', '일본식 우동', '/images/udon1.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('우동2', 7200, '우동', '매운 우동', '/images/udon2.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('우동3', 7500, '우동', '해산물 우동', '/images/udon3.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('우동4', 6800, '우동', '버섯 우동', '/images/udon4.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('우동5', 7400, '우동', '야채 우동', '/images/udon5.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('우동6', 7600, '우동', '소고기 우동', '/images/udon6.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('우동7', 6900, '우동', '치킨 우동', '/images/udon7.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('우동8', 7700, '우동', '김치 우동', '/images/udon8.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('우동9', 7300, '우동', '두부 우동', '/images/udon9.jpg');
-INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('우동10', 7100, '우동', '토마토 우동', '/images/udon10.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('일본식 우동', 7000, '우동', '일본식 우동', '.\img\menuimg\Udon.jpg');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('매운 우동', 7200, '우동', '매운 우동', '.\img\menuimg\Udon.jpg'');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('해산물 우동', 7500, '우동', '해산물 우동', '.\img\menuimg\Udon.jpg'');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('버섯 우동', 6800, '우동', '버섯 우동', '.\img\menuimg\Udon.jpg'');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('야채 우동', 7400, '우동', '야채 우동', '.\img\menuimg\Udon.jpg'');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('소고기 우동', 7600, '우동', '소고기 우동', '.\img\menuimg\Udon.jpg'');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('치킨 우동', 6900, '우동', '치킨 우동', '.\img\menuimg\Udon.jpg'');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('김치 우동', 7700, '우동', '김치 우동', '.\img\menuimg\Udon.jpg'');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('두부 우동', 7300, '우동', '두부 우동', '.\img\menuimg\Udon.jpg'');
+INSERT INTO menu (name, price, category, menu_desc, menu_path) VALUES ('토마토 우동', 7100, '우동', '토마토 우동', '.\img\menuimg\Udon.jpg'');
 
 commit;
 
