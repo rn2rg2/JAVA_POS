@@ -1,4 +1,4 @@
-package com.kosa.pos.swing.payment;
+package com.kosa.pos.swing.signUp;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;

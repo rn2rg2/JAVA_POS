@@ -1,4 +1,4 @@
-package com.kosa.pos.swing.payment;
+package com.kosa.pos.swing.signUp;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

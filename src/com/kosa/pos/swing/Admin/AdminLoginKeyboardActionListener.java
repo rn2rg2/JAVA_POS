@@ -7,8 +7,8 @@ import javax.swing.JButton;
 
 import com.kosa.pos.swing.main.CardLayoutManager;
 import com.kosa.pos.swing.main.ContentPaneManager;
-import com.kosa.pos.swing.payment.InvalidPhoneNumDialog;
-import com.kosa.pos.swing.payment.NotRegisteredDialog;
+import com.kosa.pos.swing.signUp.InvalidPhoneNumDialog;
+import com.kosa.pos.swing.signUp.NotRegisteredDialog;
 
 public class AdminLoginKeyboardActionListener implements ActionListener  {
 	AdminLoginKeyboardPanel superClass;
