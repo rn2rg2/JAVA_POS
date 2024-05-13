@@ -422,7 +422,7 @@ public class MenuView extends JPanel {
 		totalLabel.setText("0 원"); // 총액 레이블을 0원으로 설정
 
 		// 모든 메뉴의 클릭 카운트와 총 가격을 0으로 리셋
-		clickCountManager.keySet().forEach(key -> clickCountManager.put(key, 0));
-		totalPriceMap.keySet().forEach(key -> totalPriceMap.put(key, 0));
+		clickCountManager.clear();
+		totalPriceMap.clear();
 	}
 }
