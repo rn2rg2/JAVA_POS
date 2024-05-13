@@ -32,4 +32,3 @@ EXCEPTION
         -- 오류 발생 시 에러 메시지 출력
         DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);
 END;
-/
