@@ -13,7 +13,7 @@ public class MenuShowRanks extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public MenuShowRanks(int rank, String menuname, int orderCount, double orderPercentage) {
+	public MenuShowRanks(int rank, String menuname, int orderCount, String orderPercentage) {
 		setBackground(new Color(255, 255, 255));
 		setLayout(null);
 		setPreferredSize(new Dimension(266, 152));
@@ -45,9 +45,9 @@ public class MenuShowRanks extends JPanel {
 		add(OrderCount);
 
 		JLabel OrderCountshow = new JLabel(
-		Integer.toString(orderCount) + " (" + Double.toString(orderPercentage) + "%) ");
+		Integer.toString(orderCount) + " (" + orderPercentage + "%) ");
 		OrderCountshow.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
-		OrderCountshow.setBounds(91, 68, 105, 39);
+		OrderCountshow.setBounds(91, 68, 155, 39);
 		add(OrderCountshow);
 		
 		String graph = generateGraph(orderPercentage);
@@ -57,8 +57,8 @@ public class MenuShowRanks extends JPanel {
 		add(OrderCountGraph);
 	}
 	// ▒ 22 를 추가하는 로직
-	public String generateGraph(double orderPercentage) {
-	    int numFilled = (int) Math.round((orderPercentage / 100.0) * 23); // 가득찬 네모의 개수 계산
+	public String generateGraph(String orderPercentage) {
+	    int numFilled = (int) Math.round((Double.parseDouble(orderPercentage) / 100.0) * 23); // 가득찬 네모의 개수 계산
 	    StringBuilder graph = new StringBuilder();
 
 	    // 가득찬 네모 추가

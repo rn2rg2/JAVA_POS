@@ -92,7 +92,7 @@ public class AdminStatsInfo extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				// 버튼 누르면 callableStatement로 데이터 가져온 후 xData, yData에 대입
 				
-				String searchContent = textField.getText().replaceAll("\\s", ""); // 공백 제거
+				String searchContent = textField.getText();//.replaceAll("\\s", ""); // 공백 제거
 				String[] xData;
 				double[] yData;
 				System.out.println("그래프의 search : "+ searchContent);
