@@ -30,6 +30,8 @@ public class AdminMainPanel extends JPanel{
 	private AdminMenuInsert adminMenuInsert = new AdminMenuInsert(this);
 	private AdminBestMenuList adminBestMenuList = new AdminBestMenuList(this);
 	private AdminStatsInfo adminStatsInfo = new AdminStatsInfo(this);
+	
+	private AdminMenuUpdate adminMenuUpdate;
 
 	/**
 	 * Launch the application.
@@ -62,6 +64,10 @@ public class AdminMainPanel extends JPanel{
 		this.adminStatsInfo = adminStatsInfo;
 	}
 	
+	public AdminStatsInfo getAdminStatsInfo() {
+		return this.adminStatsInfo;
+	}
+	
 	public void setAdminRegisterdMenuList(AdminRegisterdMenuList adminRegisterdMenuList) {
 		this.adminRegisterdMenuList = adminRegisterdMenuList;
 	}
@@ -80,6 +86,15 @@ public class AdminMainPanel extends JPanel{
 	
 	public AdminRegisterdMenuList getAdminRegisterdMenuList() {
 		return this.adminRegisterdMenuList;
+	}
+	
+	public AdminMenuUpdate getAdminMenuUpdate() {
+		return this.adminMenuUpdate;
+	}
+	
+	public void setAdminMenuUpdate(AdminMenuUpdate adminMenuUpdate) {
+		this.adminMenuUpdate = adminMenuUpdate;
+		this.adminMenuUpdate.setName("update");
 	}
 
 	/**

@@ -32,6 +32,7 @@ public class Index extends JFrame {
 		AdminLoginKeyboardPanel adminKeyboardPanel = new AdminLoginKeyboardPanel();
 
 		AdminMainPanel adminPanel = new AdminMainPanel();
+		adminPanel.setName("adminPanel");
 
 		menutest cp = new menutest();
 

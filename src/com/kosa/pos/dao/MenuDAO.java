@@ -32,4 +32,6 @@ public interface MenuDAO {
 	public int getTotalOrderWithoutDrink();
 
 	public List<Integer> fetchMenuIdByOrderId(int orderId);
+	
+	public void updateMenu(Menu menu);
 }

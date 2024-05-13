@@ -149,9 +149,13 @@ public class AdminRegisterdMenuList extends JPanel{
             JButton menuUpdateBtn = new JButton("수정");
             menuUpdateBtn.addActionListener(new ActionListener() {
     			public void actionPerformed(ActionEvent e) {
-    				// 여기에 menu_id가 와야함
-    				int id = menu.getMenu_id();
-    				
+    				    				
+    				// 여기에 menuName이 와야함
+    				String name = menu.getName();
+    				AdminRegisterdMenuList.this.adminMain.setAdminMenuUpdate(new AdminMenuUpdate(AdminRegisterdMenuList.this.adminMain, menuDao.findByName(name)));
+    				AdminRegisterdMenuList.this.adminMain.getAdminBestMenuList().setVisible(false);
+    				AdminRegisterdMenuList.this.adminMain.getAdminRegisterdMenuList().setVisible(false);
+    				AdminRegisterdMenuList.this.adminMain.getAdminStatsInfo().setVisible(false);
     			}
             });
             menuUpdateBtn.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
