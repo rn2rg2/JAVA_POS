@@ -19,27 +19,28 @@ as
     p_order_id out number
   ) as
     v_phonenum number := 1000000000;    -- phonenum = 1000000000 이면 비회원 주문
+begin
+  -- 먼저 비회원 정보가 user_info에 있는지 확인
   begin
-    -- 먼저 비회원 정보가 user_info에 있는지 확인
     select user_id into p_user_id from user_info where phonenum = v_phonenum;
-
-    -- 없으면 새로 생성
-    if sql%notfound then
+  exception
+    when no_data_found then
+      -- 없으면 새로 생성
       insert into user_info (phonenum, join_date, point, status)
       values (v_phonenum, sysdate, 0, 1)
       returning user_id into p_user_id;
-    end if;
+  end;
 
-    -- user_order 테이블에 주문 정보 삽입, 주문 날짜는 현재 시스템 날짜 사용
-    insert into user_order (order_date, user_id)
-    values (sysdate, p_user_id)
-    returning order_id into p_order_id;
+  -- user_order 테이블에 주문 정보 삽입, 주문 날짜는 현재 시스템 날짜 사용
+  insert into user_order (order_date, user_id)
+  values (sysdate, p_user_id)
+  returning order_id into p_order_id;
 
-  exception
-    when others then
-      -- 에러 처리
-      dbms_output.put_line('Error: ' || sqlerrm);
-  end insert_order;
+exception
+  when others then
+    -- 에러 처리
+    dbms_output.put_line('Error: ' || sqlerrm);
+end insert_order;
   
   procedure insert_order_detail
   (p_order_id in number,
