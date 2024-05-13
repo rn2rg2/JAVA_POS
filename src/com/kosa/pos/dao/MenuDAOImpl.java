@@ -514,4 +514,42 @@ public class MenuDAOImpl implements MenuDAO {
 		}
 		return menuIds;
 	}
+
+	@Override
+	public void updateMenu(Menu menu) {
+
+		String runSP = "{ call menu_package.update_menu(?,?,?,?,?,?) }";
+		int menuId = menu.getMenu_id();
+		String name = menu.getName();
+		String category = menu.getCategory();
+		int price = menu.getPrice();
+		String menuDesc = menu.getMenu_desc();
+		String menuPath = menu.getMenu_path();
+
+		try {
+			// PreparedStatement 객체 생성 후 쿼리 실행
+			CallableStatement callableStatement = connection.prepareCall(runSP);
+			callableStatement.setInt(1, menuId);
+			callableStatement.setString(2, name);
+			callableStatement.setInt(3, price);
+			callableStatement.setString(4, category);
+			callableStatement.setString(5, menuDesc);
+			callableStatement.setString(6, menuPath);
+
+			callableStatement.execute();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			// 리소스 해제
+			try {
+				if (rs != null)
+					rs.close();
+				if (stmt != null)
+					stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }
