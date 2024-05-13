@@ -1,0 +1,35 @@
+create or replace TRIGGER update_user_order_point
+AFTER UPDATE OF user_id ON user_order
+FOR EACH ROW
+DECLARE
+    v_total_price NUMBER := 0;
+    v_point NUMBER;
+    v_user_info_point NUMBER;
+BEGIN
+    -- user_order의 order_id를 사용하여 해당 주문의 총 구매 금액을 계산
+    SELECT SUM(od.quantity * m.price) INTO v_total_price
+    FROM order_detail od
+    JOIN menu m ON m.menu_id = od.menu_id
+    WHERE od.order_id = :new.order_id;
+
+    -- 적립되어야 할 포인트 (구매 금액의 1%)
+    v_point := ROUND(v_total_price * 0.01);
+
+    -- 해당 유저의 현재 포인트 조회
+    SELECT point INTO v_user_info_point
+    FROM user_info
+    WHERE user_id = :new.user_id;
+
+    -- 포인트 업데이트
+    UPDATE user_info
+    SET point = v_user_info_point + v_point
+    WHERE user_id = :new.user_id;
+
+    -- 오류 처리 및 로깅을 위한 메시지 출력 (옵션)
+    DBMS_OUTPUT.PUT_LINE('Updated points for user_id ' || :new.user_id || ', Points added: ' || v_point);
+EXCEPTION
+    WHEN OTHERS THEN
+        -- 오류 발생 시 에러 메시지 출력
+        DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);
+END;
+/

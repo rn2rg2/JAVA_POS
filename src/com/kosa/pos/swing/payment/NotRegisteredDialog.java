@@ -1,4 +1,4 @@
-package com.kosa.pos.swing.savePoint;
+package com.kosa.pos.swing.payment;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;

@@ -95,7 +95,6 @@ public class MenuPanel extends JPanel {
 		menu_name.setBounds(0, 168, 170, 29);
 		add(menu_name);
 
-		
 		ImageIcon imgpath = new ImageIcon(menuimgPath);
 		Image img = imgpath.getImage().getScaledInstance(170, 156, Image.SCALE_AREA_AVERAGING);
 		imgpath = new ImageIcon(img);
@@ -108,21 +107,19 @@ public class MenuPanel extends JPanel {
 				MenuDetailPanel mdp = new MenuDetailPanel(menuId);
 				mdp.setName("mdp");
 				Component[] compList = ContentPaneManager.getContentPane().getComponents();
-				for(Component c : compList) {
-					if(c.getName() != null && c.getName().equals("mdp")) {
+				for (Component c : compList) {
+					if (c.getName() != null && c.getName().equals("mdp")) {
 						ContentPaneManager.getContentPane().remove(c);
-						ContentPaneManager.getContentPane().add(mdp,"menudetail");
+						ContentPaneManager.getContentPane().add(mdp, "menudetail");
 						break;
 					}
 				}
 				CardLayoutManager.getCardLayout().show(ContentPaneManager.getContentPane(), "menudetail");
-				
+
 			}
 		});
 		menu_img.setBounds(0, 0, 170, 156);
 		add(menu_img);
-
-		
 
 		JLabel menu_price = new JLabel(Integer.toString(price));
 		menu_price.setHorizontalAlignment(SwingConstants.CENTER);

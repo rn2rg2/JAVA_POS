@@ -16,11 +16,11 @@ is
         from user_info
         where phonenum = p_phonenum;
         
-        if sql%found then
-            user_id := v_user_id;
-        else
-            user_id := 0;
-        end if;
+        user_id := v_user_id;
+        
+        exception
+            when no_data_found then
+                user_id := 0;
     end;
 
     procedure sign_up
