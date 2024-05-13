@@ -68,14 +68,13 @@ public class ReviewPanel extends JPanel {
 		JPanel contentPanel = new JPanel();
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS)); // Y_AXIS로 설정하여 수직 배치
 
-		// orderId 저장
+		// orderId 가져오기
 		int orderId = OrderState.getOrderId();
-		System.out.println("OrderState에서 받아온 orderId:" + orderId);
 
 		List<Integer> menuIds = menuDao.fetchMenuIdByOrderId(orderId);
 		System.out.println("menuIds: " + menuIds);
 
-		// menuId List를 이용해 ReviewMenuPanel 생성
+		// menuId List를 이용해 ReviewMenuPanel 생성 및 contentPanel에 추가
 		for (Integer menuId : menuIds) {
 			Optional<MenuDetail> menuDetail = menuDao.findById(menuId);
 

@@ -39,6 +39,14 @@ public class UserDAO {
 			userId = stmt.getInt(2);
 		} catch (SQLException se) {
 			se.printStackTrace();
+		} finally {
+			try {
+				if (stmt != null) {
+					stmt.close();
+				}
+			} catch (SQLException se) {
+				se.printStackTrace();
+			}
 		}
 		return userId;
 	}
@@ -52,7 +60,37 @@ public class UserDAO {
 			System.out.println("user_order 테이블의 user_id 업데이트 완료");
 		} catch (SQLException se) {
 			se.printStackTrace();
+		} finally {
+			try {
+				if (stmt != null) {
+					stmt.close();
+				}
+			} catch (SQLException se) {
+				se.printStackTrace();
+			}
 		}
 	}
-	
+
+	public int getPoint(int userId) {
+		int point = 0;
+		try {
+			stmt = conn.prepareCall("{call user_pkg.get_point(?,?)}");
+			stmt.setInt(1, userId);
+			stmt.registerOutParameter(2, Types.INTEGER);
+
+			stmt.execute();
+			point = stmt.getInt(2);
+		} catch (SQLException se) {
+			se.printStackTrace();
+		} finally {
+			try {
+				if (stmt != null) {
+					stmt.close();
+				}
+			} catch (SQLException se) {
+				se.printStackTrace();
+			}
+		}
+		return point;
+	}
 }

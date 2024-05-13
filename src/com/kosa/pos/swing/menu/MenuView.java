@@ -225,10 +225,13 @@ public class MenuView extends JPanel {
 		paybtn.addActionListener(e -> {
 			int[] insertOrderResult = orderDao.insertOrder();
 
+			// OrderState의 변수 초기화
+			OrderState.setUserId(0);
+			OrderState.setOrderId(0);
+
 			int tempUserId = insertOrderResult[0]; // 비회원 user_id
 			int orderId = insertOrderResult[1]; // 결제 후 전화번호 입력하면 userId 업데이트 할 때 사용
 			OrderState.setOrderId(orderId); // 다음 패널에 orderId를 넘겨주기 위해 static 변수 업데이트
-			System.out.println("MenuView에서의 orderId: " + orderId);
 
 			// orderId를 이용하여 clickCountManager에 담겨있는 <메뉴명, 수량>을 order_detail 테이블에 삽입
 			System.out.println(clickCountManager);
