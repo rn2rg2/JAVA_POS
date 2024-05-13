@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -205,8 +206,11 @@ public class MenuView extends JPanel {
 
 		// 장바구니 & 결제 버튼
 		// 삭제버튼
-		ImageIcon cancel = new ImageIcon("./img/menu/images.png");
-		JButton deletebtn = new JButton(cancel);
+		
+		ImageIcon cancel = new ImageIcon("./img/menu/delete2.png");
+		Image img = cancel.getImage().getScaledInstance(191, 40, Image.SCALE_SMOOTH);
+		ImageIcon cancelimg = new ImageIcon(img);
+		JButton deletebtn = new JButton(cancelimg);
 		deletebtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
