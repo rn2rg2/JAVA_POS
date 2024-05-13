@@ -1,7 +1,7 @@
 # 	[한국소프트웨어산업협회] <br>
 회원사 채용연계형 MSA 기반 Full Stack 개발 전문가 양성과정 3차
 
-# 1차 프로젝트 (24.03.26 ~ 24.05.14)
+# 1차 프로젝트 (24.04.30 ~ 24.05.14)
 
 .![KOSA_1차프로젝트_발표](https://github.com/rn2rg2/MSA3p/assets/141730566/33160e33-5a0d-4d9c-956e-9a985fdcb761)
 ![KOSA_1차프로젝트_발표 (1)](https://github.com/rn2rg2/MSA3p/assets/141730566/31aa39f9-072f-4ed1-b0ad-cac70517bb00)
