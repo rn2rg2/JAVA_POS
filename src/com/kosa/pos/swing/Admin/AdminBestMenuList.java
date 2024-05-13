@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -20,8 +21,6 @@ import javax.swing.border.LineBorder;
 
 import com.kosa.pos.dao.MenuDAO;
 import com.kosa.pos.dao.MenuDAOImpl;
-import com.kosa.pos.dto.Menu;
-import com.kosa.pos.dto.MenuDetail;
 import com.kosa.pos.dto.MenuGetRankNReview;
 
 public class AdminBestMenuList extends JPanel {
@@ -194,7 +193,14 @@ public class AdminBestMenuList extends JPanel {
 			JPanel menuReviewAvgScorePanel = new JPanel();
 			menuReviewAvgScorePanel.setLayout(new BorderLayout());
         	
-            JLabel menuReviewAvgScoreLabel = new JLabel(menuDetail.getAvgReview() + ""); // 리뷰 평점
+			double avgReview = menuDetail.getAvgReview();
+
+			// DecimalFormat 객체 생성
+			DecimalFormat df = new DecimalFormat("#.#");
+
+			// 형식화된 문자열로 변환
+			String formattedAvgReview = df.format(avgReview);
+            JLabel menuReviewAvgScoreLabel = new JLabel(formattedAvgReview); // 리뷰 평점
             menuReviewAvgScoreLabel.setHorizontalAlignment(JLabel.CENTER);
             menuReviewAvgScoreLabel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
             menuReviewAvgScorePanel.add(menuReviewAvgScoreLabel, BorderLayout.CENTER);

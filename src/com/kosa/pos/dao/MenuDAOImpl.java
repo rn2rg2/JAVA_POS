@@ -206,7 +206,7 @@ public class MenuDAOImpl implements MenuDAO {
 	@Override
 	public Optional<MenuStatsInfo> findOrderCountByName(String name) {
 //		int menuID = 1;
-		String runSP = "{ call menu_stats_info.get_menu_order_count(?,?) }";
+		String runSP = "{ call menu_stats_info.GET_MENU_GRAPHSEARCH_DATA(?,?) }";
 
 		try {
 			// PreparedStatement 객체 생성 후 쿼리 실행
@@ -221,8 +221,47 @@ public class MenuDAOImpl implements MenuDAO {
 			MenuStatsInfo menuStatsInfo = new MenuStatsInfo();
 			int index = 0;
 			while (orderCount.next()) {
-				menuStatsInfo.getDay()[index] = orderCount.getString("DAY").toString();
-				menuStatsInfo.getValues()[index] = orderCount.getDouble("TOTAL");
+				menuStatsInfo.getDay()[index] = orderCount.getDate("OrderDate").toString();
+				menuStatsInfo.getValues()[index] = orderCount.getDouble("MENU_QUANTITY");
+				index++;
+			}
+			return Optional.of(menuStatsInfo);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			// 리소스 해제
+			try {
+				if (rs != null)
+					rs.close();
+				if (stmt != null)
+					stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return Optional.empty();
+	}
+	
+	@Override
+	public Optional<MenuStatsInfo> findOrderCountByName() {
+//		int menuID = 1;
+		String runSP = "{ call menu_stats_info.GET_GRAPH_DATA (?) }";
+
+		try {
+			// PreparedStatement 객체 생성 후 쿼리 실행
+			CallableStatement callableStatement = connection.prepareCall(runSP);
+			callableStatement.registerOutParameter(1, OracleTypes.CURSOR); // 특정 메뉴의 최근 일주일간의 주문 받은 횟수
+			callableStatement.execute();
+
+			rs = (ResultSet) callableStatement.getObject(1);
+
+			MenuStatsInfo menuStatsInfo = new MenuStatsInfo();
+			int index = 0;
+			while (rs.next()) {
+				menuStatsInfo.getDay()[index] = rs.getDate("OrderDate").toString();
+				menuStatsInfo.getValues()[index] = rs.getDouble("TotalOrders");
 				index++;
 			}
 			return Optional.of(menuStatsInfo);
