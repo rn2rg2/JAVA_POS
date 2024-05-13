@@ -1,4 +1,4 @@
-package com.kosa.pos.swing.savePoint;
+package com.kosa.pos.swing.payment;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -47,8 +47,7 @@ public class CompleteSignUpDialog extends JDialog {
 		setModal(true); // 다이얼로그가 모달임을 설정하여 다이얼로그 뒤의 윈도우를 클릭할 수 없도록 함
 
 		// TODO
-		// 1. "적립하기" 버튼 눌렀을 때 point column update하는 트리거 생성
-		// 2. "적립하기" 버튼 눌렀을 때 "적립 완료" + 적립된 포인트 보여주는 JDialog와 연결
+		// "적립하기" 버튼 눌렀을 때 "적립 완료" + 적립된 포인트 보여주는 JDialog와 연결
 	}
 
 }

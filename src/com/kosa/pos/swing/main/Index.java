@@ -10,7 +10,7 @@ import com.kosa.pos.swing.Admin.AdminMainPanel;
 import com.kosa.pos.swing.menu.MenuDetailPanel;
 import com.kosa.pos.swing.menu.MenuView;
 import com.kosa.pos.swing.menu.menutest;
-import com.kosa.pos.swing.savePoint.KeyboardPanel;
+import com.kosa.pos.swing.payment.KeyboardPanel;
 
 public class Index extends JFrame {
 	// 싱글톤으로 지정

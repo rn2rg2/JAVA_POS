@@ -27,15 +27,14 @@ import javax.swing.SwingConstants;
 import com.kosa.pos.dao.MenuDAO;
 import com.kosa.pos.dao.MenuDAOImpl;
 import com.kosa.pos.dao.OrderDAO;
-import com.kosa.pos.dao.UserDAO;
 import com.kosa.pos.dto.Menu;
 import com.kosa.pos.dto.MenuRanking;
 import com.kosa.pos.swing.common.OrderState;
 import com.kosa.pos.swing.main.CardLayoutManager;
 import com.kosa.pos.swing.main.ContentPaneManager;
 import com.kosa.pos.swing.main.Index;
+import com.kosa.pos.swing.payment.CompletePaymentDialog;
 import com.kosa.pos.swing.review.ReviewPanel;
-import com.kosa.pos.swing.savePoint.CompletePaymentDialog;
 
 public class MenuView extends JPanel {
 	MenuDAO menudao = new MenuDAOImpl();
@@ -81,18 +80,18 @@ public class MenuView extends JPanel {
 		// MenuPanel을 생성하여 ArrayList에 추가
 
 		for (int i = 0; i < menulist.size(); i++) {
-			menuPanel = new MenuPanel(menulist.get(i).getName(), menulist.get(i).getPrice(), msbpport, menulist.get(i).getMenu_id()
-					, menulist.get(i).getMenu_path());
+			menuPanel = new MenuPanel(menulist.get(i).getName(), menulist.get(i).getPrice(), msbpport,
+					menulist.get(i).getMenu_id(), menulist.get(i).getMenu_path());
 			menuPanels.add(menuPanel);
 		}
 
 		JPanel viewport = new JPanel();
 		if (menulist.size() <= 4) {
 			FlowLayout flowLayout = new FlowLayout(FlowLayout.LEFT);
-			
+
 			viewport.setLayout(flowLayout);
 		} else {
-			viewport.setLayout(new GridLayout(0, 4,1,1)); // 4개의 열
+			viewport.setLayout(new GridLayout(0, 4, 1, 1)); // 4개의 열
 		}
 
 		for (MenuPanel menuPanel : menuPanels) {
@@ -211,18 +210,7 @@ public class MenuView extends JPanel {
 		deletebtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				msbpport.removeAll();
-				// 화면을 다시 그리기 위해 revalidate()와 repaint() 호출
-				msbpport.revalidate(); // 레이아웃 갱신
-				msbpport.repaint(); // 변경된 내용을 다시 그림
-				Total.setText(Integer.toString(0) + " 원");
-				for (String key : clickCountManager.keySet()) {
-					clickCountManager.put(key, 0);
-				}
-				for (String key : MenuPanel.menuTotalPriceMap.keySet()) {
-					MenuPanel.menuTotalPriceMap.put(key, 0);
-				}
-
+				resetSidebar(msbpport, Total, clickCountManager, MenuPanel.menuTotalPriceMap);
 			}
 		});
 		deletebtn.setBounds(753, 562, 191, 40);
@@ -258,6 +246,9 @@ public class MenuView extends JPanel {
 			ReviewPanel reviewPanel = new ReviewPanel();
 			ContentPaneManager.getContentPane().add(reviewPanel, "review");
 
+			// 사이드바 초기화
+			resetSidebar(msbpport, Total, clickCountManager, MenuPanel.menuTotalPriceMap);
+
 			// 결제 완료 패널 띄우기
 			CompletePaymentDialog dialog = new CompletePaymentDialog();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -276,15 +267,14 @@ public class MenuView extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				// 먼저 키보드 패널을 불러온다.
 				CardLayoutManager.getCardLayout().show(ContentPaneManager.getContentPane(), "adminKeyboard");
-				
+
 				// 입력한 값이 관리자 계정 정보와 맞는지 확인
-				
-				
+
 				// 맞으면 아래 로직 실행
 //				CardLayoutManager.getCardLayout().show(ContentPaneManager.getContentPane(), "adminPanel");
-				
+
 				// 틀리면 키보드 패널 새로 생성
-				
+
 			}
 		});
 		mgrbtn.setBounds(827, 6, 117, 29);
@@ -351,16 +341,16 @@ public class MenuView extends JPanel {
 		menuPanels = new ArrayList<>();
 
 		for (int i = 0; i < menulist.size(); i++) {
-			menuPanel = new MenuPanel(menulist.get(i).getName(), menulist.get(i).getPrice(), msbpport, menulist.get(i).getMenu_id()
-					,menulist.get(i).getMenu_path()); 
+			menuPanel = new MenuPanel(menulist.get(i).getName(), menulist.get(i).getPrice(), msbpport,
+					menulist.get(i).getMenu_id(), menulist.get(i).getMenu_path());
 			menuPanels.add(menuPanel);
 		}
 		JPanel viewport = new JPanel();
 		if (menulist.size() <= 4) {
-			FlowLayout flowLayout = new FlowLayout(FlowLayout.LEFT,3, 0); // 오른쪽 정렬, 가로 간격 5, 세로 간격 5
+			FlowLayout flowLayout = new FlowLayout(FlowLayout.LEFT, 3, 0); // 오른쪽 정렬, 가로 간격 5, 세로 간격 5
 			viewport.setLayout(flowLayout);
 		} else {
-			viewport.setLayout(new GridLayout(0, 4,1,1)); // 4개의 열
+			viewport.setLayout(new GridLayout(0, 4, 1, 1)); // 4개의 열
 		}
 
 		for (MenuPanel menuPanel : menuPanels) {
@@ -417,5 +407,19 @@ public class MenuView extends JPanel {
 	public static void moveSidebarPanelToBottom(String menuName) {
 		sidebarOrder.remove(menuName);
 		sidebarOrder.add(menuName);
+	}
+
+	// 사이드바를 초기화하는 메서드
+	public static void resetSidebar(JPanel sidebarPanel, JLabel totalLabel, Map<String, Integer> clickCountManager,
+			Map<String, Integer> totalPriceMap) {
+		sidebarPanel.removeAll(); // 사이드바 패널의 모든 요소 제거
+		sidebarPanel.revalidate(); // 레이아웃 갱신
+		sidebarPanel.repaint(); // 다시 그리기
+
+		totalLabel.setText("0 원"); // 총액 레이블을 0원으로 설정
+
+		// 모든 메뉴의 클릭 카운트와 총 가격을 0으로 리셋
+		clickCountManager.keySet().forEach(key -> clickCountManager.put(key, 0));
+		totalPriceMap.keySet().forEach(key -> totalPriceMap.put(key, 0));
 	}
 }

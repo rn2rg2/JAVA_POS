@@ -1,4 +1,4 @@
-package com.kosa.pos.swing.savePoint;
+package com.kosa.pos.swing.payment;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -56,6 +56,8 @@ public class KeyboardActionListener implements ActionListener {
 				int userId = userDao.checkPhoneNumExists(long_userInput);
 
 				if (userId != 0) { // 가입된 전화번호
+					keyboard.userInput.setText(""); // keyboard 초기화
+
 					// 기존 비회원으로 저장됐던 order_detail 테이블의 user_id 컬럼을 업데이트
 					int orderId = OrderState.getOrderId();
 					userDao.updateUserId(userId, orderId);
@@ -65,6 +67,8 @@ public class KeyboardActionListener implements ActionListener {
 					scd.setVisible(true);
 
 				} else { // 가입 안 된 전화번호
+					keyboard.userInput.setText(""); // keyboard 초기화
+
 					NotRegisteredDialog nrd = new NotRegisteredDialog(long_userInput);
 					nrd.setModal(true);
 					nrd.setVisible(true);

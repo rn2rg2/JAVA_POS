@@ -1,4 +1,4 @@
-package com.kosa.pos.swing.savePoint;
+package com.kosa.pos.swing.payment;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
