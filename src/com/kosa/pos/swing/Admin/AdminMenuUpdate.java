@@ -80,7 +80,7 @@ public class AdminMenuUpdate extends JPanel {
 //		frame.getContentPane().add(registeredMenuListPanel);
 		setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("세부 메뉴 추가");
+		JLabel lblNewLabel = new JLabel("세부 메뉴 수정");
 		lblNewLabel.setFont(new Font("굴림", Font.PLAIN, 30));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNewLabel.setBounds(30, 34, 262, 59);
