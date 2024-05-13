@@ -1,30 +1,30 @@
 create or replace package save_point_pkg
 is
-    procedure check_phonenum(p_phonenum in number, o_exists out number);
-    procedure sign_up(p_phonenum in number, o_is_success out number);
+    procedure check_phonenum(p_phonenum in number, user_id out number);
+    procedure sign_up(p_phonenum in number, o_user_id out number);
 end;
 /
 
 create or replace package body save_point_pkg
 is
     procedure check_phonenum
-    (p_phonenum in number, o_exists out number)
+    (p_phonenum in number, user_id out number)
     is
+        v_user_id number;
     begin
-        select 
-        case 
-            when exists(select 1
-                        from user_info
-                        where phonenum = p_phonenum)
-            then 1
-            else 0
-        end
-        into o_exists
-        from dual;
+        select user_id into v_user_id
+        from user_info
+        where phonenum = p_phonenum;
+        
+        if sql%found then
+            user_id := v_user_id;
+        else
+            user_id := 0;
+        end if;
     end;
-    
+
     procedure sign_up
-    (p_phonenum in number, o_is_success out number)
+    (p_phonenum in number, o_user_id out number)
     is
     v_count number;
     begin
@@ -32,13 +32,13 @@ is
         into v_count
         from user_info
         where phonenum = p_phonenum;
-        
+
         if v_count = 0 then
             insert into user_info(phonenum, join_date, point, status)
-            values(p_phonenum, sysdate, 0, 1);
-            o_is_success := 1;
+            values(p_phonenum, sysdate, 0, 1)
+            returning user_id into o_user_id;
         else
-            o_is_success := 0;
+            o_user_id := 0;
         end if;
     end;
 end;

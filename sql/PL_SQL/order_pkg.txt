@@ -1,17 +1,24 @@
 create or replace package order_pkg
 as
   procedure insert_order(
-    p_user_id out number
+    p_user_id out number,
+    p_order_id out number
   );
+  
+  procedure insert_order_detail
+  (p_order_id in number,
+   p_menu_id in number,
+   p_quantity in number);
 end order_pkg;
 /
 
 create or replace package body order_pkg
 as
   procedure insert_order(
-    p_user_id out number
+    p_user_id out number,
+    p_order_id out number
   ) as
-    v_phonenum number := 1000000000;
+    v_phonenum number := 1000000000;    -- phonenum = 1000000000 이면 비회원 주문
   begin
     -- 먼저 비회원 정보가 user_info에 있는지 확인
     select user_id into p_user_id from user_info where phonenum = v_phonenum;
@@ -25,12 +32,23 @@ as
 
     -- user_order 테이블에 주문 정보 삽입, 주문 날짜는 현재 시스템 날짜 사용
     insert into user_order (order_date, user_id)
-    values (sysdate, p_user_id);
+    values (sysdate, p_user_id)
+    returning order_id into p_order_id;
 
   exception
     when others then
       -- 에러 처리
       dbms_output.put_line('Error: ' || sqlerrm);
   end insert_order;
+  
+  procedure insert_order_detail
+  (p_order_id in number,
+   p_menu_id in number,
+   p_quantity in number)
+  is
+  begin
+    insert into order_detail(order_id, menu_id, quantity)
+    values(p_order_id, p_menu_id, p_quantity);
+  end insert_order_detail;
 end order_pkg;
 /

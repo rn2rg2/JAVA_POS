@@ -14,7 +14,7 @@ is
         into v_detail_id
         from order_detail
         where menu_id = p_menu_id and order_id = p_order_id;
-        
+
         insert into review(title, content, rating, review_date, menu_id, detail_id)
         values(p_title, p_content, p_rating, sysdate, p_menu_id, v_detail_id);
     end;
