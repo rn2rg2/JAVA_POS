@@ -2,13 +2,15 @@ package com.kosa.pos.swing.review;
 
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class ReviewMenuPanel extends JPanel {
 
@@ -29,7 +31,10 @@ public class ReviewMenuPanel extends JPanel {
 		setPreferredSize(new Dimension(950, 185));
 		setLayout(null);
 
-		JLabel imgLabel = new JLabel("img");
+		ImageIcon imgpath = new ImageIcon(path);
+		Image img = imgpath.getImage().getScaledInstance(150, 150, Image.SCALE_AREA_AVERAGING);
+		imgpath = new ImageIcon(img);
+		JLabel imgLabel = new JLabel(imgpath);
 		imgLabel.setBounds(37, 17, 150, 150);
 		add(imgLabel);
 
