@@ -300,9 +300,9 @@ public class AdminMainPanel extends JPanel{
 		JButton btnNewButton = new JButton("메인 화면 돌아가기");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CardLayoutManager.getCardLayout().show(ContentPaneManager.getContentPane(), "menu");
 				index.setBounds(500,500,1250,700);
 				index.setLocationRelativeTo(null);
+				CardLayoutManager.getCardLayout().show(ContentPaneManager.getContentPane(), "menu");	
 			}
 		});
 		btnNewButton.setFont(new Font("굴림", Font.PLAIN, 16));
