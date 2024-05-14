@@ -138,22 +138,24 @@ PROCEDURE GET_MENU_RANKING (
 AS
 BEGIN
     OPEN p_result FOR
-        WITH TotalOrders AS (
-            SELECT SUM(QUANTITY) AS TOTAL_QUANTITY
-            FROM ORDER_DETAIL OD
-            JOIN MENU M ON OD.MENU_ID = M.MENU_ID
+        WITH MenuTotalOrders AS (
+            SELECT M.NAME AS MENU_NAME,
+                   SUM(OD.QUANTITY) AS TOTAL_ORDERS
+            FROM MENU M
+            LEFT JOIN ORDER_DETAIL OD ON OD.MENU_ID = M.MENU_ID
             WHERE M.CATEGORY != '음료'
+            GROUP BY M.NAME
         ),
         MenuOrders AS (
             SELECT M.NAME AS MENU_NAME, 
                    M.CATEGORY,
-                   COALESCE(SUM(OD.QUANTITY), 0) AS TOTAL_ORDERS,
+                   COALESCE(MTO.TOTAL_ORDERS, 0) AS TOTAL_ORDERS,
                    COALESCE(AVG(R.RATING), 0) AS AVG_RATING
             FROM MENU M
-            LEFT JOIN ORDER_DETAIL OD ON OD.MENU_ID = M.MENU_ID
+            LEFT JOIN MenuTotalOrders MTO ON MTO.MENU_NAME = M.NAME
             LEFT JOIN REVIEW R ON R.MENU_ID = M.MENU_ID
             WHERE M.CATEGORY != '음료'
-            GROUP BY M.NAME, M.CATEGORY
+            GROUP BY M.NAME, M.CATEGORY, MTO.TOTAL_ORDERS
         )
         SELECT MENU_NAME, CATEGORY,
                TOTAL_ORDERS,
