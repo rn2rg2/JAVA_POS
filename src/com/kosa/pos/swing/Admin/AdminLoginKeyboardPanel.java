@@ -3,6 +3,8 @@ package com.kosa.pos.swing.Admin;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -12,10 +14,7 @@ import javax.swing.border.EmptyBorder;
 
 import com.kosa.pos.swing.main.CardLayoutManager;
 import com.kosa.pos.swing.main.ContentPaneManager;
-import com.kosa.pos.swing.signUp.KeyboardActionListener;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import com.kosa.pos.swing.main.Index;
 
 public class AdminLoginKeyboardPanel extends JPanel {
 
@@ -24,7 +23,7 @@ public class AdminLoginKeyboardPanel extends JPanel {
 	JLabel safetyUserInput;
 	JButton submitButton;
 
-	public AdminLoginKeyboardPanel() {
+	public AdminLoginKeyboardPanel(Index index) {
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLayout(null);
 		setBounds(0, 0, 950, 700);
@@ -86,6 +85,8 @@ public class AdminLoginKeyboardPanel extends JPanel {
 		JButton btnNewButton = new JButton("뒤로 가기");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				index.setBounds(500,500,1250,700);
+				index.setLocationRelativeTo(null);
 				CardLayoutManager.getCardLayout().show(ContentPaneManager.getContentPane(), "menu");
 			}
 		});

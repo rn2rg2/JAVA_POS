@@ -10,13 +10,15 @@ import javax.swing.JLabel;
 
 import com.kosa.pos.swing.main.CardLayoutManager;
 import com.kosa.pos.swing.main.ContentPaneManager;
+import com.kosa.pos.swing.main.Index;
 
 public class CompletePaymentDialog extends JDialog {
 
 	private static final long serialVersionUID = 1L;
-
-	public CompletePaymentDialog() {
-
+	Index index;
+	
+	public CompletePaymentDialog(Index index) {
+		this.index = index;
 		initUI();
 	}
 
@@ -48,6 +50,8 @@ public class CompletePaymentDialog extends JDialog {
 		yesButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
+				index.setBounds(500,500,950,700);
+				index.setLocationRelativeTo(null);
 				CardLayoutManager.getCardLayout().show(ContentPaneManager.getContentPane(), "keyboard");
 			}
 		});

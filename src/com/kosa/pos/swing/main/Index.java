@@ -19,19 +19,22 @@ public class Index extends JFrame {
 
 	public Index() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(500, 500, 950, 700); //1250
+		setBounds(500, 500, 1250, 700); //1250 or 950
+		setLocationRelativeTo(null);
 		cardLayout = CardLayoutManager.getCardLayout();
 		// contentPane = new JPanel(cardLayout);
 		contentPane = ContentPaneManager.getContentPane();
 
 		add(contentPane);
-		MenuView menuPanel = new MenuView();
+		MenuView menuPanel = new MenuView(this);
+		
 		MenuDetailPanel mdp = new MenuDetailPanel();
 		mdp.setName("mdp");
-		KeyboardPanel keyboardPanel = new KeyboardPanel();
-		AdminLoginKeyboardPanel adminKeyboardPanel = new AdminLoginKeyboardPanel();
+		
+		KeyboardPanel keyboardPanel = new KeyboardPanel(this);
+		AdminLoginKeyboardPanel adminKeyboardPanel = new AdminLoginKeyboardPanel(this);
 
-		AdminMainPanel adminPanel = new AdminMainPanel();
+		AdminMainPanel adminPanel = new AdminMainPanel(this);
 		adminPanel.setName("adminPanel");
 
 		menutest cp = new menutest();
@@ -41,9 +44,8 @@ public class Index extends JFrame {
 		contentPane.add(cp, "cp");
 		contentPane.add(keyboardPanel, "keyboard");
 		contentPane.add(adminKeyboardPanel, "adminKeyboard");
-
 		contentPane.add(adminPanel, "adminPanel");
-
 		cardLayout.show(contentPane, "menu");
 	}
+	
 }

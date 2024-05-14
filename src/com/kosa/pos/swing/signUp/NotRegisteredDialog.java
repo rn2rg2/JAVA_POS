@@ -13,12 +13,15 @@ import com.kosa.pos.dao.UserDAO;
 import com.kosa.pos.swing.common.OrderState;
 import com.kosa.pos.swing.main.CardLayoutManager;
 import com.kosa.pos.swing.main.ContentPaneManager;
+import com.kosa.pos.swing.main.Index;
 
 public class NotRegisteredDialog extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 
-	public NotRegisteredDialog(long long_userInput) {
+
+	
+	public NotRegisteredDialog(long long_userInput, Index index) {
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(null);
 
@@ -68,6 +71,8 @@ public class NotRegisteredDialog extends JDialog {
 		btnNo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
+				index.setBounds(500,500,1250,700);
+				index.setLocationRelativeTo(null);
 				CardLayoutManager.getCardLayout().show(ContentPaneManager.getContentPane(), "menu");
 			}
 		});
