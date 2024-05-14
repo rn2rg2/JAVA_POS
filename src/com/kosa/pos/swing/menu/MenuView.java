@@ -59,9 +59,10 @@ public class MenuView extends JPanel {
 																					// menu name
 	private static List<String> sidebarOrder = new ArrayList<>();
 	static JLabel Total = new JLabel(0 + " 원");
-
+	private Index index;
+	
 	public MenuView(Index index) {
-
+		this.index = index;
 		setBackground(new Color(255, 255, 255));
 
 		// 메뉴 패널의 크기를 인덱스 패널과 동일하게 설정
@@ -88,7 +89,7 @@ public class MenuView extends JPanel {
 		// MenuPanel을 생성하여 ArrayList에 추가
 		for (int i = 0; i < menulist.size(); i++) {
 			menuPanel = new MenuPanel(menulist.get(i).getName(), menulist.get(i).getPrice(), msbpport,
-					menulist.get(i).getMenu_id(), menulist.get(i).getMenu_path());
+					menulist.get(i).getMenu_id(), menulist.get(i).getMenu_path(), index);
 			menuPanels.add(menuPanel);
 		}
 
@@ -383,7 +384,7 @@ public class MenuView extends JPanel {
 
 		for (int i = 0; i < menulist.size(); i++) {
 			menuPanel = new MenuPanel(menulist.get(i).getName(), menulist.get(i).getPrice(), msbpport,
-					menulist.get(i).getMenu_id(), menulist.get(i).getMenu_path());
+					menulist.get(i).getMenu_id(), menulist.get(i).getMenu_path(), index);
 			menuPanels.add(menuPanel);
 		}
 		JPanel viewport = new JPanel();

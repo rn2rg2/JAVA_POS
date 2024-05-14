@@ -28,22 +28,24 @@ import com.kosa.pos.dto.MenuDetail;
 import com.kosa.pos.dto.Review;
 import com.kosa.pos.swing.main.CardLayoutManager;
 import com.kosa.pos.swing.main.ContentPaneManager;
+import com.kosa.pos.swing.main.Index;
 
 public class MenuDetailPanel extends JPanel{
 
 	private int menuId = 1;
-	
+	private Index index;
 	/**
 	 * Create the application.
 	 */
 	public MenuDetailPanel() {
-		this(1);
+		this(1, null);
 //		setPreferredSize(new Dimension(900, 650));
 //		initialize();
 	}
 	
-	public MenuDetailPanel(int menuId) {
+	public MenuDetailPanel(int menuId, Index index) {
 		this.menuId = menuId;
+		this.index = index;
 		setPreferredSize(new Dimension(900, 650));
 		initialize();
 	}
@@ -372,6 +374,8 @@ public class MenuDetailPanel extends JPanel{
 		btnNewButton.setFont(new Font("굴림", Font.PLAIN, 18));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				index.setBounds(0,0,1250,700);
+				index.setLocationRelativeTo(null);
 				CardLayoutManager.getCardLayout().show(ContentPaneManager.getContentPane(), "menu");
 			}
 		});

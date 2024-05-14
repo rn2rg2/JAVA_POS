@@ -18,6 +18,7 @@ import javax.swing.border.LineBorder;
 
 import com.kosa.pos.swing.main.CardLayoutManager;
 import com.kosa.pos.swing.main.ContentPaneManager;
+import com.kosa.pos.swing.main.Index;
 
 public class MenuPanel extends JPanel {
 	private MenuSidebarPanel msbp = new MenuSidebarPanel(); // SidebarPanelManager.getSidebarPanelManager();
@@ -29,7 +30,7 @@ public class MenuPanel extends JPanel {
 	JLabel menu_name;
 	static Map<String, Integer> menuTotalPriceMap = new HashMap<>(); // 메뉴별 총 가격을 저장할 맵
 
-	public MenuPanel(String menuname, int price, JPanel msbpport, int menuId, String menuimgPath) {
+	public MenuPanel(String menuname, int price, JPanel msbpport, int menuId, String menuimgPath, Index index) {
 		setBackground(new Color(254, 255, 255));
 		setBorder(new LineBorder(new Color(207, 201, 214)));
 		setLayout(null);
@@ -104,7 +105,9 @@ public class MenuPanel extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("이미지 눌림");
-				MenuDetailPanel mdp = new MenuDetailPanel(menuId);
+				index.setBounds(0,0,950,700);
+				index.setLocationRelativeTo(null);
+				MenuDetailPanel mdp = new MenuDetailPanel(menuId,index);
 				mdp.setName("mdp");
 				Component[] compList = ContentPaneManager.getContentPane().getComponents();
 				for (Component c : compList) {
