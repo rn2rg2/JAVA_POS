@@ -10,6 +10,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import com.kosa.pos.swing.main.Index;
+
 public class KeyboardPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
@@ -19,7 +21,7 @@ public class KeyboardPanel extends JPanel {
 	JLabel userInput;
 	JButton submitButton;
 
-	public KeyboardPanel() {
+	public KeyboardPanel(Index index) {
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLayout(null);
 		setBounds(0, 0, 950, 700);
@@ -68,7 +70,7 @@ public class KeyboardPanel extends JPanel {
 		bottomPanel.add(submitButton);
 
 		/* 리스너 설정 */
-		KeyboardActionListener actionListener = new KeyboardActionListener(this);
+		KeyboardActionListener actionListener = new KeyboardActionListener(this, index);
 
 		/* Assign the actionListener to each button */
 		for (JButton button : buttons) {

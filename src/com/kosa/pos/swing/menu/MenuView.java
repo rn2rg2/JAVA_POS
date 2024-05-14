@@ -60,7 +60,8 @@ public class MenuView extends JPanel {
 	private static List<String> sidebarOrder = new ArrayList<>();
 	static JLabel Total = new JLabel(0 + " 원");
 
-	public MenuView() {
+	public MenuView(Index index) {
+
 		setBackground(new Color(255, 255, 255));
 
 		// 메뉴 패널의 크기를 인덱스 패널과 동일하게 설정
@@ -79,8 +80,12 @@ public class MenuView extends JPanel {
 		List<Menu> menulist = menudao.findByCategory("돈카츠");
 		List<MenuPanel> menuPanels = new ArrayList<>();
 
-		// MenuPanel을 생성하여 ArrayList에 추가
+		// 메뉴 랭킹 보여주기
+		List<MenuRanking> menurank = menudao.getMenuRanking();
+		int totalqa = menudao.getTotalOrderWithoutDrink();
+		JPanel MenuRankShowPane = new JPanel();
 
+		// MenuPanel을 생성하여 ArrayList에 추가
 		for (int i = 0; i < menulist.size(); i++) {
 			menuPanel = new MenuPanel(menulist.get(i).getName(), menulist.get(i).getPrice(), msbpport,
 					menulist.get(i).getMenu_id(), menulist.get(i).getMenu_path());
@@ -207,7 +212,7 @@ public class MenuView extends JPanel {
 
 		// 장바구니 & 결제 버튼
 		// 삭제버튼
-		
+
 		ImageIcon cancel = new ImageIcon("./img/menu/delete2.png");
 		Image img = cancel.getImage().getScaledInstance(191, 40, Image.SCALE_SMOOTH);
 		ImageIcon cancelimg = new ImageIcon(img);
@@ -229,7 +234,7 @@ public class MenuView extends JPanel {
 
 		paybtn.addActionListener(e -> {
 			int[] insertOrderResult = orderDao.insertOrder();
-
+			
 			// OrderState의 변수 초기화
 			OrderState.setUserId(0);
 			OrderState.setOrderId(0);
@@ -251,14 +256,35 @@ public class MenuView extends JPanel {
 
 			// 중요: 리뷰 패널 생성 및 카드 레이아웃에 추가
 			// -> reviewPanel 인스턴스 생성 시점에 orderId가 존재해야하므로 뒤로 뺐음
-			ReviewPanel reviewPanel = new ReviewPanel();
+			ReviewPanel reviewPanel = new ReviewPanel(index);
 			ContentPaneManager.getContentPane().add(reviewPanel, "review");
 
 			// 사이드바 초기화
 			resetSidebar(msbpport, Total, clickCountManager, MenuPanel.menuTotalPriceMap);
+			
+			MenuRankShowPane.removeAll();
+			List<MenuRanking> newmenurank = menudao.getMenuRanking();
+			// 각 메뉴 정보를 표시하는 컴포넌트를 반복하여 생성하여 패널에 추가 메뉴 랭킹 업데이트
+			for (int i = 0; i < newmenurank.size(); i++) {
+				MenuRanking menuRanking = newmenurank.get(i); // 현재 메뉴 랭킹 정보
+				int rank = i + 1; // 순위
+				String menuName = menuRanking.getMenuName(); // 메뉴 이름
+				int orderCount = menuRanking.getTotal_order(); // 주문 횟수
 
+				double orderPercentage = menuRanking.getTotal_percentage(); // 주문 퍼센티지
+				
+				// DecimalFormat 객체 생성
+				DecimalFormat df = new DecimalFormat("#.#");
+
+				// 형식화된 문자열로 변환
+				String formattedAvgReview = df.format(orderPercentage);
+				// 각 메뉴 정보를 표시하는 MenuShowRanks 객체 생성
+				MenuShowRanks menuRankInfo = new MenuShowRanks(rank, menuName, orderCount, formattedAvgReview);
+				MenuRankShowPane.add(menuRankInfo); // 패널에 추가
+				MenuRankShowPane.repaint();
+			}
 			// 결제 완료 패널 띄우기
-			CompletePaymentDialog dialog = new CompletePaymentDialog();
+			CompletePaymentDialog dialog = new CompletePaymentDialog(index);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setModal(true); // 모달 다이얼로그로 설정
 			dialog.setVisible(true); // 다이얼로그를 보여줌
@@ -275,7 +301,9 @@ public class MenuView extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				// 먼저 키보드 패널을 불러온다.
 				CardLayoutManager.getCardLayout().show(ContentPaneManager.getContentPane(), "adminKeyboard");
-
+				index.setBounds(0, 0, 950, 700);
+				index.setLocationRelativeTo(null);
+				
 				// 입력한 값이 관리자 계정 정보와 맞는지 확인
 
 				// 맞으면 아래 로직 실행
@@ -308,12 +336,10 @@ public class MenuView extends JPanel {
 		lblNewLabel.setBounds(6, 6, 266, 88);
 		MenuRank.add(lblNewLabel);
 
-		JPanel MenuRankShowPane = new JPanel();
+		// JPanel MenuRankShowPane = new JPanel();
 		MenuRankShowPane.setBackground(new Color(255, 255, 255));
 		MenuRankShowPane.setBounds(6, 135, 266, 497);
 		MenuRank.add(MenuRankShowPane);
-		List<MenuRanking> menurank = menudao.getMenuRanking();
-		int totalqa = menudao.getTotalOrderWithoutDrink();
 
 		MenuRankShowPane.setLayout(new GridLayout(menurank.size(), 1)); // 그리드 레이아웃 설정
 
@@ -335,7 +361,7 @@ public class MenuView extends JPanel {
 			int rank = i + 1; // 순위
 			String menuName = menuRanking.getMenuName(); // 메뉴 이름
 			int orderCount = menuRanking.getTotal_order(); // 주문 횟수
-			
+
 			double orderPercentage = menuRanking.getTotal_percentage(); // 주문 퍼센티지
 
 			// DecimalFormat 객체 생성

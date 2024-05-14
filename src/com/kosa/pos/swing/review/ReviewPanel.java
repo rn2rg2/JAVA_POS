@@ -18,12 +18,13 @@ import com.kosa.pos.dto.MenuDetail;
 import com.kosa.pos.swing.common.OrderState;
 import com.kosa.pos.swing.main.CardLayoutManager;
 import com.kosa.pos.swing.main.ContentPaneManager;
+import com.kosa.pos.swing.main.Index;
 
 public class ReviewPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private MenuDAOImpl menuDao = new MenuDAOImpl();
 
-	public ReviewPanel() {
+	public ReviewPanel(Index index) {
 		// ReviewPanel 크기를 index 패널과 동일하게 설정
 		setPreferredSize(new Dimension(950, 650));
 		setLayout(null);
@@ -58,6 +59,8 @@ public class ReviewPanel extends JPanel {
 		quitBtn.setFont(new Font("굴림", Font.PLAIN, 20));
 		quitBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				index.setBounds(500,500,1250,700);
+				index.setLocationRelativeTo(null);
 				CardLayoutManager.getCardLayout().show(ContentPaneManager.getContentPane(), "menu");
 			}
 		});

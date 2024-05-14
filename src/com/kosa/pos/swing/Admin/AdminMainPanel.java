@@ -2,16 +2,13 @@ package com.kosa.pos.swing.Admin;
 
 import java.awt.Color;
 import java.awt.Cursor;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Random;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -19,8 +16,7 @@ import javax.swing.border.LineBorder;
 
 import com.kosa.pos.swing.main.CardLayoutManager;
 import com.kosa.pos.swing.main.ContentPaneManager;
-
-import java.awt.CardLayout;
+import com.kosa.pos.swing.main.Index;
 
 public class AdminMainPanel extends JPanel{
 
@@ -30,6 +26,7 @@ public class AdminMainPanel extends JPanel{
 	private AdminMenuInsert adminMenuInsert = new AdminMenuInsert(this);
 	private AdminBestMenuList adminBestMenuList = new AdminBestMenuList(this);
 	private AdminStatsInfo adminStatsInfo = new AdminStatsInfo(this);
+	private Index index;
 	
 	private AdminMenuUpdate adminMenuUpdate;
 
@@ -52,10 +49,13 @@ public class AdminMainPanel extends JPanel{
 	/**
 	 * Create the application.
 	 */
+	public AdminMainPanel(Index index) {
+		this.index = index;
+		initialize();
+	}
 	public AdminMainPanel() {
 		initialize();
 	}
-	
 	public JPanel getMainPanel() {
 		return this.mainPanel;
 	}
@@ -301,6 +301,8 @@ public class AdminMainPanel extends JPanel{
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CardLayoutManager.getCardLayout().show(ContentPaneManager.getContentPane(), "menu");
+				index.setBounds(500,500,1250,700);
+				index.setLocationRelativeTo(null);
 			}
 		});
 		btnNewButton.setFont(new Font("굴림", Font.PLAIN, 16));

@@ -7,11 +7,14 @@ import javax.swing.JButton;
 
 import com.kosa.pos.dao.UserDAO;
 import com.kosa.pos.swing.common.OrderState;
+import com.kosa.pos.swing.main.Index;
 
 public class KeyboardActionListener implements ActionListener {
 	KeyboardPanel keyboard;
+	Index index;
 
-	public KeyboardActionListener(KeyboardPanel keyboard) {
+	public KeyboardActionListener(KeyboardPanel keyboard, Index index) {
+		this.index = index;
 		this.keyboard = keyboard;
 	}
 
@@ -69,7 +72,7 @@ public class KeyboardActionListener implements ActionListener {
 				} else { // 가입 안 된 전화번호
 					keyboard.userInput.setText(""); // keyboard 초기화
 
-					NotRegisteredDialog nrd = new NotRegisteredDialog(long_userInput);
+					NotRegisteredDialog nrd = new NotRegisteredDialog(long_userInput,index);
 					nrd.setModal(true);
 					nrd.setVisible(true);
 				}
