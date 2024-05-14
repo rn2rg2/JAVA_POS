@@ -35,15 +35,14 @@
 ![KOSA_1차프로젝트_발표 (29)](https://github.com/rn2rg2/MSA3p/assets/141730566/50875d85-fdc6-4c4e-a0d2-a7f907291f5b)
 ![KOSA_1차프로젝트_발표 (30)](https://github.com/rn2rg2/MSA3p/assets/141730566/5d8b123b-ec57-4895-8cd1-8ac19c1514bb)
 ![KOSA_1차프로젝트_발표 (31)](https://github.com/rn2rg2/MSA3p/assets/141730566/0325795c-e339-4f77-aa4d-c722351d07da)
-![KOSA_1차프로젝트_발표 (32)](https://github.com/rn2rg2/MSA3p/assets/141730566/04b6f417-874b-47b9-b686-0b25368ee877)
-![KOSA_1차프로젝트_발표 (33)](https://github.com/rn2rg2/MSA3p/assets/141730566/ba47f5e9-bc19-4bd0-9066-9eb364ad620b)
-![KOSA_1차프로젝트_발표 (34)](https://github.com/rn2rg2/MSA3p/assets/141730566/1d498ff7-b835-4a34-bc11-3ccc13727a36)
-![KOSA_1차프로젝트_발표 (35)](https://github.com/rn2rg2/MSA3p/assets/141730566/d1cb490c-1df9-45a3-9db9-327101b757c7)
-![KOSA_1차프로젝트_발표 (36)](https://github.com/rn2rg2/MSA3p/assets/141730566/16b1f626-0c71-4519-bf30-8cb0f54f2253)
-![KOSA_1차프로젝트_발표 (37)](https://github.com/rn2rg2/MSA3p/assets/141730566/6e67a7c1-0c84-4af7-9529-338addf3029e)
-![KOSA_1차프로젝트_발표 (38)](https://github.com/rn2rg2/MSA3p/assets/141730566/5e0343fa-056a-421f-bc1e-e6bf6e9ec9f5)
-![KOSA_1차프로젝트_발표 (39)](https://github.com/rn2rg2/MSA3p/assets/141730566/4300296c-294a-4440-a126-9b4ea4e3b8d8)
-![KOSA_1차프로젝트_발표 (40)](https://github.com/rn2rg2/MSA3p/assets/141730566/68210164-30d6-4d2c-b393-999231b84579)
+![KOSA_1차프로젝트_발표 (32)](https://github.com/Jo0Yo0n/MSA3p/assets/68751201/4c966b39-9e7d-4e97-8b78-c29aee9bdf6b)
+![KOSA_1차프로젝트_발표 (33)](https://github.com/Jo0Yo0n/MSA3p/assets/68751201/de2034d9-8415-43e9-a10f-a34bb7983602)
+![KOSA_1차프로젝트_발표 (35)](https://github.com/Jo0Yo0n/MSA3p/assets/68751201/f62b93c4-bef3-4cd5-91cb-7852142ffac7)
+![KOSA_1차프로젝트_발표 (36)](https://github.com/Jo0Yo0n/MSA3p/assets/68751201/2a8472ff-d1bc-4007-95f9-9a7f3eef5028)
+![KOSA_1차프로젝트_발표 (37)](https://github.com/Jo0Yo0n/MSA3p/assets/68751201/70386170-bc20-468c-b2e8-71ec8ffd1266)
+![KOSA_1차프로젝트_발표 (34)](https://github.com/Jo0Yo0n/MSA3p/assets/68751201/eaca1066-28fb-4094-aa00-ef95b5242238)
+![KOSA_1차프로젝트_발표 (38)](https://github.com/Jo0Yo0n/MSA3p/assets/68751201/ab9e50c7-c954-4d10-9647-50afc7fa72f7)
+![KOSA_1차프로젝트_발표 (39)](https://github.com/Jo0Yo0n/MSA3p/assets/68751201/820b1709-7cf9-4926-932d-11a876508ad2)
 
 
 
