@@ -22,6 +22,7 @@ import com.kosa.pos.dao.MenuDAOImpl;
 import com.kosa.pos.dto.Menu;
 import com.kosa.pos.swing.main.CardLayoutManager;
 import com.kosa.pos.swing.main.ContentPaneManager;
+import com.kosa.pos.swing.main.Index;
 
 public class AdminMenuUpdate extends JPanel {
 
@@ -31,7 +32,6 @@ public class AdminMenuUpdate extends JPanel {
 	private AdminMainPanel adminMain;
 	private JLabel menuPath;
 	private JTextArea menuDescTextArea;
-	
 	private File oldImageFile;
 	private File newImageFile;
 	
@@ -221,7 +221,7 @@ public class AdminMenuUpdate extends JPanel {
 				AdminMenuUpdate.this.menuUpdate(menuName, category, price, menuDesc, menuImage);
 				
 				// index.java에서도 adminPanel 생성할때 setName설정을 해줘야함
-				AdminMainPanel adminPanel = new AdminMainPanel();
+				AdminMainPanel adminPanel = new AdminMainPanel(IndexManager.getIndex());
 				adminPanel.setName("adminPanel");
 
 				Component[] compList = ContentPaneManager.getContentPane().getComponents();

@@ -254,7 +254,6 @@ public class MenuView extends JPanel {
 					orderDao.insertOrderDetail(orderId, menu.getMenu_id(), quantity);
 				}
 			}
-
 			// 중요: 리뷰 패널 생성 및 카드 레이아웃에 추가
 			// -> reviewPanel 인스턴스 생성 시점에 orderId가 존재해야하므로 뒤로 뺐음
 			ReviewPanel reviewPanel = new ReviewPanel(index);

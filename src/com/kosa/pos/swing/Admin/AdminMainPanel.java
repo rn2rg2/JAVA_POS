@@ -51,6 +51,7 @@ public class AdminMainPanel extends JPanel{
 	 */
 	public AdminMainPanel(Index index) {
 		this.index = index;
+		IndexManager.setIndex(index);
 		initialize();
 	}
 	public AdminMainPanel() {
