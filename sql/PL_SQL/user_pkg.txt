@@ -9,14 +9,13 @@ create or replace package body user_pkg
 is
     procedure update_user_id(p_user_id in number, p_order_id in number)
     is
-        v_row_count number;
     begin
         update user_order
         set user_id = p_user_id
         where order_id = p_order_id;
 
         -- 만약 업데이트된 행이 없다면 예외 처리
-        IF v_row_count = 0 THEN
+        IF sql%notfound THEN
             raise_application_error(-20001, 'No data found for the given order_id');
         END IF;
 
