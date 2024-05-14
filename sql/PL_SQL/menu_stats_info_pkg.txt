@@ -1,3 +1,13 @@
+create or replace package menu_stats_info
+as
+ procedure get_menu_rank(p_menu_name in varchar2 default '',p_cursor out sys_refcursor); -- 인기메뉴 가져오기 (주문 개수 순)
+ procedure GET_MENU_GRAPHSEARCH_DATA(p_menu_name in varchar2, p_cursor out sys_refcursor); -- 특정 메뉴 최근 주문 개수 가져오기
+ procedure get_menu_review_avg_score(p_menu_name in varchar2, p_cursor out sys_refcursor); -- 특정 메뉴 최근 리뷰 평점 가져오기
+ PROCEDURE GET_MENU_RANKING (p_menu_name IN VARCHAR2 DEFAULT NULL,p_result OUT SYS_REFCURSOR); -- 인기메뉴 정보 모두 가져오기(주문 개수 순)
+ PROCEDURE GET_GRAPH_DATA (p_result OUT SYS_REFCURSOR); -- 저번주~ 오늘까지 의 총주문 횟수
+END;
+/
+
 create or replace package body menu_stats_info
 as
 procedure get_menu_rank
@@ -191,3 +201,4 @@ BEGIN
 END;
 
 end menu_stats_info;
+/
